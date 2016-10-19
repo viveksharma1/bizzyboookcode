@@ -1,0 +1,701 @@
+﻿
+@{
+    ViewBag.Title = "PurchaseOrder";
+    Layout = null;
+}
+<style>
+    .modal-backdrop{position:relative}
+</style>
+
+<script type="text/ng-template" id="/ui-tree-select.html">
+    <ui-select ng-model="model.$selected"
+               ui-select-focuser
+               theme="selectize">
+        <ui-select-match placeholder="Select a group">
+            {{ $select.selected.title }}
+        </ui-select-match>
+        <ui-select-choices repeat="group in groups | filter: $select.search">
+            <div>
+                <span ng-bind-html="group.title | highlight: $select.search"></span>
+                <!--<span ng-bind-html="'('+group.size+' users)'"></span>
+                <a href
+                  ng-show="group.parent"
+                  class="goto-child-group"
+                  ng-click="loadChildGroupsOf(group, $select)">
+                  <i class="fa fa-angle-right"></i>
+                </a>-->
+            </div>
+        </ui-select-choices>
+    </ui-select>
+</script>
+
+<script type="text/ng-template" id="/ui-tree-Account.html">
+    <ui-select ng-model="model.$selected"
+               ui-select-focuser
+               theme="selectize">
+        <ui-select-match placeholder="Select a account">
+            {{ $select.selected.title }}
+        </ui-select-match>
+        <ui-select-choices repeat="group in groups | filter: $select.search">
+            <div>
+                <span ng-bind-html="group.title | highlight: $select.search"></span>
+                <!--<span ng-bind-html="'('+group.size+' users)'"></span>
+                <a href
+                  ng-show="group.parent"
+                  class="goto-child-group"
+                  ng-click="loadChildGroupsOf(group, $select)">
+                  <i class="fa fa-angle-right"></i>
+                </a>-->
+            </div>
+        </ui-select-choices>
+    </ui-select>
+</script>
+
+<script type="text/ng-template" id="/ui-tree-Item.html">
+    <ui-select ng-model="model.$selected"
+               ui-select-focuser
+               theme="selectize">
+        <ui-select-match placeholder="Select a item">
+            {{ $select.selected.title }}
+        </ui-select-match>
+        <ui-select-choices repeat="group in groups | filter: $select.search">
+            <div>
+                <span ng-bind-html="group.title | highlight: $select.search"></span>
+                <!--<span ng-bind-html="'('+group.size+' users)'"></span>
+                <a href
+                  ng-show="group.parent"
+                  class="goto-child-group"
+                  ng-click="loadChildGroupsOf(group, $select)">
+                  <i class="fa fa-angle-right"></i>
+                </a>-->
+            </div>
+        </ui-select-choices>
+    </ui-select>
+</script>
+<div class="FlexPopup" style="display:block" ng-init="model = {}">
+    <div class="flexheader">
+        <ul class="list-unstyled submenu InvoiceMenu" style="float:left">
+            <li><a href="#"><i class="fa fa-history"></i></a></li>
+            <li><a href="#"><span>Purchase Order</span></a></li>
+        </ul>
+        <ul class="list-unstyled submenu InvoiceMenu">
+            <li><a href="#"><i class="fa fa-question-circle"></i></a></li>
+            <li><a href="" ng-click="goBack()"><i class="fa fa-times"></i></a></li>
+        </ul>
+    </div>
+
+    <div class="col-sm-10" style="padding:0px">
+        <div class="flexcontainer">
+            <div class="lightblue bluebrdr content" style="padding:10px 0px">
+                <div class="col-sm-7 padding">
+                    <div class="col-sm-6" style="margin-top:10px">
+                       
+                        <ui-tree-select model="model">
+                        </ui-tree-select>
+                    </div>
+
+                    <div class="col-sm-6" style="margin-top:10px">
+                        <input type="text" class="form-control" placeholder="Email address" />
+                    </div>
+
+                </div>
+
+
+
+
+
+                <div class="pull-right" style="margin-right:10px;">
+                    <p class="text-right">BALANCE DUE</p>
+                    <span class="balancedue">Rs0.00</span>
+                </div>
+
+
+
+
+            </div>
+            <div class="col-sm-12">
+                <div class="col-sm-2 padding5">
+                    <h4 class="tabheading font_11">Mailing address</h4>
+                    <textarea class="form-control" style="height:95px"></textarea>
+                </div>
+
+                <div class="col-sm-2 padding5 claro">
+                    <h4 class="tabheading font_11">Terms</h4>
+
+                    <ui-tree-select model="model">
+                    </ui-tree-select>
+
+                    <div id="form-popoverPopup" class="popupbox">
+                        <div class="dijitDialogTitle">
+                            New Term
+                            <i class="fa fa-times-circle cursor pull-right" title="close" ng-click="popuclose()"></i>
+                        </div>
+                        <div class="form-content">
+                            <div class="form-group">
+                                <label><span class="red">*</span> Name</label>
+                                <input type="text" class="form-control" />
+                            </div>
+                            <strong>
+                                <input type="radio" class="pull-left" /> <span class="pull-left">Due in fixed number of days</span>
+                            </strong>
+                            <p>
+                                <input type="text" class="form-control pull-left" style="width:50px" /> <span class="pull-left">days</span>
+                            </p>
+                            <strong>
+                                <input type="radio" class="pull-left" /> <span class="pull-left">Due by certain day of the month</span>
+                            </strong>
+                            <p>
+                                <input type="text" class="form-control pull-left" style="width:50px" /> <span class="pull-left">day of month</span>
+                            </p>
+                            <strong>
+                                <span class="pull-left">Due the next month if issued within</span>
+                            </strong>
+                            <p>
+                                <input type="text" class="form-control pull-left" style="width:50px" /> <span class="pull-left">days of due date</span>
+                            </p>
+                            <div class="form-footer">
+                                <button type="button" class="btn btn-sm btn-default">Save</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <h4 class="tabheading font_11">Currency</h4>
+                    <select class="form-control selectcss">
+                        <option>Dollar</option>
+                        <option>Rupee</option>
+                        <option>Rupiah</option>
+                    </select>
+
+                </div>
+
+                <div class="col-sm-2 padding5">
+                    <h4 class="tabheading font_11">Bill Date</h4>
+                    <div class='input-group'>
+                        <input type='text' class="form-control" id='BillDate' />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+
+                    <h4 class="tabheading font_11">&nbsp;</h4>
+                    <button type="button" class="btn btn-default btn-sm currencybtn" ng-click="ExchangeRatebtn()">$ Exchange Rate</button>
+                </div>
+
+                <div class="col-sm-2 padding5">
+                    <h4 class="tabheading font_11">Due Date</h4>
+                    <div class='input-group'>
+                        <input type='text' class="form-control" id='DueDate' />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+
+                    <h4 class="tabheading font_11">&nbsp;</h4>
+                    <button type="button" class="btn btn-default btn-sm currencybtn" ng-click="CommodityRatesbtn()">Commodity Rates</button>
+                </div>
+
+                <div class="col-sm-1 padding5 pull-right">
+                    <h4 class="tabheading font_11">Bill no.</h4>
+                    <input type="text" class="form-control" value="435344" disabled />
+                </div>
+            </div>
+
+            <div class="modal fade" id="ExchangeRateDiv">
+                <div class="modal-dialog" style="width:460px; margin-top:60px">
+                    <div class="modal-content content">
+                        <div class="modal-header popupheader content" style="border-bottom:1px solid #e5e5e5">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">Exchange Rate</h4>
+                        </div>
+                        <div class="modal-body content modalbodyexchange" style="padding:15px;">
+
+                            <div class="col-sm-5 padding5">
+                                <h3 class="heading headingsize">$ Exchange</h3>
+                            </div>
+
+                            <div class="col-sm-5 padding5">
+                                <h3 class="heading headingsize"> Rate</h3>
+                            </div>
+
+
+
+
+
+                            <div class="ExchangeLine">
+
+                                <div class="col-sm-5 padding5">
+                                    <select class="form-control selectcss">
+                                        <option>Indonesian rupiah</option>
+                                        <option>Indian rupee</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-5 padding5">
+                                    <input type="text" class="form-control" />
+                                </div>
+
+                                <div class="col-sm-2 padding5 delete">
+                                    <i class="fa fa-trash"></i> Delete
+                                </div>
+
+                            </div>
+
+                            <div class="ExchangeLine">
+
+                                <div class="col-sm-5 padding5">
+                                    <select class="form-control selectcss">
+                                        <option>Indonesian rupiah</option>
+                                        <option>Indian rupee</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-5 padding5">
+                                    <input type="text" class="form-control" />
+                                </div>
+
+                                <div class="col-sm-2 padding5 delete">
+                                    <i class="fa fa-trash"></i> Delete
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer content">
+                            <button type="button" class="btn btn-default btn-sm pull-left addexchange">Add Line</button>
+
+                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary btn-sm">Save changes</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+
+
+            <div class="modal fade" id="CommodityRatesDiv">
+                <div class="modal-dialog" style="width:460px; margin-top:100px">
+                    <div class="modal-content content">
+                        <div class="modal-header popupheader content" style="border-bottom:1px solid #e5e5e5">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">Commodity Rates</h4>
+                        </div>
+                        <div class="modal-body content modalbodycommodity" style="padding:15px;">
+
+                            <div class="col-sm-6 padding5">
+                                <h3 class="heading headingsize">Commodity</h3>
+                            </div>
+
+                            <div class="col-sm-6 padding5">
+                                <h3 class="heading headingsize"> Rate</h3>
+                            </div>
+
+
+
+
+
+                            <div class="ExchangeLine">
+
+                                <div class="col-sm-6 padding5">
+                                    <select class="form-control selectcss">
+                                        <option>Select</option>
+                                        <option>Nickel</option>
+                                        <option>Copper</option>
+                                        <option>Fe</option>
+                                        <option>Molybdenum</option>
+                                        <option>Ferrous</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-6 padding5">
+                                    <input type="text" class="form-control" />
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="ExchangeLine">
+
+                                <div class="col-sm-6 padding5">
+                                    <select class="form-control selectcss">
+                                        <option>Select</option>
+                                        <option>Nickel</option>
+                                        <option>Copper</option>
+                                        <option>Fe</option>
+                                        <option>Molybdenum</option>
+                                        <option>Ferrous</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-6 padding5">
+                                    <input type="text" class="form-control" />
+                                </div>
+
+
+
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer content">
+                            <button type="button" class="btn btn-default btn-sm pull-left addcommodity">Add Line</button>
+
+                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary btn-sm">Save changes</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+
+            <div class="col-sm-12" style="padding-top:10px">
+                <h4 data-toggle="collapse" data-target="#AccountDetail3" class="cursor pull-left"><i class="fa fa-caret-right"></i> Account details</h4>
+                <div class="collapse in" id="AccountDetail3">
+                    <table class="table NewTable" style="width:100%" id="AccountTableLine">
+                        <thead>
+                            <tr>
+                                <th class="text-right" style="width:50px">#</th>
+                                <th>Account</th>
+                                <th>Description</th>
+                                <th class="text-right">Amount</th>
+                                <th style="width:50px">&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr class="Countedit">
+                                <td class="text-right Count" style="width:50px" data-field="Count">1</td>
+                                <td class="Count" data-field="Account">Custom Duty</td>
+                                <td class="Count" data-field="Description">&nbsp;</td>
+                                <td class="text-right Count" data-field="Amount">&nbsp;</td>
+                                <td class="text-right Count"><a> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
+
+                                <td class="text-right Count2" style="width:50px" data-field="Count"><input type="text" class="form-control" value="1"/></td>
+                                <td class="Count2" data-field="Account"><ui-tree-Account model="model">
+</ui-tree-Account></td>
+                                <td class="Count2" data-field="Description"><input type="text" class="form-control" /></td>
+                                <td class="text-right Count2" data-field="Amount"><input type="text" class="form-control" /></td>
+                                <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
+                            </tr>
+
+
+                            <tr class="Countedit">
+                                <td class="text-right Count" style="width:50px" data-field="Count">2</td>
+                                <td class="Count" data-field="Account">VAT</td>
+                                <td class="Count" data-field="Description">&nbsp;</td>
+                                <td class="text-right Count" data-field="Amount">&nbsp;</td>
+                                <td class="text-right Count"><a> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
+
+                                <td class="text-right Count2" style="width:50px" data-field="Count"><input type="text" class="form-control" value="2" /></td>
+                                <td class="Count2" data-field="Account">
+                                    <ui-tree-Account model="model">
+                                    </ui-tree-Account>
+                                </td>
+                                <td class="Count2" data-field="Description"><input type="text" class="form-control" /></td>
+                                <td class="text-right Count2" data-field="Amount"><input type="text" class="form-control" /></td>
+                                <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
+                            </tr>
+
+                     
+                            <tr class="Countedit">
+                                <td class="text-right Count" style="width:50px" data-field="Count">3</td>
+                                <td class="Count" data-field="Account">O TAX</td>
+                                <td class="Count" data-field="Description">&nbsp;</td>
+                                <td class="text-right Count" data-field="Amount">&nbsp;</td>
+                                <td class="text-right Count"><a> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
+
+                                <td class="text-right Count2" style="width:50px" data-field="Count"><input type="text" class="form-control" value="3" /></td> 
+                                <td class="Count2" data-field="Account">
+                                    <ui-tree-Account model="model">
+                                    </ui-tree-Account>
+                                </td>
+                                <td class="Count2" data-field="Description"><input type="text" class="form-control" /></td>
+                                <td class="text-right Count2" data-field="Amount"><input type="text" class="form-control" /></td>
+                                <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
+                            </tr>
+
+                            <tr class="Countedit">
+                                <td class="text-right Count" style="width:50px" data-field="Count">4</td>
+                                <td class="Count" data-field="Account">TAX</td>
+                                <td class="Count" data-field="Description">&nbsp;</td>
+                                <td class="text-right Count" data-field="Amount">&nbsp;</td>
+                                <td class="text-right Count"><a> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
+
+                                <td class="text-right Count2" style="width:50px" data-field="Count"><input type="text" class="form-control" value="4" /></td>
+                                <td class="Count2" data-field="Account">
+                                    <ui-tree-Account model="model">
+                                    </ui-tree-Account>
+                                </td>
+                                <td class="Count2" data-field="Description"><input type="text" class="form-control" /></td>
+                                <td class="text-right Count2" data-field="Amount"><input type="text" class="form-control" /></td>
+                                <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
+                            </tr>
+
+                            <tr class="Countedit">
+                                <td class="text-right Count" style="width:50px" data-field="Count">&nbsp;</td>
+                                <td class="Count" data-field="Account">&nbsp;</td>
+                                <td class="Count" data-field="Description">&nbsp;</td>
+                                <td class="text-right Count" data-field="Amount">&nbsp;</td>
+                                <td class="text-right Count"><a> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
+
+                                <td class="text-right Count2" style="width:50px" data-field="Count"><input type="text" class="form-control" value="4" /></td>
+                                <td class="Count2" data-field="Account">
+                                    <ui-tree-Account model="model">
+                                    </ui-tree-Account>
+                                </td>
+                                <td class="Count2" data-field="Description"><input type="text" class="form-control" /></td>
+                                <td class="text-right Count2" data-field="Amount"><input type="text" class="form-control" /></td>
+                                <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                    <button type="button" class="btn btn-default btn-sm btn-xs" ng-click="AddAccountTableLine()">Add lines</button>
+                </div>
+            </div>
+
+
+
+            <hr style="float:left; width:100%;" />
+
+
+            <div class="col-sm-12">
+                <h4 data-toggle="collapse" data-target="#ItemDetail2" class="cursor"><i class="fa fa-caret-right"></i> Item details</h4>
+                <div class="collapse in" id="ItemDetail2">
+                    <table class="table NewTable" style="width:100%" id="ItemTable">
+                        <thead>
+                            <tr>
+                                <th class="text-right">#</th>
+                                <th>Product/Service</th>
+                                <th>Finish</th>
+                                <th>Grade</th>
+                                <th>Thickness</th>
+                                <th>Width</th>
+                                <th>Description</th>
+                                <th class="text-right">Qty</th>
+                                <th class="text-right">Rate</th>
+                                <th class="text-right">Amount</th>
+                                <th class="text-right">Tax</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="Countedit">
+                                <td class="text-right Count">1</td>
+                                <td class="Count">Baby Coil</td>
+                                <td class="Count">2B</td>
+                                <td class="Count">304</td>
+                                <td class="Count">0.80</td>
+                                <td class="Count">1219</td>
+                                <td class="Count">&nbsp;</td>
+                                <td class="text-right Count" data-field="Qty">1</td>
+                                <td class="text-right Count" data-field="Rate">125.00</td>
+                                <td class="text-right Count" data-field="Amount">125.00</td>
+                                <td class="text-right Count" data-field="Tax">0.00</td>
+                                <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
+
+                                <td class="text-right Count2"><input type="text" class="form-control" value="1" style="width:30px" /></td>
+                                <td class="Count2"><ui-tree-Item model="model"></ui-tree-Item></td>
+                                <td class="Count2"><input type="text" class="form-control" value="2B" /></td>
+                                <td class="Count2"><input type="text" class="form-control" value="304" /></td>
+                                <td class="Count2"><input type="text" class="form-control" value="0.80" /></td>
+                                <td class="Count2"><input type="text" class="form-control" value="1219" /></td>
+                                <td class="Count2"><input type="text" class="form-control" value="-" /></td>
+                                <td class="text-right Count2"><input type="text" class="form-control" value="1" /></td>
+                                <td class="text-right Count2"><input type="text" class="form-control" value="125.00" /></td>
+                                <td class="text-right Count2"><input type="text" class="form-control" value="125.00" /></td>
+                                <td class="text-right Count2"><input type="text" class="form-control" value="0.00" /></td>
+                                <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
+                            </tr>
+
+                            <tr class="Countedit">
+                                <td class="text-right Count">2</td>
+                                <td class="Count">Defective</td>
+                                <td class="Count">2B</td>
+                                <td class="Count">304</td>
+                                <td class="Count">0.80</td>
+                                <td class="Count">1219</td>
+                                <td class="Count">&nbsp;</td>
+                                <td class="text-right Count" data-field="Qty">1</td>
+                                <td class="text-right Count" data-field="Rate">125.00</td>
+                                <td class="text-right Count" data-field="Amount">125.00</td>
+                                <td class="text-right Count" data-field="Tax">0.00</td>
+                                <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
+
+                                <td class="text-right Count2"><input type="text" class="form-control" value="2" style="width:30px" /></td>
+                                <td class="Count2"><ui-tree-Item model="model"></ui-tree-Item></td>
+                                <td class="Count2"><input type="text" class="form-control" value="2B" /></td>
+                                <td class="Count2"><input type="text" class="form-control" value="304" /></td>
+                                <td class="Count2"><input type="text" class="form-control" value="0.80" /></td>
+                                <td class="Count2"><input type="text" class="form-control" value="1219" /></td>
+                                <td class="Count2"><input type="text" class="form-control" value="-" /></td>
+                                <td class="text-right Count2"><input type="text" class="form-control" value="1" /></td>
+                                <td class="text-right Count2"><input type="text" class="form-control" value="125.00" /></td>
+                                <td class="text-right Count2"><input type="text" class="form-control" value="125.00" /></td>
+                                <td class="text-right Count2"><input type="text" class="form-control" value="0.00" /></td>
+                                <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
+                            </tr>
+
+                            <tr class="Countedit">
+                                <td class="text-right Count">3</td>
+                                <td class="Count">Baby Coil</td>
+                                <td class="Count">2B</td>
+                                <td class="Count">304</td>
+                                <td class="Count">0.80</td>
+                                <td class="Count">1219</td>
+                                <td class="Count">&nbsp;</td>
+                                <td class="text-right Count" data-field="Qty">1</td>
+                                <td class="text-right Count" data-field="Rate">125.00</td>
+                                <td class="text-right Count" data-field="Amount">125.00</td>
+                                <td class="text-right Count" data-field="Tax">0.00</td>
+                                <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
+
+                                <td class="text-right Count2"><input type="text" class="form-control" value="3" style="width:30px" /></td>
+                                <td class="Count2"><ui-tree-Item model="model"></ui-tree-Item></td>
+                                <td class="Count2"><input type="text" class="form-control" value="2B" /></td>
+                                <td class="Count2"><input type="text" class="form-control" value="304" /></td>
+                                <td class="Count2"><input type="text" class="form-control" value="0.80" /></td>
+                                <td class="Count2"><input type="text" class="form-control" value="1219" /></td>
+                                <td class="Count2"><input type="text" class="form-control" value="-" /></td>
+                                <td class="text-right Count2"><input type="text" class="form-control" value="1" /></td>
+                                <td class="text-right Count2"><input type="text" class="form-control" value="125.00" /></td>
+                                <td class="text-right Count2"><input type="text" class="form-control" value="125.00" /></td>
+                                <td class="text-right Count2"><input type="text" class="form-control" value="0.00" /></td>
+                                <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
+                            </tr>
+
+                            <tr class="Countedit">
+                                <td class="text-right Count">&nbsp;</td>
+                                <td class="Count">&nbsp;</td>
+                                <td class="Count">&nbsp;</td>
+                                <td class="Count">&nbsp;</td>
+                                <td class="Count">&nbsp;</td>
+                                <td class="Count">&nbsp;</td>
+                                <td class="Count">&nbsp;</td>
+                                <td class="text-right Count">&nbsp;</td>
+                                <td class="text-right Count">&nbsp;</td>
+                                <td class="text-right Count">&nbsp;</td>
+                                <td class="text-right Count">&nbsp;</td>
+                                <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
+
+                                <td class="text-right Count2"><input type="text" class="form-control" style="width:30px" /></td>
+                                <td class="Count2"><ui-tree-Item model="model"></ui-tree-Item></td>
+                                <td class="Count2"><input type="text" class="form-control" /></td>
+                                <td class="Count2"><input type="text" class="form-control" /></td>
+                                <td class="Count2"><input type="text" class="form-control"  /></td>
+                                <td class="Count2"><input type="text" class="form-control" /></td>
+                                <td class="Count2"><input type="text" class="form-control" /></td>
+                                <td class="text-right Count2"><input type="text" class="form-control"  /></td>
+                                <td class="text-right Count2"><input type="text" class="form-control"  /></td>
+                                <td class="text-right Count2"><input type="text" class="form-control"  /></td>
+                                <td class="text-right Count2"><input type="text" class="form-control"  /></td>
+                                <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-default btn-sm btn-xs" ng-click="AddTableLine()">Add lines</button>
+                </div>
+            </div>
+          
+
+            <hr style="float:left; width:100%; margin:5px 0px" />
+            <div class="col-sm-12">
+                <div class="col-sm-4 padding">
+
+                    <div class="form-group">
+                        <h4 class="tabheading">Memo</h4>
+                        <textarea class="form-control" style="height:80px"></textarea>
+                    </div>
+                </div>
+                <span class="pull-right" style="width:350px">
+                    <label class="subtotal" style="font-size:1.3rem;">Subtotal</label>
+                    <span class="subtotalvalue" style="font-size:1.3rem; font-weight:bold">Rs0.00</span>
+                    <label class="subtotal" style="font-size:1.5rem;">Total</label>
+                    <span class="subtotalvalue" style="font-size:1.5rem; font-weight:bold">Rs0.00</span>
+                </span>
+            </div>
+
+            <hr style="float:left; width:100%; margin:5px 0px" />
+
+            <div class="col-sm-12" style="margin-bottom:20px">
+                <div class="col-sm-4 padding">
+
+                    <div class="form-group">
+                        <h4 class="tabheading">Attachments</h4>
+                        <div class="attachmets">
+                            <input type="file" id="uploadBtn" multiple="multiple" name="browsefile">
+                            <div>
+                                <i class="fa fa-plus"></i>
+                                <p>Add file</p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div id="upload_prev" class="upload_prev"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-2" style="padding:0px;">
+        <div class="lightblue bluebrdr flexcontainer" style="padding:0px 10px">
+            <h3 class="AddBill">Add to Enquiry</h3>
+
+            <button type="button" class="btn btn-default btn-sm">Add all</button>
+
+
+            <div class="PurchaseBox">
+                <h3>System Architect</h3>
+                <small>17/08/2016</small>
+                <strong>Count : 23 </strong>
+                <br /><br />
+                <ul class="Purchasefooter list-unstyled">
+                    <li><strong><i class="fa fa-long-arrow-left"></i> Add</strong></li>
+                    <li>Open</li>
+                </ul>
+
+            </div>
+
+
+
+
+
+
+        </div>
+    </div>
+
+    <div class="flexfooter">
+        <span class="pull-left">
+            <button type="button" class="btn btn-sm btn-primary">Cancel</button>
+            <button type="button" class="btn btn-sm btn-primary">Clear</button>
+        </span>
+
+        <div class="pull-right">
+            <button type="button" class="btn btn-sm btn-primary">Save</button>
+            <div class="btn-group dropup">
+                <button type="button" class="btn btn-info btn-sm">Save and send</button>
+                <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:25px">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" style="right:-2px !important">
+                    <li><a href="#">Save and close</a></li>
+                    <li><a href="#">Save and send</a></li>
+                    <li><a href="#">Save and new</a></li>
+                    <li><a href="#">Save and share link</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+

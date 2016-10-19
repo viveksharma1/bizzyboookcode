@@ -1,0 +1,446 @@
+﻿var myApp = angular
+    .module('myApp', ['ui.router', 'datatables',
+        //'ngtimeago',
+        'oitozero.ngSweetAlert', 'fsm','ui.select', 'ngSanitize'])
+    .config(['$stateProvider', '$urlRouterProvider',function ($stateProvider,   $urlRouterProvider) {
+
+        $urlRouterProvider.otherwise('/');
+        $stateProvider.state("login", {
+            url: "/",
+            templateUrl: "Account/Login",
+            controller: "LoginCntrl"
+        })
+        $stateProvider.state("Customer", {
+            url: "/Customer",
+            abstract:true,
+            templateUrl: "Customer/Home"
+        })
+       
+        $stateProvider.state("Customer.Customerdetail", {
+            url: "/Customerdetail",
+            //url: "/RecentOrders",
+            templateUrl: "Customer/Customerdetail",
+            controller: "CustomerdetailCntrl"
+        });
+
+        $stateProvider.state("Customer.HomePage", {
+            url: "/HomePage",
+            //url: "/RecentOrders",
+            templateUrl: "Customer/HomePage",
+            controller: "HomePageCntrl"
+        });
+
+        $stateProvider.state("Customer.Customer", {
+            url: "/Customer",
+            //url: "/RecentOrders",
+            templateUrl: "Customer/Customer",
+            controller: "CustomerCntrl"
+        });
+
+
+        $stateProvider.state("Customer.Suppliers", {
+            url: "/Suppliers",
+            templateUrl: "Customer/Suppliers",
+            controller: "SupplierCntrl"
+        });
+
+
+        $stateProvider.state("Customer.SearchTransactions", {
+            url: "/SearchTransactions",
+            templateUrl: "Customer/SearchTransactions",
+            controller: "SearchTransactionsCntrl"
+        });
+
+        $stateProvider.state("Customer.Supplierdetail", {
+            url: "/Supplierdetail",
+            templateUrl: "Customer/Supplierdetail",
+            controller: "SupplierdetailCntrl"
+        });
+
+        $stateProvider.state("Customer.Inventory", {
+            url: "/Inventory",
+            templateUrl: "Customer/Inventory",
+            controller: "InventoryCntrl"
+        });
+
+        $stateProvider.state("Customer.Import", {
+            url: "/Import",
+            templateUrl: "Customer/Import",
+            controller: "ImportCntrl"
+        });
+
+        $stateProvider.state("Customer.Banking", {
+            url: "/Banking",
+            templateUrl: "Customer/Banking",
+            controller: "BankingCntrl"
+        });
+
+        $stateProvider.state("Customer.Sales", {
+            url: "/Sales",
+            templateUrl: "Customer/Sales",
+            controller: "SalesCntrl"
+
+
+        });
+
+
+        $stateProvider.state("Customer.Expenses", {
+            url: "/Expenses",
+            templateUrl: "Customer/Expenses",
+            controller: "ExpensesCntrl"
+
+
+        });
+
+
+        $stateProvider.state("Customer.Logistics", {
+            url: "/Logistics",
+            templateUrl: "Customer/Logistics",
+            controller: "LogisticsCntrl"
+
+
+        });
+
+        $stateProvider.state("Customer.Invoice", {
+            url: "/Invoice",
+            templateUrl: "Customer/Invoice",
+            controller: "InvoiceCntrl"
+
+        });
+
+        $stateProvider.state("Customer.ReceivePayment", {
+            url: "/ReceivePayment",
+            templateUrl: "Customer/ReceivePayment",
+            controller: "ReceivePaymentCntrl"
+
+        });
+
+        $stateProvider.state("Customer.Enquiry", {
+            url: "/Enquiry",
+            templateUrl: "Customer/Enquiry",
+            controller: "EnquiryCntrl"
+
+        });
+
+        $stateProvider.state("Customer.PurchaseOrder", {
+            url: "/PurchaseOrder",
+            templateUrl: "Customer/PurchaseOrder",
+            controller: "PurchaseOrderCntrl"
+
+        });
+
+        $stateProvider.state("Customer.Bill", {
+            url: "/Bill",
+            templateUrl: "Customer/Bill",
+            controller: "BillCntrl"
+
+        });
+
+        $stateProvider.state("Customer.Expense", {
+            url: "/Expense",
+            templateUrl: "Customer/Expense",
+            controller: "ExpenseCntrl"
+
+        });
+
+        $stateProvider.state("Customer.GRNEntry", {
+            url: "/GRNEntry",
+            templateUrl: "Customer/GRNEntry",
+            controller: "GRNEntryCntrl"
+
+        });
+              
+        
+        $stateProvider.state("Customer.AdvancePayment", {
+            url: "/AdvancePayment",
+            templateUrl: "Customer/AdvancePayment",
+            controller: "AdvancePaymentCntrl"
+
+        });
+
+        $stateProvider.state("Customer.MakePayment", {
+            url: "/MakePayment",
+            templateUrl: "Customer/MakePayment",
+            controller: "MakePaymentCntrl"
+
+        });
+
+
+        // Specify HTML5 mode (using the History APIs) or HashBang syntax.
+        //$locationProvider.html5Mode(false).hashPrefix('!');
+        //$locationProvider.html5Mode(true);
+    }]).controller('AppController', ['$rootScope', '$state', function ($rootScope,$state) {
+        //added here to relive after refersh
+        SetCompCode();
+        $rootScope.BASE_URL = "";
+        function SetCompCode(){
+            $rootScope.comp=sessionStorage["CompCode"];
+        }
+        $rootScope.loggedin = function (comp_code) {
+            if (comp_code)
+                $rootScope.comp = comp_code;
+            else
+                $rootScope.comp = sessionStorage["CompCode"];
+            sessionStorage["CompCode"] = $rootScope.comp;
+            $state.go('Customer.HomePage');
+        }
+
+    }]);
+
+////Ui-Select With Add New Section
+
+myApp.directive('uiTreeSelect', [
+  'groupFactory',
+  '$timeout',
+  function (groupFactory, $timeout) {
+      return {
+          restrict: 'E',
+          scope: { model: '=' },
+          link: function (scope, el) {
+              scope.breadcrumbs = [{ "id": 0, "title": "All" }];
+              scope.groups = groupFactory.load(0);
+
+              scope.loadChildGroupsOf = function (group, $select) {
+                  $select.search = '';
+
+                  scope.breadcrumbs.push(group);
+                  scope.groups = groupFactory.load(group.id);
+                  scope.$broadcast('uiSelectFocus');
+              };
+
+              scope.navigateBackTo = function (crumb, $select) {
+
+                  $('#form-popoverPopup').show();
+                  
+                  /*$select.search = '';
+                  var index = _.findIndex(scope.breadcrumbs, {id: crumb.id});
+        
+                  scope.breadcrumbs.splice(index + 1, scope.breadcrumbs.length);
+                  scope.groups = groupFactory.load(_.last(scope.breadcrumbs).id);
+                  $select.open = false;
+                  scope.$broadcast('uiSelectFocus');*/
+              };
+          },
+          templateUrl: '/ui-tree-select.html'
+      };
+  }
+]);
+
+myApp.directive('uiTreeAccount', [
+  'groupFactory',
+  '$timeout',
+  function (groupFactory, $timeout) {
+      return {
+          restrict: 'E',
+          scope: { model: '=' },
+          link: function (scope, el) {
+              scope.breadcrumbs = [{ "id": 0, "title": "All" }];
+              scope.groups = groupFactory.load(1);
+
+              scope.loadChildGroupsOf = function (group, $select) {
+                  $select.search = '';
+
+                  scope.breadcrumbs.push(group);
+                  scope.groups = groupFactory.load(group.id);
+                  scope.$broadcast('uiSelectFocus');
+              };
+
+              scope.navigateBackTo = function (crumb, $select) {
+
+             //     $('#form-popoverPopup').show();
+
+                  /*$select.search = '';
+                  var index = _.findIndex(scope.breadcrumbs, {id: crumb.id});
+        
+                  scope.breadcrumbs.splice(index + 1, scope.breadcrumbs.length);
+                  scope.groups = groupFactory.load(_.last(scope.breadcrumbs).id);
+                  $select.open = false;
+                  scope.$broadcast('uiSelectFocus');*/
+              };
+          },
+          templateUrl: '/ui-tree-Account.html'
+      };
+  }
+]);
+
+myApp.directive('uiTreeItem', [
+  'groupFactory',
+  '$timeout',
+  function (groupFactory, $timeout) {
+      return {
+          restrict: 'E',
+          scope: { model: '=' },
+          link: function (scope, el) {
+              scope.breadcrumbs = [{ "id": 0, "title": "All" }];
+              scope.groups = groupFactory.load(2);
+
+              scope.loadChildGroupsOf = function (group, $select) {
+                  $select.search = '';
+
+                  scope.breadcrumbs.push(group);
+                  scope.groups = groupFactory.load(group.id);
+                  scope.$broadcast('uiSelectFocus');
+              };
+
+              scope.navigateBackTo = function (crumb, $select) {
+
+                  //     $('#form-popoverPopup').show();
+
+                  /*$select.search = '';
+                  var index = _.findIndex(scope.breadcrumbs, {id: crumb.id});
+        
+                  scope.breadcrumbs.splice(index + 1, scope.breadcrumbs.length);
+                  scope.groups = groupFactory.load(_.last(scope.breadcrumbs).id);
+                  $select.open = false;
+                  scope.$broadcast('uiSelectFocus');*/
+              };
+          },
+          templateUrl: '/ui-tree-Item.html'
+      };
+  }
+]);
+
+
+myApp.directive('uiTreeInvoice', [
+  'groupFactory',
+  '$timeout',
+  function (groupFactory, $timeout) {
+      return {
+          restrict: 'E',
+          scope: { model: '=' },
+          link: function (scope, el) {
+              scope.breadcrumbs = [{ "id": 0, "title": "All" }];
+              scope.groups = groupFactory.load(3);
+
+              scope.loadChildGroupsOf = function (group, $select) {
+                  $select.search = '';
+
+                  scope.breadcrumbs.push(group);
+                  scope.groups = groupFactory.load(group.id);
+                  scope.$broadcast('uiSelectFocus');
+              };
+
+              scope.navigateBackTo = function (crumb, $select) {
+
+                  //     $('#form-popoverPopup').show();
+
+                  /*$select.search = '';
+                  var index = _.findIndex(scope.breadcrumbs, {id: crumb.id});
+        
+                  scope.breadcrumbs.splice(index + 1, scope.breadcrumbs.length);
+                  scope.groups = groupFactory.load(_.last(scope.breadcrumbs).id);
+                  $select.open = false;
+                  scope.$broadcast('uiSelectFocus');*/
+              };
+          },
+          templateUrl: '/ui-tree-Invoice.html'
+      };
+  }
+]);
+
+myApp.directive('uiTreeCustomer', [
+  'groupFactory',
+  '$timeout',
+  function (groupFactory, $timeout) {
+      return {
+          restrict: 'E',
+          scope: { model: '=' },
+          link: function (scope, el) {
+              scope.breadcrumbs = [{ "id": 0, "title": "All" }];
+              scope.groups = groupFactory.load(4);
+
+              scope.loadChildGroupsOf = function (group, $select) {
+                  $select.search = '';
+
+                  scope.breadcrumbs.push(group);
+                  scope.groups = groupFactory.load(group.id);
+                  scope.$broadcast('uiSelectFocus');
+              };
+
+              scope.navigateBackTo = function (crumb, $select) {
+
+                      $('#form-popoverPopupCustomer').show();
+
+                  /*$select.search = '';
+                  var index = _.findIndex(scope.breadcrumbs, {id: crumb.id});
+        
+                  scope.breadcrumbs.splice(index + 1, scope.breadcrumbs.length);
+                  scope.groups = groupFactory.load(_.last(scope.breadcrumbs).id);
+                  $select.open = false;
+                  scope.$broadcast('uiSelectFocus');*/
+              };
+          },
+          templateUrl: '/ui-tree-Customer.html'
+      };
+  }
+]);
+
+// Couldn't get on-focus to work, so wrote my own
+myApp.directive('uiSelectFocuser', function ($timeout) {
+    return {
+        restrict: 'A',
+        require: '^uiSelect',
+        link: function (scope, elem, attrs, uiSelect) {
+            scope.$on('uiSelectFocus', function () {
+                $timeout(uiSelect.activate);
+            });
+        }
+    };
+});
+
+myApp.factory('groupFactory', [
+  function () {
+      var data = {
+          0: [{ "id": 1, "title": "Due on receipt", "size": "57", "parent": true },
+              { "id": 2, "title": "Net 15", "size": "67", "parent": true },
+              { "id": 3, "title": "Net 30", "size": "32539", "parent": true },
+              { "id": 4, "title": "Net 60", "size": "898", "parent": false }],
+          1: [{ "id": 1, "title": "Custom Duty", "size": "57", "parent": true },
+              { "id": 2, "title": "VAT", "size": "67", "parent": true },
+              { "id": 3, "title": "O Tax", "size": "32539", "parent": true },
+              { "id": 4, "title": "Tax", "size": "898", "parent": false }],
+          2: [{ "id": 1, "title": "Baby Coil", "size": "57", "parent": true },
+              { "id": 2, "title": "Defective", "size": "67", "parent": true }],
+          3: [{ "id": 1, "title": "Home", "size": "57", "parent": true },
+              { "id": 2, "title": "Hours", "size": "57", "parent": true },
+              { "id": 3, "title": "Services", "size": "67", "parent": true }],
+          4: [{ "id": 1, "title": "Akash", "size": "57", "parent": true },
+              { "id": 2, "title": "Pankaj", "size": "57", "parent": true },
+              { "id": 3, "title": "Vikas", "size": "67", "parent": true }]
+      };
+
+      return {
+          load: function (id) {
+              return data[id];
+          }
+      }
+  }
+]);
+
+myApp.run(['$templateCache', function ($templateCache) {
+    // Overrides selectize template for group select tree.
+    $templateCache.put('selectize/choices.tpl.html', [
+      '<div ng-show="$select.open"',
+      '  class="ui-select-choices group-tree selectize-dropdown single">',
+      '  <div ng-show="true" class="ui-select-breadcrumbs">',
+      '    <span class="ui-breadcrumb"',
+      '       ng-click="navigateBackTo(crumb, $select)">',
+      '       +Add New {{$select.search}}',
+      '    </span>',
+      '  </div>',
+      '  <div class="ui-select-choices-content selectize-dropdown-content">',
+      '    <div class="ui-select-choices-group optgroup">',
+      '      <div ng-show="$select.isGrouped"',
+      '        class="ui-select-choices-group-label optgroup-header">',
+      '        {{$group}}',
+      '      </div>',
+      '      <div class="ui-select-choices-row">',
+      '        <div class="option ui-select-choices-row-inner"',
+      '           data-selectable="">',
+      '        </div>',
+      '      </div>',
+      '    </div>',
+      '  </div>',
+      '</div>'
+    ].join(''))
+}]);
