@@ -88,7 +88,8 @@ namespace Restaurant
                  "~/ScriptsAngular/app/Controller/ExpenseCntrl.js",
                  "~/ScriptsAngular/app/Controller/GRNEntryCntrl.js",
                  "~/ScriptsAngular/app/Controller/AdvancePaymentCntrl.js",
-                 "~/ScriptsAngular/app/Controller/MakePaymentCntrl.js"
+                 "~/ScriptsAngular/app/Controller/MakePaymentCntrl.js",
+                 "~/ScriptsAngular/app/Controller/CreateInventoryCntrl.js"
 
                 ));
 

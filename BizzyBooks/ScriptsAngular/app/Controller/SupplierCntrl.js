@@ -162,6 +162,36 @@
             action: 'Make Payment'
 
 
+        },
+        {
+            suppliers: 'Paynna',
+            phone: '9876543212',
+            email: 'Edinburgh@gmail.com',
+            purchageOrder: 'System Architect',
+            poAmount: 'Rs0.00',
+            action: 'Make Payment'
+
+
+        },
+        {
+            suppliers: 'Shenzhen Import & Export',
+            phone: '9876543212',
+            email: 'Edinburgh@gmail.com',
+            purchageOrder: 'System Architect',
+            poAmount: 'Rs0.00',
+            action: 'Make Payment'
+
+
+        },
+        {
+            suppliers: 'jindal Stainless Steel',
+            phone: '9876543212',
+            email: 'Edinburgh@gmail.com',
+            purchageOrder: 'System Architect',
+            poAmount: 'Rs0.00',
+            action: 'Make Payment'
+
+
         }
     ];
 

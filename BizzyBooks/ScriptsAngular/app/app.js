@@ -166,6 +166,14 @@
         });
 
 
+        $stateProvider.state("Customer.CreateInventory", {
+            url: "/CreateInventory",
+            templateUrl: "Customer/CreateInventory",
+            controller: "CreateInventoryCntrl"
+
+        });
+
+
         // Specify HTML5 mode (using the History APIs) or HashBang syntax.
         //$locationProvider.html5Mode(false).hashPrefix('!');
         //$locationProvider.html5Mode(true);

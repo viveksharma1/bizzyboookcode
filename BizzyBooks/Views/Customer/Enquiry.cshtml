@@ -105,47 +105,49 @@
                 <textarea class="form-control" style="height:95px"></textarea>
             </div>
 
-            <div class="col-sm-2 padding5 claro">
-                <h4 class="tabheading font_11">Terms</h4>
+          <div class="col-sm-2 padding5 claro">
+                         @*
+          <h4 class="tabheading font_11">Terms</h4>
 
-                <ui-tree-select model="model">
-                </ui-tree-select>
-
-                <div id="form-popoverPopup" class="popupbox">
-                    <div class="dijitDialogTitle">
-                        New Term
-                        <i class="fa fa-times-circle cursor pull-right" title="close" ng-click="popuclose()"></i>
-                    </div>
-                    <div class="form-content">
-                        <div class="form-group">
-                            <label><span class="red">*</span> Name</label>
-                            <input type="text" class="form-control" />
-                        </div>
-                        <strong>
-                            <input type="radio" class="pull-left" /> <span class="pull-left">Due in fixed number of days</span>
-                        </strong>
-                        <p>
-                            <input type="text" class="form-control pull-left" style="width:50px" /> <span class="pull-left">days</span>
-                        </p>
-                        <strong>
-                            <input type="radio" class="pull-left" /> <span class="pull-left">Due by certain day of the month</span>
-                        </strong>
-                        <p>
-                            <input type="text" class="form-control pull-left" style="width:50px" /> <span class="pull-left">day of month</span>
-                        </p>
-                        <strong>
-                            <span class="pull-left">Due the next month if issued within</span>
-                        </strong>
-                        <p>
-                            <input type="text" class="form-control pull-left" style="width:50px" /> <span class="pull-left">days of due date</span>
-                        </p>
-                        <div class="form-footer">
-                            <button type="button" class="btn btn-sm btn-default">Save</button>
-                        </div>
-                    </div>
-                </div>
+          <ui-tree-select model="model">
+          </ui-tree-select>
+        af072eeb3d8671688ff6eaa83c8dbcb8
+          <div id="form-popoverPopup" class="popupbox">
+              <div class="dijitDialogTitle">
+                  New Term
+                  <i class="fa fa-times-circle cursor pull-right" title="close" ng-click="popuclose()"></i>
+              </div>
+              <div class="form-content">
+                  <div class="form-group">
 
 
+                      <label><span class="red">*</span> Name</label>
+                      <input type="text" class="form-control" />
+                  </div>
+                  <strong>
+                      <input type="radio" class="pull-left" /> <span class="pull-left">Due in fixed number of days</span>
+                  </strong>
+                  <p>
+                      <input type="text" class="form-control pull-left" style="width:50px" /> <span class="pull-left">days</span>
+                  </p>
+                  <strong>
+                      <input type="radio" class="pull-left" /> <span class="pull-left">Due by certain day of the month</span>
+                  </strong>
+                  <p>
+                      <input type="text" class="form-control pull-left" style="width:50px" /> <span class="pull-left">day of month</span>
+                  </p>
+                  <strong>
+                      <span class="pull-left">Due the next month if issued within</span>
+                  </strong>
+                  <p>
+                      <input type="text" class="form-control pull-left" style="width:50px" /> <span class="pull-left">days of due date</span>
+                  </p>
+                  <div class="form-footer">
+                      <button type="button" class="btn btn-sm btn-default">Save</button>
+                  </div>
+              </div>
+          </div>
+                      *@
 
                 <h4 class="tabheading font_11">Currency</h4>
                 <select class="form-control selectcss">
@@ -168,16 +170,7 @@
 
             </div>
 
-            <div class="col-sm-2 padding5">
-                <h4 class="tabheading font_11">Due Date</h4>
-                <div class='input-group'>
-                    <input type='text' class="form-control" id='DueDate' />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
-
-            </div>
+           
 
             <div class="col-sm-1 padding5 pull-right">
                 <h4 class="tabheading font_11">Bill no.</h4>

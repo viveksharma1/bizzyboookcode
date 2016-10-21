@@ -349,6 +349,7 @@
     <Content Include="ScriptsAngular\app\Controller\AdvancePaymentCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\BankingCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\BillCntrl.js" />
+    <Content Include="ScriptsAngular\app\Controller\CreateInventoryCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\CustomerCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\CustomerdetailCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\EnquiryCntrl.js" />
@@ -434,6 +435,7 @@
     <Content Include="Views\Customer\GRNEntry.cshtml" />
     <Content Include="Views\Customer\MakePayment.cshtml" />
     <Content Include="Views\Customer\AdvancePayment.cshtml" />
+    <Content Include="Views\Customer\CreateInventory.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

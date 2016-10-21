@@ -120,5 +120,10 @@ namespace Restaurant.Controllers
             return View();
         }
 
+        public ActionResult CreateInventory()
+        {
+            return View();
+        }
+
     }
 }
