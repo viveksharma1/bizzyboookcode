@@ -166,6 +166,22 @@
         });
 
 
+        $stateProvider.state("Customer.CreateInventory", {
+            url: "/CreateInventory",
+            templateUrl: "Customer/CreateInventory",
+            controller: "CreateInventoryCntrl"
+
+        });
+
+        $stateProvider.state("Customer.Enquirydetail", {
+            url: "/Enquirydetail",
+            templateUrl: "Customer/Enquirydetail",
+            controller: "EnquirydetailCntrl"
+
+        });
+
+
+
         // Specify HTML5 mode (using the History APIs) or HashBang syntax.
         //$locationProvider.html5Mode(false).hashPrefix('!');
         //$locationProvider.html5Mode(true);
@@ -399,8 +415,9 @@ myApp.factory('groupFactory', [
               { "id": 2, "title": "VAT", "size": "67", "parent": true },
               { "id": 3, "title": "O Tax", "size": "32539", "parent": true },
               { "id": 4, "title": "Tax", "size": "898", "parent": false }],
-          2: [{ "id": 1, "title": "Baby Coil", "size": "57", "parent": true },
-              { "id": 2, "title": "Defective", "size": "67", "parent": true }],
+          2: [{ "id": 1, "title": "Cold rolled stainless steel sheets/plates/coils cut - exstock", "size": "57", "parent": true },
+              { "id": 2, "title": "Cold rolled stainless steel defective sheets/plates/coils cut", "size": "67", "parent": true },
+              { "id": 3, "title": "Cold rolled stainless steel defective baby coil less than 1 MT coils/sheets.plates cut", "size": "67", "parent": true }],
           3: [{ "id": 1, "title": "Home", "size": "57", "parent": true },
               { "id": 2, "title": "Hours", "size": "57", "parent": true },
               { "id": 3, "title": "Services", "size": "67", "parent": true }],

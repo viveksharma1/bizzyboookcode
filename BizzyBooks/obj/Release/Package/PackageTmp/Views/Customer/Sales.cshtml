@@ -116,21 +116,21 @@
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody  ng-repeat="data in transactionData">
                     <tr>
                         <td style="padding-left:30px; width:30px"><input type="checkbox" class="checkboxcss" /></td>
-                        <td>17/08/2016</td>
-                        <td>Sales Reciept</td>
-                        <td>1002</td>
-                        <td>Ajay Kumar</td>
-                        <td>16/08/2016</td>
-                        <td style="text-align:right;">Rs0.00</td>
-                        <td style="text-align:right;">Rs500.00</td>
-                        <td style="text-align:right;">Rs0.00</td>
-                        <td style="text-align:right;">Rs500.00</td>
-                        <td style="color:forestgreen">Paid</td>
+                        <td>{{data.date}}</td>
+                        <td>{{data.type}}</td>
+                        <td>{{data.no}}</td>
+                        <td>{{data.customer}}</td>
+                        <td>{{data.dueDate}}</td>
+                        <td style="text-align:right;">{{data.balance}}</td>
+                        <td style="text-align:right;">{{data.totalBefore}}</td>
+                        <td style="text-align:right;">{{data.tax}}</td>
+                        <td style="text-align:right;">{{data.total}}</td>
+                        <td style="color:forestgreen">{{data.status}}</td>
                         <td style="text-align:right;">
-                            <button type="button" class="editbtn" ng-click="MakePayment()">Print</button>
+                            <button type="button" class="editbtn" ng-click="MakePayment()">{{data.action}}</button>
                             <class class="linkseparator" style="margin-top:4px; margin-right:0px">|</class>
                             <div class="btn-group editcaret">
                                 <i class="fa fa-caret-down cursor" dropdown-toggle" data-toggle="dropdown"></i>
@@ -145,57 +145,7 @@
                     </tr>
 
                     <tr>
-                        <td style="padding-left:30px; width:30px"><input type="checkbox" class="checkboxcss" /></td>
-                        <td>17/08/2016</td>
-                        <td>Invoice</td>
-                        <td>1003</td>
-                        <td>Shankar Subramanian</td>
-                        <td>16/08/2016</td>
-                        <td style="text-align:right;">Rs5,000.00</td>
-                        <td style="text-align:right;">Rs5,000.00</td>
-                        <td style="text-align:right;">Rs0.00</td>
-                        <td style="text-align:right;">Rs5,000.00</td>
-                        <td style="color:#486C8F">Open</td>
-                        <td style="text-align:right;">
-                            <button type="button" class="editbtn" ng-click="MakePayment()">Print</button>
-                            <class class="linkseparator" style="margin-top:4px; margin-right:0px">|</class>
-                            <div class="btn-group editcaret">
-                                <i class="fa fa-caret-down cursor" dropdown-toggle" data-toggle="dropdown"></i>
-                                <ul class="dropdown-menu editdrpdwn my" role="menu" style="top:18px">
-                                    <li><a href="">Send</a></li>
-                                    <li><a href="">Print Delivery Challan</a></li>
-                                    <li><a href="">Copy</a></li>
-                                </ul>
-
-                            </div>
-                        </td>
-                    </tr> 
-                    <tr>
-                        <td style="padding-left:30px; width:30px"><input type="checkbox" class="checkboxcss" /></td>
-                        <td>15/08/2016</td>
-                        <td>Invoice</td>
-                        <td>1001</td>
-                        <td>Ajay Kumar</td>
-                        <td>30/07/2016</td>
-                        <td style="text-align:right;">Rs1,000.00</td>
-                        <td style="text-align:right;">Rs5,000.00</td>
-                        <td style="text-align:right;">Rs0.00</td>
-                        <td style="text-align:right;">Rs5,000.00</td>
-                        <td style="color:red">Overdue</td>
-                        <td style="text-align:right;">
-                            <button type="button" class="editbtn" ng-click="MakePayment()">Print</button>
-                            <class class="linkseparator" style="margin-top:4px; margin-right:0px">|</class>
-                            <div class="btn-group editcaret">
-                                <i class="fa fa-caret-down cursor" dropdown-toggle" data-toggle="dropdown"></i>
-                                <ul class="dropdown-menu editdrpdwn my" role="menu" style="top:18px">
-                                    <li><a href="">Send</a></li>
-                                    <li><a href="">Print Delivery Challan</a></li>
-                                    <li><a href="">Copy</a></li>
-                                </ul>
-
-                            </div>
-                        </td>
-                    </tr>  
+                       
 
                 </tbody>
             </table>

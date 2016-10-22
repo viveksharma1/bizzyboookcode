@@ -118,8 +118,10 @@
 
                                     <tbody ng-repeat="data in transaction">
                                         <tr>
+
                                             <td style="padding-left:30px; width:30px"><input type="checkbox" class="checkboxcss" /></td>
-                                            <td>{{data.DATE}}</td>
+                                            <td><a href="#/Customer/Enquirydetail" style="color:#000">{{data.DATE}}<br /></a></td>
+                                           
                                             <td>{{data.TYPE}}</td>
                                             <td>{{data.NO}}</td>
                                             <td>{{data.DUEDATE}}</td>

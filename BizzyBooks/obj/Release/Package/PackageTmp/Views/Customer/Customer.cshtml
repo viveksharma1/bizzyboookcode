@@ -101,13 +101,13 @@
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody ng-repeat="data in customer">
                     <tr>
                         <td style="padding-left:30px; width:30px"><input type="checkbox" class="checkboxcss" /></td>
                         <td><a href="#/Customer/Customerdetail">Vijay</a></td>
-                        <td>Vijay Ispat</td>
-                        <td>9876543212</td>
-                        <td>$320,800</td>
+                        <td>{{data.companyName}}</td>
+                        <td>{{data.contactNo}}</td>
+                        <td>{{data.balance}}</td>
                         <td style="text-align:right;">
                             <button type="button" class="editbtn"><a href="#/Customer/ReceivePayment">Receive Payment</a></button>
                             <class class="linkseparator" style="margin-top:4px; margin-right:0px">|</class>

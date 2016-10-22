@@ -117,6 +117,12 @@
             controller: 'MakePaymentCntrl'
         });
 
+
+        $routeProvider.state('/CreateInventory', {
+            templateUrl: 'Customer/CreateInventory',
+            controller: 'CreateInventoryCntrl'
+        });
+
        
         $routeProvider.otherwise({
             redirectTo: '/'

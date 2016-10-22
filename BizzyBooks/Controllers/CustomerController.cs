@@ -125,5 +125,10 @@ namespace Restaurant.Controllers
             return View();
         }
 
+        public ActionResult Enquirydetail()
+        {
+            return View();
+        }
+
     }
 }

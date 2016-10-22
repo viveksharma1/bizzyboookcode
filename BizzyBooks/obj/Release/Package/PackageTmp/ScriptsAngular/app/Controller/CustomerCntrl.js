@@ -18,8 +18,34 @@
     };
 
 
-  
+    $scope.customer = [];
 
+    $scope.customer = [
+
+        {
+            customer: 'vijay',
+            companyName: 'vijay Ishpat',
+            contactNo: '99815435',
+            balance: '55,5566'
+      },
+
+       {
+           customer: 'vijay',
+           companyName: 'vijay Ishpat',
+           contactNo: '99815435',
+           balance: "55,5566"
+
+       },
+       {
+           customer: 'vijay',
+           companyName: 'vijay Ishpat',
+           contactNo: '99815435',
+           balance: '55,5566'
+       }
+    ]
+
+
+    console.log($scope.customer);
 
 
     $('#NewCustomerCreate').click(function () {

@@ -105,47 +105,49 @@
                 <textarea class="form-control" style="height:95px"></textarea>
             </div>
 
-            <div class="col-sm-2 padding5 claro">
-                <h4 class="tabheading font_11">Terms</h4>
+          <div class="col-sm-2 padding5 claro">
+                         @*
+          <h4 class="tabheading font_11">Terms</h4>
 
-                <ui-tree-select model="model">
-                </ui-tree-select>
-
-                <div id="form-popoverPopup" class="popupbox">
-                    <div class="dijitDialogTitle">
-                        New Term
-                        <i class="fa fa-times-circle cursor pull-right" title="close" ng-click="popuclose()"></i>
-                    </div>
-                    <div class="form-content">
-                        <div class="form-group">
-                            <label><span class="red">*</span> Name</label>
-                            <input type="text" class="form-control" />
-                        </div>
-                        <strong>
-                            <input type="radio" class="pull-left" /> <span class="pull-left">Due in fixed number of days</span>
-                        </strong>
-                        <p>
-                            <input type="text" class="form-control pull-left" style="width:50px" /> <span class="pull-left">days</span>
-                        </p>
-                        <strong>
-                            <input type="radio" class="pull-left" /> <span class="pull-left">Due by certain day of the month</span>
-                        </strong>
-                        <p>
-                            <input type="text" class="form-control pull-left" style="width:50px" /> <span class="pull-left">day of month</span>
-                        </p>
-                        <strong>
-                            <span class="pull-left">Due the next month if issued within</span>
-                        </strong>
-                        <p>
-                            <input type="text" class="form-control pull-left" style="width:50px" /> <span class="pull-left">days of due date</span>
-                        </p>
-                        <div class="form-footer">
-                            <button type="button" class="btn btn-sm btn-default">Save</button>
-                        </div>
-                    </div>
-                </div>
+          <ui-tree-select model="model">
+          </ui-tree-select>
+        af072eeb3d8671688ff6eaa83c8dbcb8
+          <div id="form-popoverPopup" class="popupbox">
+              <div class="dijitDialogTitle">
+                  New Term
+                  <i class="fa fa-times-circle cursor pull-right" title="close" ng-click="popuclose()"></i>
+              </div>
+              <div class="form-content">
+                  <div class="form-group">
 
 
+                      <label><span class="red">*</span> Name</label>
+                      <input type="text" class="form-control" />
+                  </div>
+                  <strong>
+                      <input type="radio" class="pull-left" /> <span class="pull-left">Due in fixed number of days</span>
+                  </strong>
+                  <p>
+                      <input type="text" class="form-control pull-left" style="width:50px" /> <span class="pull-left">days</span>
+                  </p>
+                  <strong>
+                      <input type="radio" class="pull-left" /> <span class="pull-left">Due by certain day of the month</span>
+                  </strong>
+                  <p>
+                      <input type="text" class="form-control pull-left" style="width:50px" /> <span class="pull-left">day of month</span>
+                  </p>
+                  <strong>
+                      <span class="pull-left">Due the next month if issued within</span>
+                  </strong>
+                  <p>
+                      <input type="text" class="form-control pull-left" style="width:50px" /> <span class="pull-left">days of due date</span>
+                  </p>
+                  <div class="form-footer">
+                      <button type="button" class="btn btn-sm btn-default">Save</button>
+                  </div>
+              </div>
+          </div>
+                      *@
 
                 <h4 class="tabheading font_11">Currency</h4>
                 <select class="form-control selectcss">
@@ -168,16 +170,7 @@
 
             </div>
 
-            <div class="col-sm-2 padding5">
-                <h4 class="tabheading font_11">Due Date</h4>
-                <div class='input-group'>
-                    <input type='text' class="form-control" id='DueDate' />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
-
-            </div>
+           
 
             <div class="col-sm-1 padding5 pull-right">
                 <h4 class="tabheading font_11">Bill no.</h4>
@@ -201,101 +194,102 @@
                     <thead>
                         <tr>
                             <th class="text-right">#</th>
-                            <th>Product/Service</th>
-                            <th>Finish</th>
-                            <th>Grade</th>
-                            <th>Thickness</th>
-                            <th>Width</th>
                             <th>Description</th>
+                            <th>Grade</th>
+                            <th>Finish</th>
                             <th class="text-right">Qty</th>
-                            <th class="text-right">Rate</th>
                             <th class="text-right">Amount</th>
-                            <th class="text-right">Tax</th>
                             <th>&nbsp;</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="Countedit">
                             <td class="text-right Count">1</td>
-                            <td class="Count">Baby Coil</td>
-                            <td class="Count">2B</td>
+                            <td class="Count">Cold rolled stainless steel sheets/plates/coils cut - exstock</td>
                             <td class="Count">304</td>
-                            <td class="Count">0.80</td>
-                            <td class="Count">1219</td>
-                            <td class="Count">&nbsp;</td>
-                            <td class="text-right Count" data-field="Qty">1</td>
-                            <td class="text-right Count" data-field="Rate">125.00</td>
-                            <td class="text-right Count" data-field="Amount">125.00</td>
-                            <td class="text-right Count" data-field="Tax">0.00</td>
+                            <td class="Count">N4 2B N8</td>
+                            <td class="text-right Count" data-field="Qty">52.889</td>
+                            <td class="text-right Count" data-field="Amount">80889.57</td>
                             <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
 
                             <td class="text-right Count2"><input type="text" class="form-control" value="1" style="width:30px" /></td>
                             <td class="Count2"><ui-tree-Item model="model"></ui-tree-Item></td>
-                            <td class="Count2"><input type="text" class="form-control" value="2B" /></td>
                             <td class="Count2"><input type="text" class="form-control" value="304" /></td>
-                            <td class="Count2"><input type="text" class="form-control" value="0.80" /></td>
-                            <td class="Count2"><input type="text" class="form-control" value="1219" /></td>
-                            <td class="Count2"><input type="text" class="form-control" value="-" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" value="1" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" value="125.00" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" value="125.00" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" value="0.00" /></td>
+                            <td class="Count2"><input type="text" class="form-control" value="N4 2B N8" /></td>
+                            <td class="text-right Count2"><input type="text" class="form-control" value="52.889" /></td>
+                            <td class="text-right Count2"><input type="text" class="form-control" value="80889.57" /></td>
                             <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
                         </tr>
 
                         <tr class="Countedit">
                             <td class="text-right Count">2</td>
-                            <td class="Count">Defective</td>
-                            <td class="Count">2B</td>
-                            <td class="Count">304</td>
-                            <td class="Count">0.80</td>
-                            <td class="Count">1219</td>
-                            <td class="Count">&nbsp;</td>
-                            <td class="text-right Count" data-field="Qty">1</td>
-                            <td class="text-right Count" data-field="Rate">125.00</td>
-                            <td class="text-right Count" data-field="Amount">125.00</td>
-                            <td class="text-right Count" data-field="Tax">0.00</td>
+                            <td class="Count">Cold rolled stainless steel sheets/plates/coils cut - exstock</td>
+                            <td class="Count">430</td>
+                            <td class="Count">BA</td>
+                            <td class="text-right Count" data-field="Qty">58.836</td>
+                            <td class="text-right Count" data-field="Amount">43538.64</td>
                             <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
 
                             <td class="text-right Count2"><input type="text" class="form-control" value="2" style="width:30px" /></td>
                             <td class="Count2"><ui-tree-Item model="model"></ui-tree-Item></td>
-                            <td class="Count2"><input type="text" class="form-control" value="2B" /></td>
-                            <td class="Count2"><input type="text" class="form-control" value="304" /></td>
-                            <td class="Count2"><input type="text" class="form-control" value="0.80" /></td>
-                            <td class="Count2"><input type="text" class="form-control" value="1219" /></td>
-                            <td class="Count2"><input type="text" class="form-control" value="-" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" value="1" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" value="125.00" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" value="125.00" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" value="0.00" /></td>
+                            <td class="Count2"><input type="text" class="form-control" value="430" /></td>
+                            <td class="Count2"><input type="text" class="form-control" value="BA" /></td>
+                            <td class="text-right Count2"><input type="text" class="form-control" value="558.836" /></td>
+                            <td class="text-right Count2"><input type="text" class="form-control" value="43538.64" /></td>
                             <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
                         </tr>
 
                         <tr class="Countedit">
                             <td class="text-right Count">3</td>
-                            <td class="Count">Baby Coil</td>
-                            <td class="Count">2B</td>
-                            <td class="Count">304</td>
-                            <td class="Count">0.80</td>
-                            <td class="Count">1219</td>
-                            <td class="Count">&nbsp;</td>
-                            <td class="text-right Count" data-field="Qty">1</td>
-                            <td class="text-right Count" data-field="Rate">125.00</td>
-                            <td class="text-right Count" data-field="Amount">125.00</td>
-                            <td class="text-right Count" data-field="Tax">0.00</td>
+                            <td class="Count">Cold rolled stainless steel sheets/plates/coils cut - exstock</td>
+                            <td class="Count">J4</td>
+                            <td class="Count">No.4 2B</td>
+                            <td class="text-right Count" data-field="Qty">3.310</td>
+                            <td class="text-right Count" data-field="Amount">2323.62</td>
                             <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
 
                             <td class="text-right Count2"><input type="text" class="form-control" value="3" style="width:30px" /></td>
                             <td class="Count2"><ui-tree-Item model="model"></ui-tree-Item></td>
-                            <td class="Count2"><input type="text" class="form-control" value="2B" /></td>
-                            <td class="Count2"><input type="text" class="form-control" value="304" /></td>
-                            <td class="Count2"><input type="text" class="form-control" value="0.80" /></td>
-                            <td class="Count2"><input type="text" class="form-control" value="1219" /></td>
-                            <td class="Count2"><input type="text" class="form-control" value="-" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" value="1" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" value="125.00" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" value="125.00" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" value="0.00" /></td>
+                            <td class="Count2"><input type="text" class="form-control" value="J4" /></td>
+                            <td class="Count2"><input type="text" class="form-control" value="No.4 2B" /></td>
+                            <td class="text-right Count2"><input type="text" class="form-control" value="3.310" /></td>
+                            <td class="text-right Count2"><input type="text" class="form-control" value="2323.62" /></td>
+                            <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
+                        </tr>
+
+                        <tr class="Countedit">
+                            <td class="text-right Count">4</td>
+                            <td class="Count">Cold rolled stainless steel sheets/plates/coils cut - exstock</td>
+                            <td class="Count">JSLU</td>
+                            <td class="Count">N4</td>
+                            <td class="text-right Count" data-field="Qty">9.986</td>
+                            <td class="text-right Count" data-field="Amount">6760.52</td>
+                            <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
+
+                            <td class="text-right Count2"><input type="text" class="form-control" value="4" style="width:30px" /></td>
+                            <td class="Count2"><ui-tree-Item model="model"></ui-tree-Item></td>
+                            <td class="Count2"><input type="text" class="form-control" value="JSLU" /></td>
+                            <td class="Count2"><input type="text" class="form-control" value="N4" /></td>
+                            <td class="text-right Count2"><input type="text" class="form-control" value="9.986" /></td>
+                            <td class="text-right Count2"><input type="text" class="form-control" value="6760.52" /></td>
+                            <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
+                        </tr>
+
+                        <tr class="Countedit">
+                            <td class="text-right Count">5</td>
+                            <td class="Count">Cold rolled stainless steel defective sheets/plates/coils cut</td>
+                            <td class="Count">304/304L</td>
+                            <td class="Count">2B N4</td>
+                            <td class="text-right Count" data-field="Qty">5.638</td>
+                            <td class="text-right Count" data-field="Amount">7656.40</td>
+                            <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
+
+                            <td class="text-right Count2"><input type="text" class="form-control" value="4" style="width:30px" /></td>
+                            <td class="Count2"><ui-tree-Item model="model"></ui-tree-Item></td>
+                            <td class="Count2"><input type="text" class="form-control" value="304/304L" /></td>
+                            <td class="Count2"><input type="text" class="form-control" value="2B N4" /></td>
+                            <td class="text-right Count2"><input type="text" class="form-control" value="5.638" /></td>
+                            <td class="text-right Count2"><input type="text" class="form-control" value="7656.40" /></td>
                             <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
                         </tr>
 
@@ -304,26 +298,16 @@
                             <td class="Count">&nbsp;</td>
                             <td class="Count">&nbsp;</td>
                             <td class="Count">&nbsp;</td>
-                            <td class="Count">&nbsp;</td>
-                            <td class="Count">&nbsp;</td>
-                            <td class="Count">&nbsp;</td>
-                            <td class="text-right Count">&nbsp;</td>
-                            <td class="text-right Count">&nbsp;</td>
-                            <td class="text-right Count">&nbsp;</td>
-                            <td class="text-right Count">&nbsp;</td>
+                            <td class="text-right Count" data-field="Qty">&nbsp;</td>
+                            <td class="text-right Count" data-field="Amount">&nbsp;</td>
                             <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
 
-                            <td class="text-right Count2"><input type="text" class="form-control" style="width:30px" /></td>
+                            <td class="text-right Count2"><input type="text" class="form-control" value="" style="width:30px" /></td>
                             <td class="Count2"><ui-tree-Item model="model"></ui-tree-Item></td>
-                            <td class="Count2"><input type="text" class="form-control" /></td>
-                            <td class="Count2"><input type="text" class="form-control" /></td>
-                            <td class="Count2"><input type="text" class="form-control" /></td>
-                            <td class="Count2"><input type="text" class="form-control" /></td>
-                            <td class="Count2"><input type="text" class="form-control" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" /></td>
+                            <td class="Count2"><input type="text" class="form-control" value="" /></td>
+                            <td class="Count2"><input type="text" class="form-control" value="" /></td>
+                            <td class="text-right Count2"><input type="text" class="form-control" value="" /></td>
+                            <td class="text-right Count2"><input type="text" class="form-control" value="" /></td>
                             <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
                         </tr>
 

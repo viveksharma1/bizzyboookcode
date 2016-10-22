@@ -60,5 +60,45 @@
     }
 
 
+    //$scope.transaction = [];
+
+    $scope.transaction = [
+        {
+
+            DATE: '23/07/2016',
+            TYPE: 'PO',
+            NO: '1001',
+            DUEDATE: '22/08/2016',
+            BALANCE: 'Rs0.00',
+            TOTAL: 'Rs0.00',
+            STATUS: 'Paid',
+            ACTION: 'Print'
+        },
+         {
+
+             DATE: '23/07/2016',
+             TYPE: 'Invoice',
+             NO: '1001',
+             DUEDATE: '22/08/2016',
+             BALANCE: 'Rs0.00',
+             TOTAL: 'Rs0.00',
+             STATUS: 'Paid',
+             ACTION: 'Print'
+         },
+          {
+
+              DATE: '23/07/2016',
+              TYPE: 'Bill',
+              NO: '1001',
+              DUEDATE: '22/08/2016',
+              BALANCE: 'Rs0.00',
+              TOTAL: 'Rs0.00',
+              STATUS: 'Unpaid',
+              ACTION: 'Print'
+          }
+
+    ];
+
+
 
 }]);

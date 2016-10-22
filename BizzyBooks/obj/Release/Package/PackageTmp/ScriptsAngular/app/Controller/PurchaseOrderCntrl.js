@@ -1,5 +1,7 @@
 ﻿myApp.controller('PurchaseOrderCntrl', ['$scope', '$http', '$timeout', '$rootScope', '$state', function ($scope, $http, $timeout, $rootScope, $state) {
 
+
+    $('#dueDate').hide();
     $(".my a").click(function (e) {
         e.preventDefault();
     });
@@ -53,7 +55,8 @@ $(".Additem").click(function () {
 
     });
 
-
+  
+   
     $scope.ExchangeRatebtn = function () {
         $('#ExchangeRateDiv').modal('show');
     },
@@ -75,7 +78,7 @@ $('.addexchange').click(function () {
     });
 
 
-     $('.Countedit td').click(function () {
+    $('.Countedit td').click(function () {
         $(this).closest('tr').find('.Count').hide();
         $(this).closest('tr').find('.Count2').show();
 
@@ -93,9 +96,118 @@ $('.addexchange').click(function () {
     },
 
      $scope.AddTableLine = function () {
-        $('#ItemTable tr:last').after('<tr class="Countedit"><td class="text-right Count">&nbsp;</td><td class="Count">&nbsp;</td><td class="Count">&nbsp;</td><td class="Count">&nbsp;</td><td class="Count">&nbsp;</td><td class="Count">&nbsp;</td><td class="Count">&nbsp;</td><td class="text-right Count">&nbsp;</td><td class="text-right Count">&nbsp;</td><td class="text-right Count">&nbsp;</td><td class="text-right Count">&nbsp;</td><td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td><td class="text-right Count2"><input type="text" class="form-control" style="width:30px" /></td><td class="Count2"><ui-tree-Item model="model"></ui-tree-Item></td><td class="Count2"><input type="text" class="form-control" /></td><td class="Count2"><input type="text" class="form-control" /></td><td class="Count2"><input type="text" class="form-control"  /></td><td class="Count2"><input type="text" class="form-control" /></td><td class="Count2"><input type="text" class="form-control" /></td><td class="text-right Count2"><input type="text" class="form-control"  /></td><td class="text-right Count2"><input type="text" class="form-control"  /></td><td class="text-right Count2"><input type="text" class="form-control"  /></td><td class="text-right Count2"><input type="text" class="form-control"  /></td><td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td></tr>');
-    }
+         $('#ItemTable tr:last').after('<tr class="Countedit"><td class="text-right Count">&nbsp;</td><td class="Count">&nbsp;</td><td class="Count">&nbsp;</td><td class="Count">&nbsp;</td><td class="Count">&nbsp;</td><td class="Count">&nbsp;</td><td class="Count">&nbsp;</td><td class="text-right Count">&nbsp;</td><td class="text-right Count">&nbsp;</td><td class="text-right Count">&nbsp;</td><td class="text-right Count">&nbsp;</td><td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td><td class="text-right Count2"><input type="text" class="form-control" style="width:30px" /></td><td class="Count2"><ui-tree-Item model="model"></ui-tree-Item></td><td class="Count2"><input type="text" class="form-control" /></td><td class="Count2"><input type="text" class="form-control" /></td><td class="Count2"><input type="text" class="form-control"  /></td><td class="Count2"><input type="text" class="form-control" /></td><td class="Count2"><input type="text" class="form-control" /></td><td class="text-right Count2"><input type="text" class="form-control"  /></td><td class="text-right Count2"><input type="text" class="form-control"  /></td><td class="text-right Count2"><input type="text" class="form-control"  /></td><td class="text-right Count2"><input type="text" class="form-control"  /></td><td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td></tr>');
+     }
+
+    $scope.order = [];
+    $scope.order = [
+        {
+
+            vivek: 'kdfhfs',
+            vivek1: 'kdfhfsff'
+        }
+
+    ];
+    $scope.order = "fdfdsf";
+
+    var access_key = 'af072eeb3d8671688ff6eaa83c8dbcb8';
+    var url = 'http://apilayer.net/api/live?access_key=' + access_key;
+    var access_key = 'af072eeb3d8671688ff6eaa83c8dbcb8';
+    var from = 'USD';
+    var to = 'EUR';
+    var amount = '1';
+
+    $.ajax({
+
+        url: 'http://apilayer.net/api/convert?access_key=' + access_key,
+        success: function (response) {
+
+            if (response.success) {
+
+                alert('1 USD is worth ' + parseFloat(response.rate).toFixed(2) + ' EUR');
+            }
+
+            console.log(response);
+        }
+    });
 
 
+    
+
+    $scope.data = [];
+    
+    $http.get(url).then(function (response) {
+
+        $scope.data = response.data;
+        console.log($scope.data);
+        console.log(response);
+        console.log(response.data.quotes.USDINR);
+        $('#rs').val(response.data.quotes.USDINR);
+        $('#rs1').val(response.data.quotes.USDIDR,'IDR');
+
+    });
+
+    //$('#rs').val(response.data.quotes.USDINR);
+
+    // $('#txtarea').val('fffsfsff');
+    $('#amount').val('fffsfsff');
+
+
+    $scope.purchage = [];
+
+    $scope.purchage = [{ name: "System Architect", dsc: 'Coldrolledstainlesssteelsheets/plates/coilscut-exstock', ammount: "2345" }, { name: "System Architect", dsc: 'Coldrolledstainlesssteelsheets/plates/coilscut-exstock', ammount: "2345" }, { name: "System Architect", dsc: 'Coldrolledstainlesssteelsheets/plates/coilscut-exstock', ammount: "2345" }];
+
+    
+
+
+    $scope.purchageorder = [];
+
+    $scope.purchageorder = [{ name: 'System Architect', date: '12/05/2016', count: '23', dsc: 'Coldrolledstainlesssteelsheets/plates/coilscut-exstock', email: 'SystemArchitect@gmail.com', phone: '+934434343' }, { name: 'Jindal Steel', date: '29/05/2016', count: '33', email: 'JindalSteel@gmail.com', phone: '+932323233' }, { name: 'Phoenix Imports and Exports', date: '25/05/2016', count: '73', email: 'Phoenix@gmail.com', phone: '+9445466663' }, { name: 'Paynna Anugrah Indonesia', date: '25/05/2016', count: '73', email: 'Paynna@gmail.com', phone: '+9134423443' }]
+
+    
+    $scope.item = [];
+
+    $scope.item = [[{ PRODUCT: "Stainless Steel Coil", FINISH: '2B', GRADE: '377', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "nickel", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "Steel Coil", FINISH: '7B', GRADE: '357', THICKNESS: '0.56', WIDTH: '1255', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "Baby Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }],
+    [{ PRODUCT: "nickel Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '51', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "Baby Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: " Nickel Coil", FINISH: '6B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1323', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "Baby Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }],
+     [{ PRODUCT: "Baby Coil", FINISH: '5B', GRADE: '237', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '9', RATE: '125.00', AMOUNT: '525.00', TAX: '0.00' }, { PRODUCT: "Baby Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "Iron Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '5454', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "Baby Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }],
+     [{ PRODUCT: "Steel Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '8', RATE: '125.00', AMOUNT: '325.00', TAX: '0.00' }, { PRODUCT: "Baby Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "Iron  Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1455', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "Steel Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '5', RATE: '600.00', AMOUNT: '125.00', TAX: '0.00' }]];
+    
+    $scope.name1 = $scope.purchageorder[0].name;
+    $scope.email = $scope.purchageorder[0].email;
+    $scope.phone = $scope.purchageorder[0].phone;
+    $scope.add = function (i) {
+
+        $scope.newitem = [];
+
+        $scope.newitem = $scope.item[i];
+       
+        //$('#dsc').val('fffsfsff');
+        //$('#amount').val('fffsfsff');
+
+        $scope.table = "dfdsff";
+        $('#txtarea').val('Mumbai , Mahrashtra');
+        $('#dsc').val('Cold rolled stainless steel sheets/plates/coils cut - exstock');
+        // $('#name').show(purchageorder[0].name);
+
+        // $scope.name1 = $scope.purchageorder.name;
+        $scope.name1 = $scope.purchageorder[i].name;
+        $scope.email = $scope.purchageorder[i].email;
+        $scope.phone = $scope.purchageorder[i].phone;
+
+    };
+
+
+    //$scope.name1 = $scope.purchageorder[i].name;
+
+
+    $scope.rate1="$683.42";
+    $scope.rate2 = "$440";
+    $scope.rate3="$6833.42";
+   
+
+
+
+
+    
 
 }]);

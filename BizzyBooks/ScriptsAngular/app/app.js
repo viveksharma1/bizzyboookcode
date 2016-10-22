@@ -173,6 +173,14 @@
 
         });
 
+        $stateProvider.state("Customer.Enquirydetail", {
+            url: "/Enquirydetail",
+            templateUrl: "Customer/Enquirydetail",
+            controller: "EnquirydetailCntrl"
+
+        });
+
+
 
         // Specify HTML5 mode (using the History APIs) or HashBang syntax.
         //$locationProvider.html5Mode(false).hashPrefix('!');
