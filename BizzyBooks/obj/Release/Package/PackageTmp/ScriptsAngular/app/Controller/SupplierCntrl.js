@@ -3,43 +3,56 @@
         e.preventDefault();
     });
 
-   
 
-    $('#PurchaseOrder').hide();
+
+    $('#PurchaseOrderTable').hide();
     $('#OpenBill').hide();
-    $('#Overdue').hide();
-    
-    $scope.PurchaseOrderTable = function () {
-        $('#PurchaseOrder').show();
-        $('#OpenBalance').hide();
+    $('#PaidBillTable').hide();
+    $('#EnquiryTable').hide();
+
+    $scope.SuppliersTablebtn = function () {
+        $('#SuppliersTable').show();
+        $('#PurchaseOrderTable').hide();
+        $('#EnquiryTable').hide();
         $('#OpenBill').hide();
-        $('#Overdue').hide();
+        $('#PaidBillTable').hide();
+    },
+
+    $scope.PurchaseOrderTable = function () {
+        $('#PurchaseOrderTable').show();
+        $('#EnquiryTable').hide();
+        $('#OpenBill').hide();
+        $('#PaidBillTable').hide();
+        $('#SuppliersTable').hide();
     },
 
     $scope.OpenBillTable = function () {
         $('#OpenBill').show();
-        $('#PurchaseOrder').hide();
-        $('#OpenBalance').hide();
-        $('#Overdue').hide();
+        $('#PurchaseOrderTable').hide();
+        $('#EnquiryTable').hide();
+        $('#PaidBillTable').hide();
+        $('#SuppliersTable').hide();
     },
 
-    $scope.OverdueTable = function () {
-        $('#Overdue').show();
+    $scope.PaidBillbtn = function () {
+        $('#PaidBillTable').show();
         $('#OpenBill').hide();
-        $('#PurchaseOrder').hide();
-        $('#OpenBalance').hide();
+        $('#PurchaseOrderTable').hide();
+        $('#EnquiryTable').hide();
+        $('#SuppliersTable').hide();
 
     },
 
-    $scope.OpenBalanceTable = function () {
-        $('#Overdue').hide();
+    $scope.EnquiryTablebtn = function () {
+        $('#PaidBillTable').hide();
         $('#OpenBill').hide();
-        $('#PurchaseOrder').hide();
-        $('#OpenBalance').show();
+        $('#PurchaseOrderTable').hide();
+        $('#EnquiryTable').show();
+        $('#SuppliersTable').hide();
 
     },
 
-   
+
 
 
     $scope.menuUp = function (e) {
@@ -55,7 +68,7 @@
 
 
 
-  
+
 
     $('#NewCustomerCreate').click(function () {
         $('#NewCustomerCreateModal').modal('show');
@@ -65,7 +78,7 @@
 
     $scope.savechanges = function () {
 
-       
+
 
         var newsuppliers = [];
 
@@ -117,32 +130,36 @@
     $scope.suppliers = [
         {
             suppliers: 'Paynna ',
-            enquiryDate: '30/09/2016',
+            email: 'Paynna@gmail.com',
             enquiryNo: '23',
-            status: 'Open',
+            purchageOrder: 'System Architect',
+            OpenBill: 'Bill 243',
             action: 'Make Payment'
         },
 
         {
             suppliers: 'jindal Stainless Steel',
-            enquiryDate: '1/10/2016',
+            email: 'jindal@gmail.com',
             enquiryNo: '05',
-            status: 'Process',
+            purchageOrder: 'System Architect',
+            OpenBill: 'Bill 253',
             action: 'Make Payment'
         },
         {
             suppliers: 'Shenzhen Import & Export',
-            enquiryDate: '1/10/2016',
+            email: 'Shenzhen@gmail.com',
             enquiryNo: '05',
-            status: 'Close',
+            purchageOrder: 'System Architect',
+            OpenBill: 'Bill 244',
             action: 'Make Payment'
         },
 
         {
             suppliers: 'Phoenix Imports and Exports ',
-            enquiryDate: '6/10/2016',
+            email: 'Phoenix@gmail.com',
             enquiryNo: '01',
-            status: 'Open',
+            purchageOrder: 'System Architect',
+            OpenBill: 'Bill 249',
             action: 'Make Payment'
         }
 
@@ -154,49 +171,141 @@
     $scope.purchageOrder = [
 
         {
-            suppliers: 'System Architect',
-            phone: '9876543212',
-            email: 'Edinburgh@gmail.com',
-            purchageOrder: 'System Architect',
+            ponumber: '47598479',
+            podt: '18/Oct/2016',
+            duedt: '22/Oct/2016',
+            suppliers: 'Phoenix Imports and Exports ',
             poAmount: 'Rs0.00',
-            action: 'Make Payment'
+            action: 'Create Bill'
 
 
         },
         {
-            suppliers: 'Paynna',
-            phone: '9876543212',
-            email: 'Edinburgh@gmail.com',
-            purchageOrder: 'System Architect',
-            poAmount: 'Rs0.00',
-            action: 'Make Payment'
-
-
-        },
-        {
-            suppliers: 'Shenzhen Import & Export',
-            phone: '9876543212',
-            email: 'Edinburgh@gmail.com',
-            purchageOrder: 'System Architect',
-            poAmount: 'Rs0.00',
-            action: 'Make Payment'
-
-
-        },
-        {
+            ponumber: '47598479',
+            podt: '18/Oct/2016',
+            duedt: '22/Oct/2016',
             suppliers: 'jindal Stainless Steel',
-            phone: '9876543212',
-            email: 'Edinburgh@gmail.com',
-            purchageOrder: 'System Architect',
             poAmount: 'Rs0.00',
-            action: 'Make Payment'
+            action: 'Create Bill'
+
+
+        },
+        {
+            ponumber: '47598479',
+            podt: '18/Oct/2016',
+            duedt: '22/Oct/2016',
+            suppliers: 'Shenzhen Import & Export',
+            poAmount: 'Rs0.00',
+            action: 'Create Bill'
+
+
+        },
+        {
+            ponumber: '47598479',
+            podt: '18/Oct/2016',
+            duedt: '22/Oct/2016',
+            suppliers: 'Paynna ',
+            poAmount: 'Rs0.00',
+            action: 'Create Bill'
 
 
         }
     ];
 
 
-  
-  
+    $scope.Enquiries = [];
+
+
+    $scope.Enquiries = [
+
+        {
+            enquiryNo: '2323',
+            enquirydate: '18/Oct/2016',
+            enquiryduedt: '22/Oct/2016',
+            suppliers: 'System Architect',
+            action: 'Edit'
+
+
+        },
+        {
+            enquiryNo: '2329',
+            enquirydate: '10/Oct/2016',
+            enquiryduedt: '15/Oct/2016',
+            suppliers: 'Paynna',
+            action: 'Edit'
+
+
+        },
+        {
+            enquiryNo: '2332',
+            enquirydate: '1/Oct/2016',
+            enquiryduedt: '10/Oct/2016',
+            suppliers: 'Shenzhen Import & Export',
+            action: 'Edit'
+
+
+        },
+        {
+            enquiryNo: '2335',
+            enquirydate: '18/Sep/2016',
+            enquiryduedt: '22/Sep/2016',
+            suppliers: 'Jindal Stainless Steel',
+            action: 'Edit'
+
+
+        }
+    ];
+
+
+    $scope.Bill = [];
+
+
+    $scope.Bill = [
+
+        {
+            suppliers: 'System Architect',
+            email: 'System@gmail.com',
+            billno: '23424',
+            bilamt: 'Rs0',
+            balamt: 'Rs0',
+            action: 'Make payment'
+
+
+        },
+        {
+            suppliers: 'Paynna',
+            email: 'Paynna@gmail.com',
+            billno: '23429',
+            bilamt: 'Rs0',
+            balamt: 'Rs0',
+            action: 'Make payment'
+
+
+        },
+        {
+            suppliers: 'Shenzhen Import & Export',
+            email: 'Shenzhen@gmail.com',
+            billno: '4234',
+            bilamt: 'Rs0',
+            balamt: 'Rs0',
+            action: 'Make payment'
+
+
+        },
+        {
+            suppliers: 'Jindal Stainless Steel',
+            email: 'Jindal@gmail.com',
+            billno: '34534',
+            bilamt: 'Rs0',
+            balamt: 'Rs0',
+            action: 'Make payment'
+
+
+        }
+    ];
+
+
+
+
 
 }]);
