@@ -96,7 +96,7 @@ $('.addexchange').click(function () {
     },
 
      $scope.AddTableLine = function () {
-         $('#ItemTable tr:last').after('<tr class="Countedit"><td class="text-right Count">&nbsp;</td><td class="Count">&nbsp;</td><td class="Count">&nbsp;</td><td class="Count">&nbsp;</td><td class="Count">&nbsp;</td><td class="Count">&nbsp;</td><td class="Count">&nbsp;</td><td class="text-right Count">&nbsp;</td><td class="text-right Count">&nbsp;</td><td class="text-right Count">&nbsp;</td><td class="text-right Count">&nbsp;</td><td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td><td class="text-right Count2"><input type="text" class="form-control" style="width:30px" /></td><td class="Count2"><ui-tree-Item model="model"></ui-tree-Item></td><td class="Count2"><input type="text" class="form-control" /></td><td class="Count2"><input type="text" class="form-control" /></td><td class="Count2"><input type="text" class="form-control"  /></td><td class="Count2"><input type="text" class="form-control" /></td><td class="Count2"><input type="text" class="form-control" /></td><td class="text-right Count2"><input type="text" class="form-control"  /></td><td class="text-right Count2"><input type="text" class="form-control"  /></td><td class="text-right Count2"><input type="text" class="form-control"  /></td><td class="text-right Count2"><input type="text" class="form-control"  /></td><td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td></tr>');
+         $('#ItemTable tr:last').after('<tr class="Countedit"><td class="Count">&nbsp;</td><td class="Count" style="text-align:center;">&nbsp;</td><td class="Count" style="text-align:center">&nbsp;</td><td class="Count" style="text-align:center">&nbsp;</td><td class="Count" style="text-align:center">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td><td class="Count2"><ui-tree-select model="model"></ui-tree-select></td><td class="Count2" style="text-align:center;"><input type="text" class="form-control" value="" /></td><td class="Count2" style="text-align:center;"><input type="text" class="form-control text-center" value="" /> </td><td class="Count2" style="text-align:center;"><input type="text" class="form-control text-center" value="" /></td><td class="Count2" style="text-align:center;"><input type="text" class="form-control text-center" value="" /></td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /></td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td></tr>');
      }
 
     $scope.order = [];
@@ -162,8 +162,7 @@ $('.addexchange').click(function () {
 
     $scope.purchageorder = [];
 
-    $scope.purchageorder = [{ name: 'System Architect', date: '12/05/2016', count: '23', dsc: 'Coldrolledstainlesssteelsheets/plates/coilscut-exstock', email: 'SystemArchitect@gmail.com', phone: '+934434343' }, { name: 'Jindal Steel', date: '29/05/2016', count: '33', email: 'JindalSteel@gmail.com', phone: '+932323233' }, { name: 'Phoenix Imports and Exports', date: '25/05/2016', count: '73', email: 'Phoenix@gmail.com', phone: '+9445466663' }, { name: 'Paynna Anugrah Indonesia', date: '25/05/2016', count: '73', email: 'Paynna@gmail.com', phone: '+9134423443' }]
-
+   
     
     $scope.item = [];
 
@@ -172,15 +171,11 @@ $('.addexchange').click(function () {
      [{ PRODUCT: "Baby Coil", FINISH: '5B', GRADE: '237', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '9', RATE: '125.00', AMOUNT: '525.00', TAX: '0.00' }, { PRODUCT: "Baby Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "Iron Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '5454', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "Baby Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }],
      [{ PRODUCT: "Steel Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '8', RATE: '125.00', AMOUNT: '325.00', TAX: '0.00' }, { PRODUCT: "Baby Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "Iron  Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1455', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "Steel Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '5', RATE: '600.00', AMOUNT: '125.00', TAX: '0.00' }]];
     
-    $scope.name1 = $scope.purchageorder[0].name;
-    $scope.email = $scope.purchageorder[0].email;
-    $scope.phone = $scope.purchageorder[0].phone;
-    $scope.add = function (i) {
+   // $scope.name1 = $scope.purchageorder[0].name;
+   // $scope.email = $scope.purchageorder[0].email;
+    //$scope.phone = $scope.purchageorder[0].phone;
+    //$scope.add = function (i) {
 
-        $scope.newitem = [];
-
-        $scope.newitem = $scope.item[i];
-       
         //$('#dsc').val('fffsfsff');
         //$('#amount').val('fffsfsff');
 
@@ -190,11 +185,11 @@ $('.addexchange').click(function () {
         // $('#name').show(purchageorder[0].name);
 
         // $scope.name1 = $scope.purchageorder.name;
-        $scope.name1 = $scope.purchageorder[i].name;
-        $scope.email = $scope.purchageorder[i].email;
-        $scope.phone = $scope.purchageorder[i].phone;
+       // $scope.name1 = $scope.purchageorder[i].name;
+       // $scope.email = $scope.purchageorder[i].email;
+       // $scope.phone = $scope.purchageorder[i].phone;
 
-    };
+   
 
 
     //$scope.name1 = $scope.purchageorder[i].name;
@@ -207,6 +202,12 @@ $('.addexchange').click(function () {
 
 
 
+    $scope.enquiryList = [];
+    var url = "http://localhost:4000/api/enquiries";
+    $http.get(url).then(function (response) {
+        $scope.enquiryList = response.data;
+        console.log($scope.enquiryList);
+    });
 
     
 

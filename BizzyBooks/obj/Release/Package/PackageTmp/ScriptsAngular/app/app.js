@@ -2,7 +2,7 @@
     .module('myApp', ['ui.router', 'datatables',
         //'ngtimeago',
         'oitozero.ngSweetAlert', 'fsm','ui.select', 'ngSanitize'])
-    .config(['$stateProvider', '$urlRouterProvider',function ($stateProvider,   $urlRouterProvider) {
+    .config(['$stateProvider','$urlRouterProvider',function ($stateProvider,   $urlRouterProvider) {
 
         $urlRouterProvider.otherwise('/');
         $stateProvider.state("login", {
@@ -52,7 +52,7 @@
         });
 
         $stateProvider.state("Customer.Supplierdetail", {
-            url: "/Supplierdetail",
+            url: "/Supplierdetail:contactId",
             templateUrl: "Customer/Supplierdetail",
             controller: "SupplierdetailCntrl"
         });
@@ -315,6 +315,26 @@ myApp.directive('uiTreeItem', [
       };
   }
 ]);
+
+
+  myApp.factory('myService', function ($http) {
+
+      var url = "http://localhost:3000/api/"
+
+      var http = {
+          postSuppliers: function (webService, data) {
+              var promise = $http.post(url + webService, data).then(function (response) {
+                  return response.data;
+              });
+
+             
+              return promise;
+          }
+
+      };
+
+      return http;
+  });
 
 
 myApp.directive('uiTreeInvoice', [

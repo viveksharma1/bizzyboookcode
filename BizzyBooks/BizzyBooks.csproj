@@ -172,6 +172,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Site.css" />
+    <Content Include="css\angular-datatables.min.css" />
+    <Content Include="css\bootstrap-select.min.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\calendar\fullcalendar.css" />
     <Content Include="css\calendar\fullcalendar.min.css" />
@@ -236,9 +238,11 @@
     <Content Include="ion\sounds\bell_ring.aac" />
     <Content Include="ion\sounds\bell_ring.mp3" />
     <Content Include="js\alertify.js" />
+    <Content Include="js\bootstrap-select.min.js" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\Common.js" />
     <Content Include="js\custom.js" />
+    <Content Include="js\dataTables.min.css" />
     <Content Include="js\datatables\buttons.bootstrap.min.css" />
     <Content Include="js\datatables\buttons.bootstrap.min.js" />
     <Content Include="js\datatables\buttons.html5.min.js" />
@@ -264,6 +268,7 @@
     <Content Include="js\datepicker\daterangepicker-min.js" />
     <Content Include="js\editable-table.js" />
     <Content Include="js\fsm-sticky-header.js" />
+    <Content Include="js\jquery.dataTables.min.js" />
     <Content Include="js\jquery.js" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\jquery.scrollTo.js" />

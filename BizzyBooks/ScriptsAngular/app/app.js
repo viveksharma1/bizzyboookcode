@@ -2,9 +2,9 @@
     .module('myApp', ['ui.router', 'datatables',
         //'ngtimeago',
         'oitozero.ngSweetAlert', 'fsm','ui.select', 'ngSanitize'])
-    .config(['$stateProvider', '$urlRouterProvider',function ($stateProvider,   $urlRouterProvider) {
+    .config(['$stateProvider','$urlRouterProvider',function ($stateProvider,   $urlRouterProvider) {
 
-        $urlRouterProvider.otherwise('/');
+       $urlRouterProvider.otherwise('/');
         $stateProvider.state("login", {
             url: "/",
             templateUrl: "Account/Login",
@@ -52,7 +52,7 @@
         });
 
         $stateProvider.state("Customer.Supplierdetail", {
-            url: "/Supplierdetail",
+            url: "/Supplierdetail:contactId",
             templateUrl: "Customer/Supplierdetail",
             controller: "SupplierdetailCntrl"
         });
@@ -116,7 +116,7 @@
         });
 
         $stateProvider.state("Customer.Enquiry", {
-            url: "/Enquiry",
+            url: "/Enquiry:email",
             templateUrl: "Customer/Enquiry",
             controller: "EnquiryCntrl"
 
@@ -317,6 +317,26 @@ myApp.directive('uiTreeItem', [
 ]);
 
 
+  myApp.factory('myService', function ($http) {
+
+      var url = "http://localhost:4000/api/"
+
+      var http = {
+          postSuppliers: function (webService, data) {
+              var promise = $http.post(url + webService, data).then(function (response) {
+                  return response.data;
+              });
+
+             
+              return promise;
+          }
+
+      };
+
+      return http;
+  });
+
+
 myApp.directive('uiTreeInvoice', [
   'groupFactory',
   '$timeout',
@@ -403,6 +423,19 @@ myApp.directive('uiSelectFocuser', function ($timeout) {
         }
     };
 });
+myApp.directive('selectWatcher', function ($timeout) {
+    return {
+        link: function (scope, element, attr) {
+            var last = attr.last;
+            if (last === "true") {
+                $timeout(function () {
+                    $(element).parent().selectpicker('val', 'any');
+                    $(element).parent().selectpicker('refresh');
+                });
+            }
+        }
+    };
+});
 
 myApp.factory('groupFactory', [
   function () {
@@ -433,6 +466,27 @@ myApp.factory('groupFactory', [
       }
   }
 ]);
+
+myApp.directive('exportToPdf', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var el = element[0];
+            element.bind('click', function(e){
+                var table = e.target.nextElementSibling;
+                var pdfString = '<html><table></table></html>';
+
+                var a = $('<a/>', {
+                    style:'display:none',
+                    href:'data:application/pdf;base64,' + btoa(pdfString ),
+                    download:'planning.pdf'
+                }).appendTo('body')
+                a[0].click()
+                a.remove();
+            });
+        }
+    }
+});
 
 myApp.run(['$templateCache', function ($templateCache) {
     // Overrides selectize template for group select tree.

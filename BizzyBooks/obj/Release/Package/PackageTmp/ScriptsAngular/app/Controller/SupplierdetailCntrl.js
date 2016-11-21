@@ -1,4 +1,4 @@
-﻿myApp.controller('SupplierdetailCntrl', ['$scope', '$http', '$timeout', '$rootScope', '$state', function ($scope, $http, $timeout, $rootScope, $state) {
+﻿myApp.controller('SupplierdetailCntrl', ['$scope', '$http', '$timeout','myService', '$rootScope','$stateParams', '$state', function ($scope, $http, $timeout, $rootScope,$myService, $stateParams,$state) {
 
     $(".my a").click(function (e) {
         e.preventDefault();
@@ -98,7 +98,165 @@
           }
 
     ];
+    $scope.suppliers = [];
+    console.log($stateParams.contactId);
+    $scope.company = $stateParams.contactId;
+    var url = "http://localhost:3000/api/suppliers";
+    $scope.supplierscount = [];
+    $http.get(url + "?filter[where][email] =" + $scope.company).then(function (response) {
+        $scope.suppliers = response.data;
+       // console.log(response);
+        
+   $scope.middleName=$scope.suppliers[0].middleName,
+   $scope.suffix= $scope.suppliers[0].suffix,
+   $scope.email= $scope.suppliers[0].email,
+   $scope.company =$scope.suppliers[0].company,
+   $scope.phone = $scope.suppliers[0].phone,
+   $scope.mobile = $scope.suppliers[0].mobile,
+   $scope.fax = $scope.suppliers[0].fax,
+   $scope.displayName = $scope.suppliers[0].displayName,
+   $scope.other =   $scope.suppliers[0].other,
+   $scope.website = $scope.suppliers[0].website,
+   
+         $scope.street =  $scope.suppliers[0].billingAddress[0].street ,
+         $scope.city = $scope.suppliers[0].billingAddress[0].city,
+         $scope.state = $scope.suppliers[0].billingAddress[0].state,
+         $scope.postalCode =  $scope.suppliers[0].billingAddress[0].postalCode,
+    
+  
+         $scope.street1 =   $scope.suppliers[0].shippingAddress[1].street,
+         $scope.city1 = $scope.suppliers[0].shippingAddress[1].city,
+         $scope.state1 = $scope.suppliers[0].shippingAddress[1].state,
+         $scope.postalCode1 =   $scope.suppliers[0].shippingAddress[1].postalCode,
+   
+  
+         $scope.taxRegNo =   $scope.suppliers[0].taxInfo[0].taxRegNo,
+         $scope.cstReg =  $scope.suppliers[0].taxInfo[0].cstRegNo,
+         $scope.panNo =  $scope.suppliers[0].taxInfo[0].panNo,
 
 
+   
+         $scope.paymentMethod = $scope.suppliers[0].paymentInfo[0].paymentMethod,
+         $scope.terme =  $scope.suppliers[0].paymentInfo[0].terms,
+         $scope.deliveryMethod = $scope.suppliers[0].paymentInfo[0].deliveryMethod,
+         $scope.openingBalance = $scope.suppliers[0].paymentInfo[0].openingBalance,
+         $scope.asOf = $scope.suppliers[0].paymentInfo[0].asOf,
+
+
+
+   
+        $scope.notes = $scope.suppliers[0].notes
+
+
+
+
+    });
+
+   
+
+    $scope.updateSupplier = function (supplier) {
+
+        var data = {
+
+            title: $scope.title,
+            firstName: $scope.firstName,
+            middleName: $scope.middleName,
+            suffix: $scope.suffix,
+            email: $scope.email,
+            company: $scope.company,
+            phone: $scope.phone,
+            mobile: $scope.mobile,
+            fax: $scope.fax,
+            displayName: $scope.displayName,
+            other: $scope.other,
+            website: $scope.website,
+            billingAddress: [
+              {
+                  street: $scope.street,
+                  city: $scope.city,
+                  state: $scope.state,
+                  postalCode: $scope.postalCode,
+                  country: $scope.country
+              }
+            ],
+            shippingAddress: [
+              {
+
+                  street: $scope.street1,
+                  city: $scope.city1,
+                  state: $scope.state1,
+                  postalCode: $scope.postalCode1,
+                  country: $scope.country1
+              }
+            ],
+            taxInfo: [
+              {
+                  taxRegNo: $scope.taxRegNo,
+                  cstRegNo: $scope.cstRegNo,
+                  panNo: $scope.panNo
+
+
+              }
+            ],
+            paymentInfo: [
+              {
+                  paymentMethod: $scope.paymentMethod,
+                  terms: $scope.terme,
+                  deliveryMethod: $scope.deliveryMethod,
+                  openingBalance: $scope.openingBalance,
+                  asOf: $scope.asOf
+
+
+
+              }
+            ],
+            notes: $scope.notes
+
+        }
+        var data1 = {
+
+            companyName: $scope.company,
+            email: $scope.email,
+            po: 0,
+            enquiry: 0,
+            openBill: 0
+
+        }
+
+        var webService = 'suppliers';
+        var webService1 = 'supplierscounts';
+
+        $http.post(url + "/update" + "?[where][email]=" + supplier, data).then(function (response) {
+           
+
+
+            console.log(supplier);
+            console.log(response.data);
+        });
+        var data1 = {
+
+            companyName: $scope.company,
+            email: $scope.email,
+          
+        }
+
+        var webService = 'suppliers';
+        var webService1 = 'supplierscounts';
+
+      
+        $http.post("http://localhost:3000/api/supplierscounts" + "/update" + "?[where][email]=" + supplier, data1).then(function (response) {
+
+
+
+            console.log(supplier);
+            console.log(response.data);
+        });
+
+        $scope.supplierscount.push(data1);
+
+
+
+
+    };
 
 }]);

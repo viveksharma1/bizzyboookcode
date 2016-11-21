@@ -1,9 +1,26 @@
-﻿myApp.controller('SupplierCntrl', ['$scope', '$http', '$timeout', '$rootScope', '$state', function ($scope, $http, $timeout, $rootScope, $state) {
+﻿myApp.controller('SupplierCntrl', ['$scope', '$http', '$timeout', '$rootScope','myService', '$state' ,function ($scope, $http, $timeout,  $rootScope, myService, $state) {
     $(".my a").click(function (e) {
         e.preventDefault();
     });
 
 
+
+    $scope.suppliers = [];
+   
+
+    var url = "http://localhost:3000/api/supplierscounts";
+    $scope.supplierscount = [];
+    $http.get(url).then(function (response) {
+        $scope.supplierscount = response.data;
+
+        console.log($scope.supplierscount[0].companyName);
+    });
+    $http.get(url + "/count").then(function (response) {
+
+        $scope.suppliersCount = response.data;
+    });
+
+    
 
     $('#PurchaseOrderTable').hide();
     $('#OpenBill').hide();
@@ -11,7 +28,7 @@
     $('#EnquiryTable').hide();
 
     $scope.SuppliersTablebtn = function () {
-        $('#SuppliersTable').show();
+        $('#example').show();
         $('#PurchaseOrderTable').hide();
         $('#EnquiryTable').hide();
         $('#OpenBill').hide();
@@ -23,7 +40,7 @@
         $('#EnquiryTable').hide();
         $('#OpenBill').hide();
         $('#PaidBillTable').hide();
-        $('#SuppliersTable').hide();
+        $('#example').hide();
     },
 
     $scope.OpenBillTable = function () {
@@ -31,7 +48,7 @@
         $('#PurchaseOrderTable').hide();
         $('#EnquiryTable').hide();
         $('#PaidBillTable').hide();
-        $('#SuppliersTable').hide();
+        $('#example').hide();
     },
 
     $scope.PaidBillbtn = function () {
@@ -39,7 +56,7 @@
         $('#OpenBill').hide();
         $('#PurchaseOrderTable').hide();
         $('#EnquiryTable').hide();
-        $('#SuppliersTable').hide();
+        $('#example').hide();
 
     },
 
@@ -48,7 +65,7 @@
         $('#OpenBill').hide();
         $('#PurchaseOrderTable').hide();
         $('#EnquiryTable').show();
-        $('#SuppliersTable').hide();
+        $('#example').hide();
 
     },
 
@@ -73,50 +90,92 @@
     $('#NewCustomerCreate').click(function () {
         $('#NewCustomerCreateModal').modal('show');
 
+
     });
 
+   
+    $scope.createNewSupplier = function () {
 
-    $scope.savechanges = function () {
-
-
-
-        var newsuppliers = [];
-
-        var newsuppliers = {
-
+        var data = {
 
             title: $scope.title,
-            firstName: $scope.fname,
-            mName: $scope.mname,
-            lName: $scope.lname,
+            firstName: $scope.firstName,
+            middleName: $scope.middleName,
             suffix: $scope.suffix,
-            company: $scope.company,
-            displayName: $scope.nameas,
-            street: $scope.street,
-            city: $scope.city,
-            state: $scope.state,
-            pCode: $scope.pcode,
-            country: $scope.country,
-            panNo: $scope.pan,
-            applyTds: $scope.tds,
-            note: $scope.note,
             email: $scope.email,
+            company: $scope.company,
             phone: $scope.phone,
             mobile: $scope.mobile,
             fax: $scope.fax,
+            displayName: $scope.displayName,
             other: $scope.other,
             website: $scope.website,
-            billingRate: $scope.billrate,
-            terms: $scope.terms,
-            openingBalance: $scope.openbalance,
-            asof: $scope.asof,
-            accountNo: $scope.accno,
-            taxRegNo: $scope.taxregno,
-            effectiveDate: $scope.effectiveDate
+            billingAddress: [
+              {
+                  street: $scope.street,
+                  city: $scope.city,
+                  state: $scope.state,
+                  postalCode: $scope.postalCode,
+                  country: $scope.country
+              }
+            ],
+            shippingAddress: [
+              {
 
-        };
+                  street: $scope.street1,
+                  city: $scope.city1,
+                  state: $scope.state1,
+                  postalCode: $scope.postalCode1,
+                  country: $scope.country1
+              }
+            ],
+            taxInfo: [
+              {
+                  taxRegNo: $scope.taxRegNo,
+                  cstRegNo: $scope.cstRegNo,
+                  panNo: $scope.panNo
 
-        console.log(newsuppliers);
+
+              }
+            ],
+            paymentInfo: [
+              {
+                  paymentMethod: $scope.paymentMethod,
+                  terms: $scope.terme,
+                  deliveryMethod: $scope.deliveryMethod,
+                  openingBalance: $scope.openingBalance,
+                  asOf: $scope.asOf
+
+
+
+              }
+            ],
+            notes: $scope.notes
+
+        }
+        var data1 = {
+
+            companyName: $scope.company,
+            email: $scope.email,
+            po: 0,
+            enquiry: 0,
+            openBill:0
+
+        }
+
+        var webService = 'suppliers';
+        var webService1 = 'supplierscounts';
+
+        myService.postSuppliers(webService, data).then(function (data) {
+            console.log(data);
+        });
+
+        myService.postSuppliers(webService1, data1).then(function (data) {
+            console.log(data);
+        });
+
+        $scope.supplierscount.push(data1);
+
 
 
 
@@ -124,47 +183,11 @@
     };
 
 
+  
 
-    $scope.suppliers = [];
 
-    $scope.suppliers = [
-        {
-            suppliers: 'Paynna ',
-            email: 'Paynna@gmail.com',
-            enquiryNo: '23',
-            purchageOrder: 'System Architect',
-            OpenBill: 'Bill 243',
-            action: 'Make Payment'
-        },
 
-        {
-            suppliers: 'jindal Stainless Steel',
-            email: 'jindal@gmail.com',
-            enquiryNo: '05',
-            purchageOrder: 'System Architect',
-            OpenBill: 'Bill 253',
-            action: 'Make Payment'
-        },
-        {
-            suppliers: 'Shenzhen Import & Export',
-            email: 'Shenzhen@gmail.com',
-            enquiryNo: '05',
-            purchageOrder: 'System Architect',
-            OpenBill: 'Bill 244',
-            action: 'Make Payment'
-        },
-
-        {
-            suppliers: 'Phoenix Imports and Exports ',
-            email: 'Phoenix@gmail.com',
-            enquiryNo: '01',
-            purchageOrder: 'System Architect',
-            OpenBill: 'Bill 249',
-            action: 'Make Payment'
-        }
-
-    ];
-
+   
     $scope.purchageOrder = [];
 
 

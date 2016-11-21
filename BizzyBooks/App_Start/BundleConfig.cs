@@ -14,11 +14,16 @@ namespace Restaurant
                 "~/css/bootstrap.min.css",
                 "~/css/selectize.bootstrap3.min.css",
                 "~/css/select.min.css",
-                "~/css/datepicker.css"
+                "~/css/datepicker.css",
+
+                  "~/css/bootstrap-select.min.css",
+                  "~/css/dataTables.min.css",
+                   "~/css/angular-datatables.min.css"
                 ));
 
 
-         
+           
+
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                    "~/js/jquery.js",
                    "~/js/datatables/jquery.dataTables.js",
@@ -48,7 +53,10 @@ namespace Restaurant
                     "~/js/fsm-sticky-header.js",
                     "~/js/moment.js",
                     "~/js/datepicker.js",
-                    "~/js/Common.js"
+                    "~/js/Common.js",
+                      "~/js/bootstrap-select.min.js",
+                       "~/js/jquery.dataTables.min.js"
+                       
 
                ));
             bundles.Add(new ScriptBundle("~/bundles/appjs")
