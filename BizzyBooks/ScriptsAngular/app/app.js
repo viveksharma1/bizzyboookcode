@@ -177,7 +177,7 @@
         $stateProvider.state("Customer.CreateInventory", {
             url: "/CreateInventory",
             templateUrl: "Customer/CreateInventory",
-            controller: "CreateInventoryCntrl"
+            controller: "InventoryCntrl"
 
         });
 
