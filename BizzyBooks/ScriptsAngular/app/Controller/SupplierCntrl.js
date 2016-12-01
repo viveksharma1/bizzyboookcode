@@ -19,7 +19,9 @@
 
         $scope.suppliersCount = response.data;
     });
-    $http.get("http://localhost:4000/api/enquiries" + "/count").then(function (response) {
+
+    $scope.suppliersCounts1 = 'fetgfdghfdgfdgfdtewtew';
+    $http.get("http://localhost:4000/api/enquiries" + "/count", { headers: { 'tokan': $rootScope.tok } }).then(function (response) {
 
         $scope.enquiryCount = response.data;
     });
@@ -94,12 +96,12 @@
     $('#NewCustomerCreate').click(function () {
         $('#NewCustomerCreateModal').modal('show');
 
-
+     
     });
 
    
     $scope.createNewSupplier = function () {
-
+       
         var data = {
 
             title: $scope.title,
@@ -166,21 +168,64 @@
             openBill:0
 
         }
+        if (!data.email=='') {
+            var webService = 'suppliers';
+            var webService1 = 'supplierscounts';
 
-        var webService = 'suppliers';
-        var webService1 = 'supplierscounts';
+            myService.postSuppliers(webService, data).then(function (data) {
+                console.log(data);
+            });
 
-        myService.postSuppliers(webService, data).then(function (data) {
-            console.log(data);
-        });
+            myService.postSuppliers(webService1, data1).then(function (data) {
+                console.log(data);
+            });
 
-        myService.postSuppliers(webService1, data1).then(function (data) {
-            console.log(data);
-        });
-
-        $scope.supplierscount.push(data1);
+            $scope.supplierscount.push(data1);
 
 
+   $scope.middleName = null,
+   $scope.suffix = null,
+   $scope.email = null,
+   $scope.company = null,
+   $scope.phone = null,
+   $scope.mobile = null,
+   $scope.fax = null,
+   $scope.displayName = null,
+   $scope.other = null,
+   $scope.website = null,
+
+         $scope.street = null,
+         $scope.city = null,
+         $scope.state = null,
+         $scope.postalCode = null,
+
+
+         $scope.street1 = null,
+         $scope.city1 = null,
+         $scope.state1 = null,
+         $scope.postalCode1 = null,
+
+
+         $scope.taxRegNo = null,
+         $scope.cstReg = null,
+         $scope.panNo = null,
+
+
+
+         $scope.paymentMethod = null,
+         $scope.terme = null,
+         $scope.deliveryMethod = null,
+         $scope.openingBalance = null,
+         $scope.asOf = null,
+
+
+
+
+        $scope.notes = null
+
+
+
+        }
 
 
 
@@ -336,6 +381,16 @@
 
         }
     ];
+
+    //Get PurchaseOrder Table 
+
+    var url = "http://localhost:4000/api/purchaseOrders";
+    $scope.purchaseOrder = [];
+    $http.get(url +"?filter[fields][supliersName]=true&filter[fields][poDate]=true&filter[fields][poDueDate]=true&filter[fields][poNo]=true&filter[fields][amount]=true").then(function (response) {
+        $scope.purchaseOrder = response.data;
+
+        console.log($scope.purchaseOrder);
+    });
 
 
 

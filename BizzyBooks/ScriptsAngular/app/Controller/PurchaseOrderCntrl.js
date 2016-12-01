@@ -1,4 +1,4 @@
-﻿myApp.controller('PurchaseOrderCntrl', ['$scope', '$http', '$timeout', '$rootScope', '$state', function ($scope, $http, $timeout, $rootScope, $state) {
+﻿myApp.controller('PurchaseOrderCntrl', ['$scope', '$http', '$stateParams', '$timeout', '$rootScope', '$state', function ($scope, $http,$stateParams, $timeout, $rootScope, $state) {
 
 
     $('#dueDate').hide();
@@ -61,13 +61,13 @@ $(".Additem").click(function () {
         $('#ExchangeRateDiv').modal('show');
     },
 
-$scope.CommodityRatesbtn = function () {
+    $scope.CommodityRatesbtn = function () {
     $('#CommodityRatesDiv').modal('show');
-},
+   },
 
-$('.addexchange').click(function () {
+    $('.addexchange').click(function () {
     $('.modalbodyexchange').append('<div class="ExchangeLine"><div class="col-sm-5 padding5"><select class="form-control selectcss">         <option>Indonesian rupiah</option><option>Indian rupee</option></select></div><div class="col-sm-5 padding5"><input type="text" class="form-control" /></div><div class="col-sm-2 padding5 delete"><i class="fa fa-trash"></i> Delete</div></div>');
-});
+    });
 
     $(document).on('click', '.delete', function () {
         $(this).parent('div').remove();
@@ -99,16 +99,9 @@ $('.addexchange').click(function () {
          $('#ItemTable tr:last').after('<tr class="Countedit"><td class="Count">&nbsp;</td><td class="Count" style="text-align:center;">&nbsp;</td><td class="Count" style="text-align:center">&nbsp;</td><td class="Count" style="text-align:center">&nbsp;</td><td class="Count" style="text-align:center">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td><td class="Count2"><ui-tree-select model="model"></ui-tree-select></td><td class="Count2" style="text-align:center;"><input type="text" class="form-control" value="" /></td><td class="Count2" style="text-align:center;"><input type="text" class="form-control text-center" value="" /> </td><td class="Count2" style="text-align:center;"><input type="text" class="form-control text-center" value="" /></td><td class="Count2" style="text-align:center;"><input type="text" class="form-control text-center" value="" /></td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /></td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td></tr>');
      }
 
-    $scope.order = [];
-    $scope.order = [
-        {
-
-            vivek: 'kdfhfs',
-            vivek1: 'kdfhfsff'
-        }
-
-    ];
-    $scope.order = "fdfdsf";
+   
+  
+    // Get currency rate
 
     var access_key = 'af072eeb3d8671688ff6eaa83c8dbcb8';
     var url = 'http://apilayer.net/api/live?access_key=' + access_key;
@@ -147,17 +140,10 @@ $('.addexchange').click(function () {
 
     });
 
-    //$('#rs').val(response.data.quotes.USDINR);
-
-    // $('#txtarea').val('fffsfsff');
+    
     $('#amount').val('fffsfsff');
 
 
-    $scope.purchage = [];
-
-    $scope.purchage = [{ name: "System Architect", dsc: 'Coldrolledstainlesssteelsheets/plates/coilscut-exstock', ammount: "2345" }, { name: "System Architect", dsc: 'Coldrolledstainlesssteelsheets/plates/coilscut-exstock', ammount: "2345" }, { name: "System Architect", dsc: 'Coldrolledstainlesssteelsheets/plates/coilscut-exstock', ammount: "2345" }];
-
-    
 
 
     $scope.purchageorder = [];
@@ -201,14 +187,186 @@ $('.addexchange').click(function () {
    
 
 
+    //get enquiry list 
 
     $scope.enquiryList = [];
     var url = "http://localhost:4000/api/enquiries";
     $http.get(url).then(function (response) {
         $scope.enquiryList = response.data;
         console.log($scope.enquiryList);
+        console.log($scope.enquiryList[0].itemDetail);
     });
 
+    $scope.poTable = [];
+    $scope.index = 0;
+    var i = 0
+    $scope.subtotal = 0;
+    var count;
     
+    $scope.role;
+    $scope.admin = localStorage['adminrole'];
+    console.log($scope.admin);
+
+    // add item row to  po table 
+
+    $scope.addrow = function () {
+        if (localStorage['adminrole'] == 1) {
+
+            $scope.poTable.push(
+                {
+
+                    grade: '',
+                    finish: '',
+                    thickness: '',
+                    width: '',
+                    length: '',
+                    netweight: '',
+                    grossweight: '',
+                    sheetNo: '',
+                    fobRate: '',
+                    cif: '',
+                    miscCharge: '',
+                    charges: ''
+                }
+            );
+        }
+        if (localStorage['adminrole'] == 2) {
+            console.log($rootScope.role);
+            $scope.poTable.push(
+               {
+
+                   grade: '',
+                   finish: '',
+                   thickness: '',
+                   width: '',
+                   length: '',
+                   netweight: '',
+                   grossweight: '',
+                   sheetNo: '',
+                   fobRate: '',
+                   cif: '',
+                   charges: ''
+               }
+           );
+        }
+
+
+        // calculating  total amount
+        var total = 0;
+        for (var i = 0; i < $scope.poTable.length; i++) {
+            var product = Number($scope.poTable[i]);
+            total += Number($scope.poTable[i].charges);
+        }
+        $scope.subtotalnew = total;
+
+        console.log(total);
+
+
+
+
+    }
+
+
+    $scope.addrow1 = function () {
+        var total = 0;
+        for (var i = 0; i < $scope.poTable.length; i++) {
+            var product = Number($scope.poTable[i]);
+            total += Number($scope.poTable[i].charges);
+        }
+        $scope.subtotalnew = total;
+
+        console.log(total);
+
+
+
+
+    }
+
+    // remove po table row 
+    $scope.remove = function (index) {
+
+        $http.get("http://localhost:4000/api/purchaseOrders" + "/getPo", { headers: { 'tokan': localStorage['token'] } }).then(function (response) {
+
+            console.log(response);
+        });
+      
+            $scope.poTable.splice(index, 1);
+            var total = 0;
+            for (var i = 0; i < $scope.poTable.length; i++) {
+                var product = Number($scope.poTable[i]);
+                total += Number($scope.poTable[i].charges);
+            }
+            $scope.subtotalnew = total;
+
+         
+        }
+    
+    // add enquiry item detail to po item detail
+
+    $scope.addtoPurchase = function (index) {
+
+
+        $scope.poTable = $scope.enquiryList[index].itemDetail;
+        console.log(index);
+
+
+    }
+
+    //clear row
+    $scope.clearTable = function () {
+
+        $scope.poTable = [];
+
+    }
+    $scope.email = $stateParams.email;
+
+    // po count 
+    $http.get("http://localhost:4000/api/purchaseOrders" + "/count").then(function (response) {
+
+        $scope.poCount = response.data.count;
+        $scope.poNo = 'PO' + $scope.poCount;
+    });
+
+    console.log($scope.email);
+
+    //save purchase order
+
+    $scope.savePurchaseOrder = function (index) {
+        console.log($scope.poTable);
+
+        var index = 0;
+        var data = {
+
+            supliersName: '',
+            email: $scope.email,
+            role: localStorage['adminrole'],
+            currency: $scope.currency,
+            poDate: $scope.poDate,
+            poDueDate: $scope.poDueDate,
+            poNo: $scope.poNo,
+            
+            itemDetail: $scope.poTable,
+            amount: $scope.subtotalnew
+        }
+        console.log(data);
+        var url = "http://localhost:4000/api/purchaseOrders";
+        $http.post(url, data).then(function (response) {
+
+        });
+        
+        // incriment po count
+        var datacount = {
+
+            email: $scope.email
+        }
+        $http.post("http://localhost:4000/api/supplierscounts/incrimentPo", datacount).then(function (response) {
+
+        });
+
+
+
+    }
+
+   
 
 }]);

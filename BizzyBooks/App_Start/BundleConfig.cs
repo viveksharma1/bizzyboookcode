@@ -18,7 +18,9 @@ namespace Restaurant
 
                   "~/css/bootstrap-select.min.css",
                   "~/css/dataTables.min.css",
-                   "~/css/angular-datatables.min.css"
+                   "~/css/angular-datatables.min.css",
+                    "~/css/xeditable.css",
+                    "~/css/select2.css"
                 ));
 
 
@@ -55,8 +57,12 @@ namespace Restaurant
                     "~/js/datepicker.js",
                     "~/js/Common.js",
                       "~/js/bootstrap-select.min.js",
-                       "~/js/jquery.dataTables.min.js"
-                       
+                       "~/js/jquery.dataTables.min.js",
+                       "~/js/xeditable.js", 
+                        "~/js/xeditable.min.js",
+                        "~/js/angular-mocks.js",
+                         "~/js/select2.min.js"
+
 
                ));
             bundles.Add(new ScriptBundle("~/bundles/appjs")

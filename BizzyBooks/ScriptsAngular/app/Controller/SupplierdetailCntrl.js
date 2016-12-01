@@ -56,7 +56,7 @@
 
     $scope.NewCustomerCreate = function () {
         $('#NewCustomerCreateModal').modal('show');
-
+       
     }
 
 
@@ -105,7 +105,7 @@
     $scope.supplierscount = [];
     $http.get(url + "?filter[where][email] =" + $scope.company).then(function (response) {
         $scope.suppliers = response.data;
-       // console.log(response);
+       console.log(response);
         
    $scope.middleName=$scope.suppliers[0].middleName,
    $scope.suffix= $scope.suppliers[0].suffix,

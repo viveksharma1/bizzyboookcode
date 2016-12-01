@@ -1,4 +1,4 @@
-﻿myApp.controller('LoginCntrl', ['$state', '$rootScope', function ($state, $rootScope) {
+﻿myApp.controller('LoginCntrl', ['$state', '$http','$rootScope', function ($state,$http, $rootScope) {
    // showoverlay();
 
    
@@ -8,7 +8,27 @@
          //   showoverlay();
             var usernamedetail = $('#usernamedetail').val();
             var userpassword = $('#userpassword').val();
-          //  showoverlay();
+            //  showoverlay();
+
+            var data = {
+                "email": usernamedetail,
+                "password": userpassword
+            };
+
+            $http.post("http://localhost:4000/login", data).success(function (data, status) {
+
+                console.log(data);
+                $rootScope.tok = data.token;
+                localStorage['adminrole'] = data.role;
+                localStorage['token'] = data.token;
+               
+                console.log($rootScope.tok);
+                
+
+                $rootScope.loggedin(usernamedetail);
+            });
+
+            /*
             if (usernamedetail == "") {
                 return;
 
@@ -19,7 +39,7 @@
             }
             else {
                 $rootScope.loggedin(usernamedetail);
-            }
+            } */
            // hideoverlay();
         });
      //   hideoverlay();

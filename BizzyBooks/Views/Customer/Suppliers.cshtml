@@ -154,14 +154,15 @@
                             <td>{{data.enquiry}}</td>
                             <td>{{data.po}}</td>
                             <td>{{data.openBill}}</td>
+                              
                             <td style="text-align:right; width:150px">
-                                <button type="button" class="editbtn"><a href="#/Customer/MakePayment"></a></button>
+                                <button type="button" class="editbtn"><a href="#/Customer/Enquiry{{data.email}}">Add Enquiry</a></button>
                                 <class class="linkseparator" style="margin-top:4px; margin-right:0px">|</class>
                                 <div class="btn-group editcaret">
                                     <i class="fa fa-caret-down cursor" dropdown-toggle" data-toggle="dropdown"></i>
                                     <ul class="dropdown-menu editdrpdwn" role="menu" style="left:-135px">
-                                        <li><a href="#/Customer/Enquiry{{data.email}}">Add Enquiry</a></li>
-                                        <li><a href="#/Customer/PurchaseOrder">Create Purchase Order</a></li>
+                                        <li><a ui-sref="Customer.Enquiry({email:data.email})">Add Enquiry</a></li>
+                                        <li><a ui-sref="Customer.PurchaseOrder({email:data.email})">Create Purchase Order</a></li>
                                         <li><a href="#/Customer/Bill">Create Bill</a></li>
                                         <li><a href="#/Customer/CreateInventory">Create Inventory</a></li>
                                         <li><a href="#/Customer/Expense">Create expense</a></li>
@@ -246,7 +247,8 @@
                             <td style="color:red">{{data.billDueDate}}</td>
                             <td><a href="#/Customer/Supplierdetail" style="color:#000">{{data.supliersName}}<br /> <small class="text-info">2 Enquiry</small></a></td>
                             <td style="text-align:right; width:150px">
-                                <button type="button" class="editbtn"><a href="">Action</a></button>
+                                <button type="button" class="editbtn"><a ui-sref="Customer.Enquiry({email:data.no,edit:1})">Edit</a></button>
+                             
                                 <class class="linkseparator" style="margin-top:4px; margin-right:0px">|</class>
                                 <div class="btn-group editcaret">
                                     <i class="fa fa-caret-down cursor" dropdown-toggle" data-toggle="dropdown"></i>
@@ -281,15 +283,15 @@
                     </thead>
 
                     <tbody>
-                        <tr  ng-repeat="data in purchageOrder">
+                        <tr  ng-repeat="data in purchaseOrder">
                             <td style="padding-left:30px; width:30px"><input type="checkbox" class="checkboxcss" /></td>
-                            <td>{{data.ponumber}}</td>
-                            <td>{{data.podt}}</td>
-                            <td style="color:red">{{data.duedt}}</td>
-                            <td>{{data.suppliers}}</td>
-                            <td>{{data.poAmount}}</td>
+                            <td>{{data.poNo}}</td>
+                            <td>{{data.poDate}}</td>
+                            <td style="color:red">{{data.poDueDate}}</td>
+                            <td>{{data.supliersName}}</td>
+                            <td>{{data.amount}}</td>
                             <td style="text-align:right; width:150px">
-                                <button type="button" class="editbtn"><a href="#/Customer/MakePayment">{{data.action}}</a></button>
+                                <button type="button" class="editbtn"><a href="#/Customer/Bill">{{data.action}}</a></button>
                                 <class class="linkseparator" style="margin-top:4px; margin-right:0px">|</class>
                                 <div class="btn-group editcaret">
                                     <i class="fa fa-caret-down cursor" dropdown-toggle" data-toggle="dropdown"></i>

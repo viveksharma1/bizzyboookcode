@@ -28,7 +28,6 @@
         </ui-select-choices>
     </ui-select>
 </script>
-
 <script type="text/ng-template" id="/ui-tree-Account.html">
     <ui-select ng-model="model.$selected"
                ui-select-focuser
@@ -89,13 +88,9 @@
             <div class="lightblue bluebrdr content" style="padding:0px 10px 10px 10px">
 
 
-                <h1>{{name1}}</h1>
-                <p><strong>Phone No:</strong> {{phone}}<p>
-                <p><strong>Email:</strong>  {{email}}</p>
-                
+               
 
-
-                @*
+            
                 <div class="col-sm-7 padding">
                     <div class="col-sm-6" style="margin-top:10px">
                        
@@ -108,7 +103,7 @@
                     </div>
 
                 </div>
-                    *@
+                   
 
 
 
@@ -120,19 +115,15 @@
 
             </div>
             <div class="col-sm-12">
-                <div class="col-sm-2 padding5">
-                    <h4 class="tabheading">Shipping address</h4>
-                    <textarea class="form-control" id ="txtarea"style="height:95px"></textarea>
-                </div>
+               
 
                 <div class="col-sm-2 padding5 claro">
                     
                     
 
 
-
                     <h4 class="tabheading">Currency</h4>
-                    <select class="form-control selectcss">
+                    <select class="form-control selectcss" ng-model ="currency">
                         <option>Dollar</option>
                         <option>Rupee</option>
                         <option>Rupiah</option>
@@ -147,23 +138,33 @@
                 <div class="col-sm-2 padding5">
                     <h4 class="tabheading">P.O Date</h4>
                     <div class='input-group'>
-                        <input type='text' class="form-control" id='BillDate' />
+                        <input type='text' class="form-control" ng-model="poDate"id='BillDate' />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
                     </div>
+                    <h4 class="tabheading">Due Date</h4>
+                    <div class='input-group'>
+
+                        <input type='text' ng-model="poDueDate" class="form-control" id='billDueDate' />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+
                     <div >
                         <h4 class="tabheading">&nbsp;</h4>
                         <button type="button" class="btn btn-default btn-sm currencybtn" ng-click="ExchangeRatebtn()">$ Exchange Rate</button>
 
                     </div>
+
                 </div>
              
                 
                   
                 <div class="col-sm-1 padding5 pull-right">
                     <h4 class="tabheading">P.O No.</h4>
-                    <input type="text" class="form-control" value="435344" disabled />
+                    <input type="text" class="form-control" ng-model="poNo"  disabled />
                 </div>
             </div>
 
@@ -230,6 +231,7 @@
                         </div>
                         <div class="modal-footer content">
                             <button type="button" class="btn btn-default btn-sm pull-left addexchange">Add Line</button>
+
 
                             <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
                             <button type="button" class="btn btn-primary btn-sm">Save changes</button>
@@ -472,164 +474,13 @@
 
             <div class="col-sm-12">
                 <h4 data-toggle="collapse" data-target="#ItemDetail2" class="cursor"><i class="fa fa-caret-right"></i> Item details</h4>
-                <div class="collapse in" id="ItemDetail2">
-                    @*<table class="table NewTable" style="width:100%" id="ItemTable">
-                        <thead>
-                            <tr>
-                               <th class="text-right">#</th>
-                                <th>Product/Service</th>
-                                <th>Finish</th>
-                                <th>Grade</th>
-                                <th>Thickness</th>
-                                <th>Width</th>
-                                <th>Description</th>
-                                <th class="text-left">Qty</th>
-                                <th class="text-left">Rate</th>
-                                <th class="text-left">Amount</th>
-                                
-                                
-                            </tr>
-                        </thead>
-                        <tbody ng-repeat='data in newitem'>
-                                    <tr>
-
-                                        <td >{{data.PRODUCT}}</td>
-                                        <td>{{data.FINISH}}</td>
-                                        <td>{{data.GRADE}}</td>
-                                        <td>{{data.THICKNESS}}</td>
-                                        <td>{{data.WIDTH}}</td>
-                                        <td>{{data.DESCRIPTION}}</td>
-                                        <td>{{data.QTY}}</td>
-                                        <td>{{data.AMOUNT}}</td>
-                                      
-                                       
-                                        </tr>
-                         </tbody>
-                      
-
-                                <tbody>
-                            <tr class="Countedit">
-                                <td class="text-right Count">1</td>
-                                <td class="Count">Baby Coil</td>
-                                <td class="Count">2B</td>
-                                <td class="Count">304</td>
-                                <td class="Count">0.80</td>
-                                <td class="Count">1219</td>
-                                <td class="Count">&nbsp;</td>
-                                <td class="text-right Count" data-field="Qty">1</td>
-                                <td class="text-right Count" data-field="Rate">125.00</td>
-                                <td class="text-right Count" data-field="Amount">125.00</td>
-                                <td class="text-right Count" data-field="Tax">0.00</td>
-                                <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
-
-                                <td class="text-right Count2"><input type="text" class="form-control" value="1" style="width:30px" /></td>
-                                <td class="Count2"><ui-tree-Item model="model"></ui-tree-Item></td>
-                                <td class="Count2"><input type="text" class="form-control" value="2B" /></td>
-                                <td class="Count2"><input type="text" class="form-control" value="304" /></td>
-                                <td class="Count2"><input type="text" class="form-control" value="0.80" /></td>
-                                <td class="Count2"><input type="text" class="form-control" value="1219" /></td>
-                                <td class="Count2"><input type="text" class="form-control" value="-" /></td>
-                                <td class="text-right Count2"><input type="text" class="form-control" value="1" /></td>
-                                <td class="text-right Count2"><input type="text" class="form-control" value="125.00" /></td>
-                                <td class="text-right Count2"><input type="text" class="form-control" value="125.00" /></td>
-                                <td class="text-right Count2"><input type="text" class="form-control" value="0.00" /></td>
-                                <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
-                            </tr>
-
-                            <tr class="Countedit">
-                                <td class="text-right Count">2</td>
-                                <td class="Count">Defective</td>
-                                <td class="Count">2B</td>
-                                <td class="Count">304</td>
-                                <td class="Count">0.80</td>
-                                <td class="Count">1219</td>
-                                <td class="Count">&nbsp;</td>
-                                <td class="text-right Count" data-field="Qty">1</td>
-                                <td class="text-right Count" data-field="Rate">125.00</td>
-                                <td class="text-right Count" data-field="Amount">125.00</td>
-                                <td class="text-right Count" data-field="Tax">0.00</td>
-                                <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
-
-                                <td class="text-right Count2"><input type="text" class="form-control" value="2" style="width:30px" /></td>
-                                <td class="Count2"><ui-tree-Item model="model"></ui-tree-Item></td>
-                                <td class="Count2"><input type="text" class="form-control" value="2B" /></td>
-                                <td class="Count2"><input type="text" class="form-control" value="304" /></td>
-                                <td class="Count2"><input type="text" class="form-control" value="0.80" /></td>
-                                <td class="Count2"><input type="text" class="form-control" value="1219" /></td>
-                                <td class="Count2"><input type="text" class="form-control" value="-" /></td>
-                                <td class="text-right Count2"><input type="text" class="form-control" value="1" /></td>
-                                <td class="text-right Count2"><input type="text" class="form-control" value="125.00" /></td>
-                                <td class="text-right Count2"><input type="text" class="form-control" value="125.00" /></td>
-                                <td class="text-right Count2"><input type="text" class="form-control" value="0.00" /></td>
-                                <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
-                            </tr>
-
-                            <tr class="Countedit">
-                                <td class="text-right Count">3</td>
-                                <td class="Count">Baby Coil</td>
-                                <td class="Count">2B</td>
-                                <td class="Count">304</td>
-                                <td class="Count">0.80</td>
-                                <td class="Count">1219</td>
-                                <td class="Count">&nbsp;</td>
-                                <td class="text-right Count" data-field="Qty">1</td>
-                                <td class="text-right Count" data-field="Rate">125.00</td>
-                                <td class="text-right Count" data-field="Amount">125.00</td>
-                                <td class="text-right Count" data-field="Tax">0.00</td>
-                                <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
-
-                                <td class="text-right Count2"><input type="text" class="form-control" value="3" style="width:30px" /></td>
-                                <td class="Count2"><ui-tree-Item model="model"></ui-tree-Item></td>
-                                <td class="Count2"><input type="text" class="form-control" value="2B" /></td>
-                                <td class="Count2"><input type="text" class="form-control" value="304" /></td>
-                                <td class="Count2"><input type="text" class="form-control" value="0.80" /></td>
-                                <td class="Count2"><input type="text" class="form-control" value="1219" /></td>
-                                <td class="Count2"><input type="text" class="form-control" value="-" /></td>
-                                <td class="text-right Count2"><input type="text" class="form-control" value="1" /></td>
-                                <td class="text-right Count2"><input type="text" class="form-control" value="125.00" /></td>
-                                <td class="text-right Count2"><input type="text" class="form-control" value="125.00" /></td>
-                                <td class="text-right Count2"><input type="text" class="form-control" value="0.00" /></td>
-                                <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
-                            </tr>
-
-                            <tr class="Countedit">
-                                <td class="text-right Count">&nbsp;</td>
-                                <td class="Count">&nbsp;</td>
-                                <td class="Count">&nbsp;</td>
-                                <td class="Count">&nbsp;</td>
-                                <td class="Count">&nbsp;</td>
-                                <td class="Count">&nbsp;</td>
-                                <td class="Count">&nbsp;</td>
-                                <td class="text-right Count">&nbsp;</td>
-                                <td class="text-right Count">&nbsp;</td>
-                                <td class="text-right Count">&nbsp;</td>
-                                <td class="text-right Count">&nbsp;</td>
-                                <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
-
-                                <td class="text-right Count2"><input type="text" class="form-control" style="width:30px" /></td>
-                                <td class="Count2"><ui-tree-Item model="model"></ui-tree-Item></td>
-                                <td class="Count2"><input type="text" class="form-control" /></td>
-                                <td class="Count2"><input type="text" class="form-control" /></td>
-                                <td class="Count2"><input type="text" class="form-control"  /></td>
-                                <td class="Count2"><input type="text" class="form-control" /></td>
-                                <td class="Count2"><input type="text" class="form-control" /></td>
-                                <td class="text-right Count2"><input type="text" class="form-control"  /></td>
-                                <td class="text-right Count2"><input type="text" class="form-control"  /></td>
-                                <td class="text-right Count2"><input type="text" class="form-control"  /></td>
-                                <td class="text-right Count2"><input type="text" class="form-control"  /></td>
-                                <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
-                            </tr>
-                            
-                        </tbody>
-                            
-                    </table>*@
-
+              
+                <div class="collapse in" id="ItemDetail2" ng-init="role = admin" >{{role}}
+                   
                     <table class="table NewTable" id="ItemTable">
-                        <thead>
+                        <thead style="width:70px">
                             <tr>
-                                <th>Remarks</th>
-                                <th>Container NOS.</th>
-                                <th>Particular Sheets</th>
+
                                 <th>Grade</th>
                                 <th>Finish</th>
                                 <th>Thickness (MM)</th>
@@ -637,124 +488,47 @@
                                 <th>Length</th>
                                 <th>Net Weight (MT)</th>
                                 <th>Gross Weight (MT)</th>
-                                <th>Sheets NOS</th>
+                                <th>Sheets NO</th>
                                 <th>FOB Rate($)</th>
-                                <th>CIF ($)</th>
-                                <th>Charges ($)</th>
+                                <th>CIF($)</th>
+                                <th ng-hide="role =='2'"> Msc.Charges($)</th>
+                                <th>Amount($)</th>
                                 <th>&nbsp;</th>
+
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr class="Countedit">
-                                <td class="Count">EX-Stock</td>
-                                <td class="Count" style="text-align:center;">ECNU2011936</td>
-                                <td class="Count" style="text-align:center">36285B1</td>
-                                <td class="Count" style="text-align:center">JSL U</td>
-                                <td class="Count" style="text-align:center">NO 4</td>
-                                <td class="Count" style="text-align:right">0.70</td>
-                                <td class="Count" style="text-align:right">1250</td>
-                                <td class="Count" style="text-align:right">2500</td>
-                                <td class="Count" style="text-align:right">2.447</td>
-                                <td class="Count" style="text-align:right">2.520</td>
-                                <td class="Count" style="text-align:right">140</td>
-                                <td class="Count" style="text-align:right">140</td>
-                                <td class="Count" style="text-align:right">140</td>
-                                <td class="Count" style="text-align:right">140</td>
-                                <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
+                        <tbody ng-repeat="item in poTable">
+                            <tr>
 
-                                <td class="Count2"><ui-tree-select model="model"></ui-tree-select></td>
-                                <td class="Count2" style="text-align:center;"><input type="text" class="form-control" value="ECNU2011936" /></td>
-                                <td class="Count2" style="text-align:center;"><input type="text" class="form-control text-center" value="36285B1" /> </td>
-                                <td class="Count2" style="text-align:center;"><input type="text" class="form-control text-center" value="JSL U" /></td>
-                                <td class="Count2" style="text-align:center;"><input type="text" class="form-control text-center" value="NO 4" /></td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="0.70" /></td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="1250" /> </td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="2500" /> </td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="2.447" /> </td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="2.520" /> </td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="140" /> </td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="140" /> </td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="140" /> </td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="140" /> </td>
-                                <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
+
+                                <td class="Count"><input ng:model="item.grade" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
+                                <td class="Count"><input ng:model="item.finish" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
+                                <td class="Count"><input ng:model="item.thickness" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
+                                <td class="Count"><input ng:model="item.width" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
+                                <td class="Count"><input ng:model="item.length" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
+                                <td class="Count"><input ng:model="item.netweight" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
+                                <td class="Count"><input ng:model="item.grossweight" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
+                                <td class="Count"><input ng:model="item.sheetNo" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
+                                <td class="Count"><input ng:model="item.fobRate" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
+                                <td class="Count"><input ng:model="item.cif" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
+                                <td class="Count" ng-hide="role =='2'"><input ng:model="item.miscCharge" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
+                                <td class="Count"><input ng:model="item.charges" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
+                                <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-times-circle cursor RemoveTR" style="font-size:16px" ng-click="remove($index)"></i></a></td>
+
                             </tr>
-                            <tr class="Countedit">
-                                <td class="Count">EX-Stock</td>
-                                <td class="Count" style="text-align:center;">ECNU2011936</td>
-                                <td class="Count" style="text-align:center">36285B2</td>
-                                <td class="Count" style="text-align:center">JSL U</td>
-                                <td class="Count" style="text-align:center">NO 4</td>
-                                <td class="Count" style="text-align:right">0.70</td>
-                                <td class="Count" style="text-align:right">1250</td>
-                                <td class="Count" style="text-align:right">2500</td>
-                                <td class="Count" style="text-align:right">2.448</td>
-                                <td class="Count" style="text-align:right">2.518</td>
-                                <td class="Count" style="text-align:right">140</td>
-                                <td class="Count" style="text-align:right">140</td>
-                                <td class="Count" style="text-align:right">140</td>
-                                <td class="Count" style="text-align:right">140</td>
-                                <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
 
-
-                                <td class="Count2"><ui-tree-select model="model"></ui-tree-select></td>
-                                <td class="Count2" style="text-align:center;"><input type="text" class="form-control" value="ECNU2011936" /></td>
-                                <td class="Count2" style="text-align:center;"><input type="text" class="form-control text-center" value="36285B2" /> </td>
-                                <td class="Count2" style="text-align:center;"><input type="text" class="form-control text-center" value="JSL U" /></td>
-                                <td class="Count2" style="text-align:center;"><input type="text" class="form-control text-center" value="NO 4" /></td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="0.70" /></td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="1250" /> </td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="2500" /> </td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="2.448" /> </td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="2.518" /> </td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="140" /> </td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="140" /> </td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="140" /> </td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="140" /> </td>
-                                <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
-                            </tr>
-                            <tr class="Countedit">
-                                <td class="Count">EX-Stock</td>
-                                <td class="Count" style="text-align:center;">ECNU2011936</td>
-                                <td class="Count" style="text-align:center">36285B3</td>
-                                <td class="Count" style="text-align:center">JSL U</td>
-                                <td class="Count" style="text-align:center">NO 4</td>
-                                <td class="Count" style="text-align:right">0.70</td>
-                                <td class="Count" style="text-align:right">1250</td>
-                                <td class="Count" style="text-align:right">2500</td>
-                                <td class="Count" style="text-align:right">1.748</td>
-                                <td class="Count" style="text-align:right">1.818</td>
-                                <td class="Count" style="text-align:right">100</td>
-                                <td class="Count" style="text-align:right">100</td>
-                                <td class="Count" style="text-align:right">100</td>
-                                <td class="Count" style="text-align:right">100</td>
-                                <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
-
-                                <td class="Count2"><ui-tree-select model="model"></ui-tree-select></td>
-                                <td class="Count2" style="text-align:center;"><input type="text" class="form-control" value="ECNU2011936" /></td>
-                                <td class="Count2" style="text-align:center;"><input type="text" class="form-control text-center" value="36285B3" /> </td>
-                                <td class="Count2" style="text-align:center;"><input type="text" class="form-control text-center" value="JSL U" /></td>
-                                <td class="Count2" style="text-align:center;"><input type="text" class="form-control text-center" value="NO 4" /></td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="0.70" /></td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="1250" /> </td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="2500" /> </td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="1.748" /> </td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="1.818" /> </td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="100" /> </td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="100" /> </td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="100" /> </td>
-                                <td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="100" /> </td>
-                                <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
-                            </tr>
 
                         </tbody>
                     </table>
-                    <button type="button" class="btn btn-default btn-sm btn-xs" ng-click="AddTableLine()">Add lines</button>
+                    <button type="button" class="btn btn-default btn-sm btn-xs" ng-click="addrow(count = count + 1)" ng-init="count=-1">Add lines</button>
+                    <button type="button" class="btn btn-default btn-sm btn-xs" ng-click="clearTable()">clear lines</button>
+
                 </div>
             </div>
           
 
             <hr style="float:left; width:100%; margin:5px 0px" />
-            <div class="col-sm-12">
+            <div class="col-sm-12" ng-click="addrow1()">
                 <div class="col-sm-4 padding">
 
                     <div class="form-group">
@@ -764,7 +538,7 @@
                 </div>
                 <span class="pull-right" style="width:350px">
                     <label class="subtotal" style="font-size:1.3rem;">Subtotal</label>
-                    <span class="subtotalvalue" style="font-size:1.3rem; font-weight:bold">Rs0.00</span>
+                    <span class="subtotalvalue" style="font-size:1.3rem; font-weight:bold">Rs {{subtotalnew}}</span>
                     <label class="subtotal" style="font-size:1.5rem;">Total</label>
                     <span class="subtotalvalue" style="font-size:1.5rem; font-weight:bold">Rs0.00</span>
                 </span>
@@ -806,7 +580,7 @@
                 <strong>{{data.no}} </strong>
                 <br /><br />
                 <ul class="Purchasefooter list-unstyled">
-                    <li ng-click="add(0)"><strong><i class="fa fa-long-arrow-left"></i> Add</strong></li>
+                    <li ng-click="addtoPurchase($index)"><strong><i class="fa fa-long-arrow-left"></i> Add</strong></li>
                     <li>Open</li>
                 </ul>
 
@@ -830,7 +604,7 @@
         </span>
 
         <div class="pull-right">
-            <button type="button" class="btn btn-sm btn-primary">Save</button>
+            <button type="button" class="btn btn-sm btn-primary" ng-click="savePurchaseOrder()">Save</button>
             <div class="btn-group dropup">
                 <button type="button" class="btn btn-info btn-sm">Save and send</button>
                 <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:25px">

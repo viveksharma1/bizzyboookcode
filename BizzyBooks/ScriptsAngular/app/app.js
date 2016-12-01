@@ -116,16 +116,24 @@
         });
 
         $stateProvider.state("Customer.Enquiry", {
-            url: "/Enquiry:email",
+            url: "/Enquiry",
             templateUrl: "Customer/Enquiry",
-            controller: "EnquiryCntrl"
+            controller: "EnquiryCntrl",
+            params: {
+                email: null,
+                edit: null
+            }
 
         });
 
         $stateProvider.state("Customer.PurchaseOrder", {
             url: "/PurchaseOrder",
             templateUrl: "Customer/PurchaseOrder",
-            controller: "PurchaseOrderCntrl"
+            controller: "PurchaseOrderCntrl",
+            params: {
+                email: null
+               
+            }
 
         });
 
@@ -205,6 +213,24 @@
 
 ////Ui-Select With Add New Section
 
+myApp.directive("test1", function () {
+    return {
+        restrict: 'A',
+        link: function ($scope, $elem) {
+            var entries = [];
+            angular.forEach($elem.children()[1].children, function (tr) {
+                var entry = [];
+                angular.forEach(tr.children, function (td) {
+                    entry.push(td.innerHTML);
+                });
+
+                entries.push(entry);
+            });
+            console.log(entries);
+        }
+    }
+});
+
 myApp.directive('uiTreeSelect', [
   'groupFactory',
   '$timeout',
@@ -213,14 +239,20 @@ myApp.directive('uiTreeSelect', [
           restrict: 'E',
           scope: { model: '=' },
           link: function (scope, el) {
-              scope.breadcrumbs = [{ "id": 0, "title": "All" }];
-              scope.groups = groupFactory.load(0);
+             
+             
 
               scope.loadChildGroupsOf = function (group, $select) {
                   $select.search = '';
+                 
 
-                  scope.breadcrumbs.push(group);
-                  scope.groups = groupFactory.load(group.id);
+                 
+                  scope.groups = groupFactory.data;
+
+
+
+                     
+                  
                   scope.$broadcast('uiSelectFocus');
               };
 
@@ -436,10 +468,51 @@ myApp.directive('selectWatcher', function ($timeout) {
         }
     };
 });
+myApp.directive('selectPicker', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        require: '?ngModel',
+        priority: 10,
+        compile: function (tElement, tAttrs, transclude) {
+            tElement.selectpicker($parse(tAttrs.selectpicker)());
+            tElement.selectpicker('refresh');
+            return function (scope, element, attrs, ngModel) {
+                if (!ngModel) return;
 
-myApp.factory('groupFactory', [
-  function () {
-      var data = {
+                scope.$watch(attrs.ngModel, function (newVal, oldVal) {
+                    scope.$evalAsync(function () {
+                        if (!attrs.ngOptions || /track by/.test(attrs.ngOptions)) element.val(newVal);
+                        element.selectpicker('refresh');
+                    });
+                });
+
+                ngModel.$render = function () {
+                    scope.$evalAsync(function () {
+                        element.selectpicker('refresh');
+                    });
+                }
+            };
+        }
+            
+    };
+}])
+
+myApp.factory('groupFactory', ['$http',
+  function ($http) {
+
+      var data = {};
+      var url = "http://localhost:4000/api/suppliers";
+      $http.get(url + "?filter[fields][company]=true").then(function (response) {
+          var data = response.data;
+
+          console.log(data);
+      });
+
+
+      var data1 = {
+
+
+
           0: [{ "id": 1, "title": "Due on receipt", "size": "57", "parent": true },
               { "id": 2, "title": "Net 15", "size": "67", "parent": true },
               { "id": 3, "title": "Net 30", "size": "32539", "parent": true },
