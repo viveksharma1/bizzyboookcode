@@ -1,4 +1,4 @@
-﻿myApp.controller('EnquiryCntrl', ['$scope', '$http', '$timeout', '$stateParams', '$rootScope', '$state', function ($scope, $http, $timeout, $stateParams,$rootScope, $state) {
+﻿myApp.controller('EnquiryCntrl', ['$scope', '$http', '$timeout', '$stateParams', '$rootScope', '$state', 'config', function ($scope, $http, $timeout, $stateParams, $rootScope, $state, config) {
 
     $("#mySel").select2({
 
@@ -88,42 +88,47 @@ $(".Additem").click(function () {
     $scope.enqNo = $stateParams.email;
     $scope.edit = $stateParams.edit;
    
-    console.log($scope.edit);
+  
+    
+    
 
-
-    $scope.AddTableLine = function () {
-
-
-         $('#ItemTable tr:last').after('<tr class="Countedit"><td class="Count">&nbsp;</td><td class="Count" style="text-align:center;">&nbsp;</td><td class="Count" style="text-align:center">&nbsp;</td><td class="Count" style="text-align:center">&nbsp;</td><td class="Count" style="text-align:center">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td><td class="Count2"></td><td class="Count2" style="text-align:center;"><input type="text" class="form-control" value="" /></td><td class="Count2" style="text-align:center;"><input type="text" class="form-control text-center" value="" /> </td><td class="Count2" style="text-align:center;"><input type="text" class="form-control text-center" value="" /></td><td class="Count2" style="text-align:center;"><input type="text" class="form-control text-center" value="" /></td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /></td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td></tr>');
-    }
-    $scope.enquiryData = [];
+    //geting enquiry count for enquiry no generation
 
    
+    //get enquiry list for edit enquiry
 
-    $http.get("http://localhost:4000/api/enquiries" + "/count").then(function (response) {
+    if ($scope.edit == 1) {
+        $scope.no = $scope.enqNo;
+        $http.get(config.api + "transactions" + "?filter[where][no]=" + $scope.enqNo).then(function (response) {
 
-        $scope.enquiryCount = response.data;
+            $scope.enquiryData = response.data;
+            $scope.email = response.data[0].email;
+            $scope.supplier = response.data[0].supliersName;
+           
+            $scope.billDate = response.data[0].date;
+            $scope.billDueDate = response.data[0].billDueDate;
+            $scope.no = $scope.enqNo;
+            $scope.enquiryTable = response.data[0].itemDetail;
+        });
 
-        $scope.EnquiryNo = 'ENQ' + $scope.enquiryCount.count;
-    });
+    }
+    else {
+        $http.get(config.api + "transactions" + "/count" + "?where[ordertype]=" + "enquiry").then(function (response) {
 
-    $http.get("http://localhost:4000/api/enquiries" + "?filter[where][no]=" + $scope.enqNo).then(function (response) {
+            $scope.enquiryCount = response.data;
 
-        $scope.enquiryData = response.data;
-        $scope.email = response.data[0].email;
-        $scope.billDate = response.data[0].date;
-        $scope.billDueDate = response.data[0].billDueDate;
-        $scope.EnquiryNo = $scope.enqNo;
-       
-        console.log(response.data[0].itemDetail);
-       
-        $scope.enquiryTable = response.data[0].itemDetail;
-    });
+            $scope.no = 'ENQ' + $scope.enquiryCount.count;
+        });
 
+    }
 
+    //console.log($scope.cop);
 
 
     $scope.enquiryTable = [];
+
+    //Add row to the enquiry Item detail table
+
     $scope.addRow = function () {
         $scope.enquiryTable.push(
             {
@@ -140,87 +145,136 @@ $(".Additem").click(function () {
         );
     };
   
+    // Remove the row from item table
 
     $scope.remove = function (index) {
 
         $scope.enquiryTable.splice(index, 1);
-   
-
-
     }
     
 
 
-     
-    $scope.saveEnquiry = function () {
-        console.log($scope.enquiryTable);
+    //get suppliers
+    $scope.$watch('sup', function () {
+       
 
+        if ($scope.sup != "undefind") {
+
+            $scope.supplier = $scope.sup;
+
+            $http.get(config.api + 'suppliers' + '?filter[where][company]=' + $scope.supplier)
+         .then(function (response) {
+         
+             $scope.supEmail = response.data;
+             $scope.email = $scope.supEmail[0].email;
+
+         });
+
+        }
+       
+       
+    });
+
+    // save enquiry
+
+    $scope.saveEnquiry = function () {
+      
         var index = 0;
         $scope.enquiryTable.forEach(function (row) {
 
         });
-        console.log($scope.email);
+       
         var data = {
 
-            supliersName: $scope.sup2,
-            email: $scope.enqNo,
-            remarks: $scope.remarks,
+            supliersName: $scope.supplier,
+            suplierId: $scope.sup2,
+            email: $scope.email,
+
             currency: $scope.currency,
             date: $scope.billDate,
             billDueDate: $scope.billDueDate,
-            no: $scope.EnquiryNo,
+            no: $scope.no,
+            ordertype: "enquiry",
             status: [$scope.status],
             itemDetail: $scope.enquiryTable
         }
 
-
+        // edit enquiry 
         if ($scope.edit == 1) {
             var data = {
 
-                supliersName: $scope.sup2,
+
+                supliersName: $scope.supplier,
+                suplierId: $scope.sup2,
                 email: $scope.email,
-                remarks: $scope.remarks,
+               
                 currency: $scope.currency,
                 date: $scope.billDate,
                 billDueDate: $scope.billDueDate,
-                no: $scope.EnquiryNo,
+                no: $scope.enqNo,
+                ordertype: "enquiry",
                 status: [$scope.status],
                 itemDetail: $scope.enquiryTable
             }
 
-
-            var url = "http://localhost:4000/api/enquiries";
-            $http.post(url + "/update" + "?[where][no]=" + $scope.enqNo, data).then(function (response) {
+            $http.post(config.api +"transactions" + "/update" + "?[where][no]=" + $scope.enqNo, data).then(function (response) {
 
             });
-
-
         }
-        else {
-            console.log(data);
-            var url = "http://localhost:4000/api/enquiries";
-            $http.post(url + "/addEnquiry", data).then(function (response) {
 
-            });
            
+        else {
 
+            $http.post(config.api + "transactions" , data).then(function (response) {
+                  window.alert(" Enquiry is saved")
+            });
         };
-        $scope.totalsuppliers = [];
-        var url = "http://localhost:4000/api/suppliers";
-        $http.get(url + "?filter[fields][company]=true").then(function (response) {
-            $scope.totalsuppliers = response.data;
-
-            console.log($scope.totalsuppliers);
 
 
-        });
-        $http.get(url + "/count").then(function (response) {
-
-            $scope.suppliersCount = response.data;
-        });
+       
+        
     }
 
 
 
+    //get suppliers 
+
+    $http.get(config.api + 'suppliers' + '?filter[fields][company]=true')
+          .success(function (data) {
+              $scope.supliers = data;
+            
+          });
+
+   
+
+    
+   
+   $scope.add = function () {
+
+       $('#form-popoverPopup').show();
+
+
+   }
+ 
+   
+   $scope.saveSuppliers = function () {
+
+       var data = {
+
+           company: $scope.suppliersName,
+           email: $scope.email1,
+           mobile: $scope.mobile
+
+       }
+
+       $http.post(config.api + "suppliers", data)
+       .success(function (data) {
+          
+       });
+
+
+   }
+
+   
 }]);
 

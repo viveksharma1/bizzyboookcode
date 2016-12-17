@@ -64,7 +64,11 @@
      }
 
 
+    $scope.groups = $scope.model.$selected;
+   // console.log(model.$selected)
+    //$('#salect1').value();
+  // $("#salect1").value()
+    // console.log($select.selected.company);
 
-
-
+   
 }]);

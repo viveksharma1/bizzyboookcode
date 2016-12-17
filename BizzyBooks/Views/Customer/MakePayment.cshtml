@@ -40,17 +40,57 @@
     <div class="flexcontainer">
         <div class="lightblue bluebrdr content" style="padding:10px 10px">
             <div class="col-sm-3 padding5" style="margin-top:10px">
-                <ui-tree-select model="model">
-                </ui-tree-select>
-            </div>
-            <div class="col-sm-3" style="margin-top:10px">
-                <input type="text" class="form-control" placeholder="Email (Separate emails with a comma)" />
-            </div>
+                <ui-select ui-tree-select ng-model="model.people" id="countryCode"
+                           ui-select-focuser
+                           theme="selectize">
+                    <ui-select-match placeholder="Select Suppliers...">{{ $select.selected.company }}</ui-select-match>
+                    <ui-select-choices repeat="group in supliers | filter: $select.search">
+                        <div>
+                            <span ng-bind-html="group.company | highlight: $select.search"></span>
+                        </div>
 
-            <div class="pull-right">
-                <p class="text-right">Amount</p>
-                <span class="balancedue">Rs0.00</span>
+
+                    </ui-select-choices>
+                </ui-select>
+                <p ng-init="{{sup = model.people.company}}"> </p>
+                <p ng-init="{{sup = model.people.company}}"> </p>
             </div>
+            
+            <div id="form-popoverPopup" class="popupbox">
+                <div class="dijitDialogTitle">
+                    New Suppliers
+                    <i class="fa fa-times-circle cursor pull-right" title="close" ng-click="popuclose()"></i>
+                </div>
+                <div class="form-content">
+                    <div class="form-group">
+                        <label><span class="red">*</span>Suppliers Name</label>
+                        <input type="text" ng-model="suppliersName" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label><span class="red">*</span>Email</label>
+                        <input type="text" ng-model="email1" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label><span class="red">*</span>Mobile No.</label>
+                        <input type="text" ng-model="mobile" class="form-control" />
+                    </div>
+
+
+
+                    <div class="form-footer">
+                        <button type="button" class="btn btn-sm btn-default" ng-click="saveSuppliers()">Save</button>
+                    </div>
+                </div>
+            </div>
+            <div class="pull-right">
+                
+                <h2 class="text-right">Amount</h2>
+                <span class="balancedue">Rs {{balance}}</span>
+                <h3>{{status}}</h3>
+                
+                
+            </div>
+           
         </div>
         <div class="col-sm-12">
             <div class="col-sm-2 padding5">
@@ -94,27 +134,18 @@
                             <th class="text-right" style="width:100px">Payment</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody  ng-repeat = "data in bill">
 
                         <tr>
                             <td class="text-right" style="width:50px"><input type="checkbox" /></td>
-                            <td>Bill (17/08/2016)</td>
-                            <td>17/08/2016</td>
-                            <td class="text-right">24,000.00</td>
-                            <td class="text-right">14,000.00</td>
-                            <td class="text-right"><input type="text" class="form-control" value="14,000.000" /> </td>
+                            <td>Bill {{data.date}}</td>
+                            <td>{{data.billDueDate}}</td>
+                            <td class="text-right">{{data.amount}}</td>
+                            <td class="text-right">{{data.balance}}</td>
+                            <td class="text-right"><input type="text" id="abc"    /> </td>
                         </tr>
 
-                        <tr>
-                            <td class="text-right" style="width:50px"><input type="checkbox" /></td>
-                            <td>Bill (17/08/2016)</td>
-                            <td>17/08/2016</td>
-                            <td class="text-right">40,000.00</td>
-                            <td class="text-right">40,000.00</td>
-                            <td class="text-right"><input type="text" class="form-control" value="40,000.000" /> </td>
-                        </tr>
-
-
+                       
                     </tbody>
                 </table>
             </div>
@@ -128,15 +159,17 @@
             <div class="col-sm-3 padding">
 
                 <div class="form-group">
-                    <h4 class="tabheading">Memo</h4>
+                    <h4 class="tabheading">Memo{{data.paymentAmount}}</h4>
                     <textarea class="form-control" style="height:80px"></textarea>
                 </div>
             </div>
             <span class="pull-right" style="width:350px">
-                <label class="subtotal" style="font-size:1.3rem;">Amount to Apply</label>
-                <span class="subtotalvalue" style="font-size:1.3rem; font-weight:bold">Rs1,54,000.00</span>
-                <label class="subtotal" style="font-size:1.3rem;">Amount to Credit</label>
-                <span class="subtotalvalue" style="font-size:1.3rem; font-weight:bold">Rs0.00</span>
+                
+                @*
+    <span class="subtotalvalue" style="font-size:1.3rem; font-weight:bold">Rs1,54,000.00</span>
+    <label class="subtotal" style="font-size:1.3rem;">Amount to Credit</label>
+    <span class="subtotalvalue" style="font-size:1.3rem; font-weight:bold">Rs0.00</span>
+                *@
             </span>
         </div>
 
@@ -166,23 +199,24 @@
 
     <div class="flexfooter">
         <span class="pull-left">
-            <button type="button" class="btn btn-sm btn-primary">Cancel</button>
+           
             <button type="button" class="btn btn-sm btn-primary">Clear</button>
         </span>
 
         <div class="pull-right">
-            <button type="button" class="btn btn-sm btn-primary">Save</button>
+            <button type="button" class="btn btn-sm btn-primary" ng-click="makePayment(paymentAmount-amount)">Save</button>
             <div class="btn-group dropup">
-                <button type="button" class="btn btn-info btn-sm">Save and send</button>
-                <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:25px">
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" style="right:-2px !important">
-                    <li><a href="#">Save and close</a></li>
-                    <li><a href="#">Save and send</a></li>
-                    <li><a href="#">Save and new</a></li>
-                    <li><a href="#">Save and share link</a></li>
-                </ul>
+                @*
+    <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:25px">
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" style="right:-2px !important">
+        <li><a href="#">Save and close</a></li>
+        <li><a href="#">Save and send</a></li>
+        <li><a href="#">Save and new</a></li>
+        <li><a href="#">Save and share link</a></li>
+    </ul>
+                *@
             </div>
         </div>
     </div>

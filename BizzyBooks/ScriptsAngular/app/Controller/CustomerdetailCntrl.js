@@ -1,5 +1,8 @@
-﻿myApp.controller('CustomerdetailCntrl', ['$scope', '$http', '$timeout', '$rootScope', '$state', function ($scope, $http, $timeout, $rootScope, $state) {
+﻿myApp.controller('CustomerdetailCntrl', ['$scope', '$http', '$timeout', '$rootScope', '$state', 'config', function ($scope, $http, $timeout, $rootScope, $state, config) {
 
+
+    var CustomerId = localStorage.CustomerId;
+    $scope.CustomerName = localStorage.customerName;
     $(".my a").click(function (e) {
         e.preventDefault();
     });
@@ -40,7 +43,7 @@
         $("#wrapper").toggleClass("toggled");
     };
 
- 
+
     $scope.menuUp = function (e) {
         $(".statusBody").slideToggle("slow", function () {
             // Animation complete.
@@ -51,15 +54,121 @@
     };
 
 
-   
-
-   
 
 
-    $scope.NewCustomerCreate = function () {
+
+
+
+    $scope.EditViewPopUp = function () {
+        var url = config.api + "customers/" + CustomerId + "";
+        $http.get(url).success(function (response) {
+            $scope.title = response.title;
+            $scope.firstName = response.firstName;
+            $scope.lastName = response.lastName;
+            $scope.middleName = response.middleName;
+            $scope.street = response.billingAddress[0].street;
+            $scope.city = response.billingAddress[0].city;
+            $scope.state = response.billingAddress[0].state;
+            $scope.country = response.billingAddress[0].country;
+            $scope.postalCode = response.billingAddress[0].postalCode;
+            $scope.street1 = response.shippingAddress[0].street;
+            $scope.city1 = response.shippingAddress[0].city;
+            $scope.state1 = response.shippingAddress[0].state;
+            $scope.country1 = response.shippingAddress[0].country;
+            $scope.postalCode1 = response.shippingAddress[0].postalCode;
+            $scope.notes = response.notes;
+            $scope.deliveryMethod = response.paymentInfo[0].deliveryMethod;
+            $scope.paymentMethod = response.paymentInfo[0].paymentMethod;
+            $scope.openingBalance = response.paymentInfo[0].openingBalance;
+            $scope.terms = response.paymentInfo[0].terms;
+            $scope.taxRegNo = response.taxInfo[0].taxRegNo;
+            $scope.cstRegNo = response.taxInfo[0].cstRegNo;
+            $scope.panNo = response.taxInfo[0].panNo;
+            $scope.website = response.website;
+            $scope.other = response.other;
+            $scope.displayName = response.displayName;
+            $scope.fax = response.fax;
+            $scope.mobile = response.mobile;
+            $scope.phone = response.phone;
+            $scope.company = response.company;
+            $scope.email = response.email;
+            $scope.suffix = response.suffix;
+
+        })
         $('#NewCustomerCreateModal').modal('show');
 
     }
+    $scope.UpdateCustomerInfo = function () {
+        var data = {
 
-   
+            title: $scope.title,
+            firstName: $scope.firstName,
+            middleName: $scope.middleName,
+            lastName: $scope.lastName,
+            suffix: $scope.suffix,
+            email: $scope.email,
+            company: $scope.company,
+            phone: $scope.phone,
+            mobile: $scope.mobile,
+            fax: $scope.fax,
+            displayName: $scope.displayName,
+            other: $scope.other,
+            website: $scope.website,
+            billingAddress: [
+              {
+                  street: $scope.street,
+                  city: $scope.city,
+                  state: $scope.state,
+                  postalCode: $scope.postalCode,
+                  country: $scope.country
+              }
+            ],
+            shippingAddress: [
+              {
+
+                  street: $scope.street1,
+                  city: $scope.city1,
+                  state: $scope.state1,
+                  postalCode: $scope.postalCode1,
+                  country: $scope.country1
+              }
+            ],
+            taxInfo: [
+              {
+                  taxRegNo: $scope.taxRegNo,
+                  cstRegNo: $scope.cstRegNo,
+                  panNo: $scope.panNo
+
+
+              }
+            ],
+            paymentInfo: [
+              {
+                  paymentMethod: $scope.paymentMethod,
+                  terms: $scope.terms,
+                  deliveryMethod: $scope.deliveryMethod,
+                  openingBalance: $scope.openingBalance,
+                  asOf: $scope.asOf
+
+
+
+              }
+            ],
+            notes: $scope.notes,
+            id: CustomerId
+
+        }
+
+        var url = config.api + "customers/" + CustomerId + "";
+        $http.put(url, data).success(function (response) {
+            $scope.CustomerName = response.firstName;
+
+        })
+        $('#NewCustomerCreateModal').modal('hide');
+
+    }
+
+
+
+
 }]);

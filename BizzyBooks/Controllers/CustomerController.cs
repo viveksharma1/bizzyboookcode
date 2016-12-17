@@ -130,5 +130,13 @@ namespace Restaurant.Controllers
             return View();
         }
 
+        public ActionResult PdfView()
+        {
+            return View();
+        }
+        public ActionResult CustomerPdfView()
+        {
+            return View();
+        }
     }
 }

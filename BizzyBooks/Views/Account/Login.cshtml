@@ -11,7 +11,8 @@
             { }
             
         });
-        function test(message) {
+        function test(message)
+        {
             sessionStorage["CompCode"] = message;
             angular.element($('.main_container')).scope().loggedin(message);
         }
@@ -33,7 +34,6 @@
 <div class="overlay" >
         <a class="hiddenanchor" id="toregister"></a>
         <a class="hiddenanchor" id="tologin"></a>
-
         <div id="wrapper" style="padding-left:0px; padding-top:7%;">
             <div id="login" class="animate form" style="border:3px solid #075163; box-shadow:0px 2px 72px 14px #075163">
                 <div>
@@ -56,8 +56,9 @@
                             </div>
                             <div id="CaptchaDiv" class="loginwidth">
                                 <strong class="text-primary pull-left" style="font-style:italic; color:#000; margin-bottom:10px; width:100%; text-align:left">Enter again with captcha.</strong>
-                                <div class="col-sm-5" style="padding:0px"><img src="../images/captcha.png"/> </div>
-                                <div class="col-sm-7" style="padding:0px 0px 0px 10px; margin-top:2px"><input type="text" style="height:38px; font-size:16px; font-weight:bold; color:#000" class="form-control" /></div>
+                                <div class="col-sm-5" style="padding:0px">@*<img src="../images/captcha.png"/>*@ <h2 type="text" id="mainCaptcha" style="font-size: 19px; color: inherit; text-align: center; background: url('../images/captcha-bg.jpg'); height: 38px; margin-top: 2px; padding-top: 9px; border: 2px solid; font-weight: bold; "></h2></div>
+                                
+                                <div class="col-sm-7" style="padding:0px 0px 0px 10px; margin-top:2px"><input type="text" id="txtInput" style="height:38px; font-size:16px; font-weight:bold; color:#000" class="form-control" /></div>
                             </div>
                             <div style="text-align:center; width:100%; float:left" class="loginwidth">
 
@@ -78,18 +79,21 @@
                     <div class="modal-content">
 
                         <div class="modal-body text-center" style="font-size:20px; padding:30px 15px 15px 15px">
-                            <p><img src="../images/warning-icon-24.png" style="cursor:pointer" ng-click="errorpopup()" /></p>
+                            <p><img src="../images/warning-icon-24.png" style="cursor:pointer" data-dismiss="modal" id="okbtn" ng-click="errorpopup()" /></p>
 
                             <span class="invalid">Invalid</span>
 
                             <p>Username or Password</p>
                         </div>
                         <div class="modal-footer" style="text-align:center">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="okbtn">OK</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" >OK</button>
                         </div>
                     </div>
 
                 </div>
             </div>
-        </div>
+            s
+           
+    </div>
+
     </div>

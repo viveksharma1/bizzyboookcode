@@ -45,14 +45,16 @@
         </ui-select-choices>
     </ui-select>
 </script>
+
 <script type="text/ng-template" id="/ui-tree-Customer.html">
     <ui-select ng-model="model.$selected"
                ui-select-focuser
                theme="selectize">
-        <ui-select-match placeholder="Choose a customer">
-            {{ $select.selected.title }}
+        <ui-select-match id="salectId" ng-model="customermodel" placeholder="Choose a customer">
+            {{ $select.selecteds }}
         </ui-select-match>
         <ui-select-choices repeat="group in groups | filter: $select.search">
+
             <div>
                 <span ng-bind-html="group.title | highlight: $select.search"></span>
                 <!--<span ng-bind-html="'('+group.size+' users)'"></span>
@@ -66,6 +68,7 @@
         </ui-select-choices>
     </ui-select>
 </script>
+
 
 <div class="FlexPopup" style="display:block" ng-init="model = {}">
     <div class="flexheader">
@@ -82,9 +85,19 @@
     <div class="flexcontainer">
         <div class="lightblue bluebrdr content" style="padding:10px 10px">
             <div class="col-sm-3" style="margin-top:10px">
-                <ui-tree-Customer model="model">
-                </ui-tree-Customer>
-
+                <ui-select ui-tree-select ng-model="model.people" id="countryCode"
+                           ui-select-focuser
+                           theme="selectize">
+                    <ui-select-match placeholder="....Select Customer...">{{ $select.selected.firstName }}</ui-select-match>
+                    <ui-select-choices repeat="group in customerNameList | filter: $select.search">
+                        <div id="customerName">
+                            <span ng-model="customerName" ng-bind-html="group.firstName | highlight: $select.search"></span>
+                        </div>
+                    </ui-select-choices>
+                </ui-select>
+                <p ng-init="{{sup = model.people.email}}"> </p>
+                <p style="display:none" ng-init="{{cname = model.people.firstName}}"> </p>
+                <p style="display:none" ng-init="{{id = model.people.id}}"> </p>
                 <div id="form-popoverPopupCustomer" class="popupbox">
                     <div class="dijitDialogTitle">
                         New Customer
@@ -95,38 +108,40 @@
                             <label><span class="red">*</span> Name</label>
                             <input type="text" class="form-control" />
                         </div>
-                        
+
                         <div class="form-footer">
                             <a style="float:left; padding-top:5px; cursor:pointer" id="NewCustomerCreate">+ Details</a>
                             <button type="button" class="btn btn-sm btn-default pull-right" ng-click="SaveCustomer()">Save</button>
+
                         </div>
                     </div>
                 </div>
 
 
-             
+
 
             </div>
             <div class="col-sm-3" style="margin-top:10px">
-                <input type="text" class="form-control" placeholder="Email (Separate emails with a comma)" style="margin-bottom:5px" />
+                <input type="text" class="form-control" ng-model="CustomerEmail" placeholder="Customer Email" style="margin-bottom:5px" />
                 <input type="checkbox" class="pull-left" /> <small class="sendlater">Send later</small>
             </div>
             <div class="pull-right">
                 <p class="text-right">BALANCE DUE</p>
                 <span class="balancedue">Rs0.00</span>
+
             </div>
         </div>
         <div class="col-sm-12">
             <div class="col-sm-2 padding5">
                 <h4 class="tabheading">Billing address</h4>
-                <textarea class="form-control" style="height:80px"></textarea>
+                <textarea class="form-control" ng-model="billingAddress" style="height:80px"></textarea>
             </div>
 
             <div class="col-sm-2 padding5 claro">
-                <h4 class="tabheading">Terms</h4>
+                @*<h4 class="tabheading">Terms</h4>
 
-                <ui-tree-select model="model" >
-                </ui-tree-select>
+                    <ui-tree-select model="model" >
+                    </ui-tree-select>*@
 
                 <div id="form-popoverPopup" class="popupbox">
                     <div class="dijitDialogTitle">
@@ -166,7 +181,7 @@
             <div class="col-sm-2 padding5">
                 <h4 class="tabheading">Invoice Date</h4>
                 <div class="input-group">
-                    <input type="text" class="form-control" id="InvoiceDate">
+                    <input type="text" class="form-control" ng-model="invoiceDate" id="InvoiceDate">
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -176,7 +191,7 @@
             <div class="col-sm-2 padding5">
                 <h4 class="tabheading">Due Date</h4>
                 <div class="input-group">
-                    <input type="text" class="form-control" id="DueDate">
+                    <input type="text" class="form-control" ng-model="invoiceDueDate" id="DueDate">
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -185,95 +200,178 @@
         </div>
 
         <div class="col-sm-12" style="padding-top:30px">
-            <table class="table NewTable" id="InvoiceTable">
+            @*<table class="table NewTable" id="InvoiceTable">
+                    <thead>
+                        <tr>
+                            <th class="text-right">#</th>
+                            <th>Product/Service</th>
+                            <th>Description</th>
+                            <th class="text-right">Qty</th>
+                            <th class="text-right">Rate</th>
+                            <th class="text-right">Amount</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="Countedit">
+                            <td class="text-right Count">1</td>
+                            <td class="Count"></td>
+                            <td class="Count"></td>
+                            <td class="text-right Count"></td>
+                            <td class="text-right Count"></td>
+                            <td class="text-right Count"></td>
+                            <td class="text-right Count"><a> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
+
+                            <td class="text-right Count2"><input type="text" class="form-control" style="width:30px" value="1" /></td>
+                            <td class="text-right Count2"><input type="text" class="form-control" ng-model="productName"  /></td>
+                            <td class="Count2"><input type="text" class="form-control" ng-model="productDiscription" /></td>
+                            <td class="text-right Count2"><input type="text" class="form-control" ng-model="productQty" /></td>
+                            <td class="text-right Count2"><input type="text" class="form-control" ng-model="rate"  /></td>
+                            <td class="text-right Count2"><input type="text" class="form-control" ng-model="amount"  /></td>
+                            <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
+                        </tr>
+                        <tr class="Countedit">
+                            <td class="text-right Count">2</td>
+                            <td class="Count">&nbsp;</td>
+                            <td class="Count">&nbsp;</td>
+                            <td class="text-right Count">&nbsp;</td>
+                            <td class="text-right Count">&nbsp;</td>
+                            <td class="text-right Count">&nbsp;</td>
+                            <td class="text-right Count"><a> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
+
+                            <td class="text-right Count2"><input type="text" class="form-control" style="width:30px" value="2"  /></td>
+                            <td class="Count2"><input type="text" class="form-control" ng-model="productName1" /></td>
+                            <td class="Count2"><input type="text" class="form-control" ng-model="productDiscription1" /></td>
+                            <td class="text-right Count2"><input type="text" class="form-control" ng-model="productQty1" /></td>
+                            <td class="text-right Count2"><input type="text" class="form-control" ng-model="rate1" /></td>
+                            <td class="text-right Count2"><input type="text" class="form-control" ng-model="amount1" /></td>
+                            <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
+                        </tr>
+                    </tbody>
+                </table>*@
+
+            <table class="table NewTable" id="ItemTable">
+
                 <thead>
                     <tr>
-                        <th class="text-right">#</th>
                         <th>Product/Service</th>
-                        <th>Description</th>
-                        <th class="text-right">Qty</th>
-                        <th class="text-right">Rate</th>
-                        <th class="text-right">Amount</th>
+                        <th>Discription</th>
+                        <th>Quantity</th>
+                        <th>Rate</th>
+                        <th>Mislinius Chargies</th>
+                        <th>Amount</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class="Countedit">
-                        <td class="text-right Count">1</td>
-                        <td class="Count">Home</td>
-                        <td class="Count">-</td>
-                        <td class="text-right Count">1</td>
-                        <td class="text-right Count">125.00</td>
-                        <td class="text-right Count">125.00</td>
-                        <td class="text-right Count"><a> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
+                <tbody ng-repeat="item in enquiryTable">
+                    <tr>
+                        <td class="Count"><input ng:model="item.product" value="0.00" ng:required ng:validate="string" style="border:none" /></td>
+                        <td class="Count"><input ng:model="item.discription" value="0.00" ng:required ng:validate="string" style="border:none" /></td>
+                        <td class="Count"><input ng:model="item.quantity" value="0.00" ng:required ng:validate="number" style="border:none" /></td>
+                        <td class="Count"><input ng:model="item.rate" ng-change="textChanged()" value="0.00" ng:required ng:validate="number" style="border:none" /></td>
+                        <td class="Count"><input ng:model="item.misliniusCh" value="0.00" ng:required ng:validate="number" type="number" style="border:none" /></td>
+                        <td class="Count"><input ng:model="item.amount=(item.quantity*item.rate)+item.misliniusCh" id="amt" ng:required ng:validate="number" style="border:none" /></td>
+                        <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-times-circle cursor RemoveTR" style="font-size:16px" ng-click="remove($index)"></i></a></td>
 
-                        <td class="text-right Count2"><input type="text" class="form-control" style="width:30px" value="1" /></td>
-                        <td class="Count2"><ui-tree-Invoice model="model"></ui-tree-Invoice></td>
-                        <td class="Count2"><input type="text" class="form-control" value="-" /></td>
-                        <td class="text-right Count2"><input type="text" class="form-control text-right" value="1" /></td>
-                        <td class="text-right Count2"><input type="text" class="form-control text-right" value="125.00" /></td>
-                        <td class="text-right Count2"><input type="text" class="form-control text-right" value="125.00" /></td>
-                        <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
                     </tr>
-                    <tr class="Countedit">
-                        <td class="text-right Count"></td>
-                        <td class="Count">&nbsp;</td>
-                        <td class="Count">&nbsp;</td>
-                        <td class="text-right Count">&nbsp;</td>
-                        <td class="text-right Count">&nbsp;</td>
-                        <td class="text-right Count">&nbsp;</td>
-                        <td class="text-right Count"><a> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
 
-                        <td class="text-right Count2"><input type="text" class="form-control" style="width:30px" value="" /></td>
-                        <td class="Count2"><ui-tree-Invoice model="model"></ui-tree-Invoice></td>
-                        <td class="Count2"><input type="text" class="form-control" value="-" /></td>
-                        <td class="text-right Count2"><input type="text" class="form-control text-right" value="" /></td>
-                        <td class="text-right Count2"><input type="text" class="form-control text-right" value="" /></td>
-                        <td class="text-right Count2"><input type="text" class="form-control text-right" value="" /></td>
-                        <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
-                    </tr>
+
                 </tbody>
+
+
+
             </table>
 
+            <table class="table NewTable" id="ItemTable1">
 
-  
+
+                <thead>
+                    <tr>
+                        <th>Product/Service</th>
+                        <th>Discription</th>
+                        <th>Quantity</th>
+                        <th>Rate</th>
+                        <th>Amount</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody ng-repeat="item in enquiryTable">
+                    <tr>
+
+
+                        <td class="Count"><input ng:model="item.product" value="0.00" ng:required ng:validate="string" style="border:none" /></td>
+                        <td class="Count"><input ng:model="item.discription" value="0.00" ng:required ng:validate="string" style="border:none" /></td>
+                        <td class="Count"><input ng:model="item.quantity" value="0.00" ng:required ng:validate="number" style="border:none" /></td>
+                        <td class="Count"><input ng:model="item.rate" value="0.00" ng:required ng:validate="number" style="border:none" /></td>
+                        <td class="Count"><input ng:model="item.amount" value="0.00" ng:required ng:validate="number" style="border:none" /></td>
+                        <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-times-circle cursor RemoveTR" style="font-size:16px" ng-click="remove($index)"></i></a></td>
+
+                    </tr>
+
+
+                </tbody>
+
+
+            </table>
+
         </div>
         <div class="col-sm-12">
-            <div class="pull-left">
-                <button type="button" class="btn btn-default btn-sm btn-xs" ng-click="AddTableLine()">Add lines</button>
+            <div class="pull-left" id="btnid">
+
+                @*<button type="button" class="btn btn-default btn-sm btn-xs" ng-click="addRow()">Add lines</button>*@
+
+
+                <button type="button" class="btn btn-default btn-sm btn-xs" ng-click="addRowMisliniusCh()">Add lines</button>
+
                 <div class="form-group">
                     <h4 class="tabheading">Message displayed on invoice</h4>
-                    <textarea class="form-control" style="height:80px"></textarea>
+                    <textarea class="form-control" ng-model="displayoninvoice" style="height:80px"></textarea>
                 </div>
                 <div class="form-group">
                     <h4 class="tabheading">Statement memo</h4>
-                    <textarea class="form-control" style="height:80px"></textarea>
+                    <textarea class="form-control" ng-model="statementMemo" style="height:80px"></textarea>
+                </div>
+            </div>
+            <div class="pull-left" id="btnid1">
+
+                <button type="button" class="btn btn-default btn-sm btn-xs" ng-click="addRow()">Add lines</button>
+
+
+                @*<button type="button" class="btn btn-default btn-sm btn-xs" ng-click="addRowMisliniusCh()">Add lines</button>*@
+
+                <div class="form-group">
+                    <h4 class="tabheading">Message displayed on invoice</h4>
+                    <textarea class="form-control" ng-model="displayoninvoice" style="height:80px"></textarea>
+                </div>
+                <div class="form-group">
+                    <h4 class="tabheading">Statement memo</h4>
+                    <textarea class="form-control" ng-model="statementMemo" style="height:80px"></textarea>
                 </div>
             </div>
             <span class="pull-right" style="width:350px">
-                <label class="subtotal">Subtotal</label>
-                <span class="subtotalvalue">Rs0.00</span>
-                <label class="subtotal">
-                    <div class="btn-group pull-left" style="margin-right:10px">
-                        <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" style="width:145px; color:#000 !important; text-align:left">
-                            Discount percent
-                            <i class="fa fa-sort pull-right" style="margin-top:3px"></i>
-                        </button>
+                @*<label class="subtotal">Subtotal</label>
+                    <span class="subtotalvalue">Rs0.00</span>*@
+                @*<label class="subtotal">
+                        <div class="btn-group pull-left" style="margin-right:10px">
+                            <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" style="width:145px; color:#000 !important; text-align:left">
+                                Discount percent
+                                <i class="fa fa-sort pull-right" style="margin-top:3px"></i>
+                            </button>
 
-                        <ul class="dropdown-menu my Discountfilter" style="width:150px;">
-                            <li><a href="#">Discount percent</a></li>
-                            <li><a href="#">Discount value</a></li>
+                            <ul class="dropdown-menu my Discountfilter" style="width:150px;">
+                                <li><a href="#">Discount percent</a></li>
+                                <li><a href="#">Discount value</a></li>
 
-                        </ul>
+                            </ul>
 
-                    </div>
-                    <input type="text" class="form-control" style="width:50px; text-align:right" />
-                </label>
-                <span class="subtotalvalue">Rs0.00</span>
-                <label class="subtotal">Total</label>
-                <span class="subtotalvalue">Rs0.00</span>
-                <label class="subtotal" style="font-size:1.5rem;">Balance due</label>
-                <span class="subtotalvalue" style="font-size:1.5rem; font-weight:bold">Rs0.00</span>
+                        </div>
+                        <input type="text" class="form-control" style="width:50px; text-align:right" />
+                    </label>*@
+                @*<span class="subtotalvalue">Rs0.00</span>*@
+                @*<label class="subtotal">Total</label>
+                    <span class="subtotalvalue">Rs0.00</span>
+                    <label class="subtotal" style="font-size:1.5rem;">Balance due</label>
+                    <span class="subtotalvalue" style="font-size:1.5rem; font-weight:bold">Rs0.00</span>*@
             </span>
         </div>
     </div>
@@ -286,7 +384,8 @@
         </span>
 
         <div class="pull-right">
-            <button type="button" class="btn btn-sm btn-primary">Save</button>
+            <a href="#/Customer/CustomerPdfView" class="pull-right btn-primary" style="height:30px;margin-left:10px;width:90px">Invoice View</a>
+            <button type="button" class="btn btn-sm btn-primary" ng-click="CreateNewInvoice()">Save</button>
             <div class="btn-group dropup">
                 <button type="button" class="btn btn-info btn-sm">Save and send</button>
                 <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:25px">
@@ -302,7 +401,7 @@
         </div>
     </div>
 
-    
+
 </div>
 
 <div class="modal fade" id="NewCustomerCreateModal">
@@ -404,7 +503,7 @@
                             <div class="col-sm-6 padding">
                                 <h4 class="tabheading">Billing Address</h4>
                                 <div class="form-group col-sm-12 padding5">
-                                    <textarea class="form-control" placeholder="Street"></textarea>
+                                    <textarea class="form-control" ng-model="billingAddress" placeholder="Street"></textarea>
                                 </div>
                                 <div class="form-group col-sm-6 padding5">
                                     <input type="text" class="form-control" placeholder="City/Town" />
@@ -530,7 +629,7 @@
     </div><!-- /.modal-dialog -->
 </div>
 
-   <!-- SaveCustomerModal -->
+<!-- SaveCustomerModal -->
 <div id="SaveCustomerModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-sm" style="margin-top:100px">
 
@@ -539,9 +638,9 @@
 
             <div class="modal-body text-center" style="font-size:20px; padding:30px 15px 15px 15px">
                 <p><img src="../images/warning-icon-24.png" style="cursor:pointer" ng-click="errorpopup()" /></p>
-         
-                    <span class="invalid">Invalid Characters</span> in
-                
+
+                <span class="invalid">Invalid Characters</span> in
+
                 <p>the customer name.</p>
             </div>
             <div class="modal-footer" style="text-align:center">
@@ -553,7 +652,7 @@
 </div>
 
 
-  <!-- errorpopupModal -->
+<!-- errorpopupModal -->
 <div id="errorpopupModal" class="modal fade" role="dialog">
     <div class="modal-dialog" style="margin-top:150px; width:500px">
 
@@ -563,7 +662,7 @@
             <div class="modal-body " style="font-size:20px; float:left; width:100%">
                 <small style="float:left; width:100%; font-size:12px; margin-bottom:5px">Virtual keyboard</small>
                 <table cellpadding="0" cellspacing="0" class="pull-left" style="margin-right:20px">
-                   
+
                     <tr>
                         <td> <input type="button" value="1" class="num-key" /> </td>
                         <td> <input type="button" value="2" class="num-key" /> </td>
@@ -593,14 +692,14 @@
                     <button type="button" class="btn btn-success" data-dismiss="modal" style="width:80px" ng-click="successmsg()">OK</button>
                 </div>
             </div>
-           
+
         </div>
 
     </div>
 </div>
 
 
-  <!-- successmsgModal -->
+<!-- successmsgModal -->
 <div id="successmsgModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-sm" style="margin-top:120px">
 
@@ -608,7 +707,7 @@
         <div class="modal-content">
 
             <div class="modal-body text-center" style="padding:30px 15px 15px 15px">
-              <i class="fa fa-check circleicon"></i>
+                <i class="fa fa-check circleicon"></i>
                 <h3>Success</h3>
                 <p>Here is the message.</p>
             </div>

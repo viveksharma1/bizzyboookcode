@@ -59,15 +59,16 @@
     });
 </script>
 
-<div id="wrapper" ng-init="model = {}">
+<div id="wrapper" ng-app="myApp" ng-controller="LoginCntrl" ng-init="model = {}">
 
     <!-- Sidebar -->
-    <div id="sidebar-wrapper">
-        <ul class="sidebar-nav">
+
+    @*<div id="sidebar-wrapper">*@
+        @*<ul class="sidebar-nav">
             <li class="sidebar-brand">
-                <a href="#" class="logo">
-                    <i class="fa fa-compass"></i> Account <span>Books</span>
-                </a>
+               
+                    <i class="fa fa-compass">Account Books</i> 
+                
             </li>
             <li>
                 <a ui-sref=".HomePage"><i class="fa fa-dashboard"></i> Home</a>
@@ -98,7 +99,84 @@
                 <a href=""><i class="fa fa-bar-chart"></i> Reports</a>
             </li>
           
-        </ul>
+        </ul>*@
+
+    <div id="sidebar-wrapper" ng-switch on="{{usertype}}">
+        <em ng-switch-when="3">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#" class="logo">
+                        <i class="fa fa-compass"></i> Account <span>Books</span>
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref=".HomePage"><i class="fa fa-dashboard"></i> Home</a>
+                </li>
+                <li>
+                    <a ui-sref=".Customer"><i class="fa fa-users"></i> Customers</a>
+                </li>
+                <li>
+                    <a ui-sref=".Suppliers"><i class="fa fa-street-view"></i> Suppliers</a>
+                </li>
+
+                <li>
+                    <a href="" class="sub-menu"><i class="fa fa-money"></i> Transactions</a>
+                    <ul class="list-unstyled leftsubmenu">
+                        <li><a ui-sref=".Banking">Banking</a></li>
+                        <li><a ui-sref=".Sales">Sales</a></li>
+                        <li><a ui-sref=".Expenses">Expenses</a></li>
+
+                    </ul>
+                </li>
+                <li>
+                    <a ui-sref=".Inventory"><i class="fa fa-cubes"></i> Inventory</a>
+                </li>
+
+                <li>
+                    <a ui-sref=".Logistics"><i class="fa fa-truck"></i>Logistics </a>
+                </li>
+                <li>
+                    <a href=""><i class="fa fa-bar-chart"></i> Reports</a>
+                </li>
+
+            </ul>
+        </em>
+        <em ng-switch-default>
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#" class="logo">
+                        <i class="fa fa-compass"></i> Account <span>Books</span>
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref=".HomePage"><i class="fa fa-dashboard"></i> Home</a>
+                </li>
+                <li>
+                    <a ui-sref=".Customer"><i class="fa fa-users"></i> Customers</a>
+                </li>
+                <li>
+                    <a ui-sref=".Suppliers"><i class="fa fa-street-view"></i> Suppliers</a>
+                </li>
+
+                <li>
+                    <a href="" class="sub-menu"><i class="fa fa-money"></i> Transactions</a>
+                    <ul class="list-unstyled leftsubmenu">
+                        <li><a ui-sref=".Banking">Banking</a></li>
+                        <li><a ui-sref=".Sales">Sales</a></li>
+                        <li><a ui-sref=".Expenses">Expenses</a></li>
+
+                    </ul>
+                </li>
+                <li>
+                    <a ui-sref=".Inventory"><i class="fa fa-cubes"></i> Inventory</a>
+                </li>
+
+            </ul>
+        </em>
+
+        
+
+
     </div>
     <!-- /#sidebar-wrapper -->
     <!-- Page Content -->
@@ -112,7 +190,7 @@
 
                 <div class="bg-info cursor topbar">
                     <i class="fa fa-bars menutoggle" id="menutoggle"></i>
-                    
+
                     <ul class="list-unstyled topmenu">
                         <li><a ui-sref=".SearchTransactions"><i class="fa fa-search" style="color:#fff"></i></a></li>
                         <li class="addrotate flytopbar"><i class="fa fa-plus"></i> </li>
@@ -135,7 +213,7 @@
                                 <ul class="list-unstyled">
                                     <li><a ui-sref=".Invoice">Invoice</a></li>
                                     <li><a ui-sref=".ReceivePayment">Receive Payment</a></li>
-                                   
+
                                 </ul>
                             </div>
 
@@ -151,7 +229,7 @@
                                     <li><a ui-sref=".PurchaseOrder">Purchase Order</a></li>
                                     <li><a ui-sref=".Bill">Bill</a></li>
                                     <li><a ui-sref=".Expense">Add Expense</a></li>
-                                   
+
                                 </ul>
                             </div>
 
@@ -166,7 +244,7 @@
                             </div>
 
 
-                            
+
                         </div>
                     </div>
 
@@ -200,7 +278,7 @@
                             </div>
 
 
-                            
+
 
 
 
@@ -212,7 +290,7 @@
                     <div id="flyoutChange" class="flytopbar">
                         <div class="arrow-up" style="margin-right:9%; float:right"></div>
                         <div class="flyoutdiv">
-                            
+
                             <div class="col-sm-12" style="padding:0px">
                                 <ul class="list-unstyled my">
                                     <li><a href="#">Labdhi Engineering & Co.</a></li>
@@ -230,23 +308,23 @@
 
                 </div>
 
-                
-
-                
-                
 
 
-                
 
 
-                
-
-                
-
-                
 
 
-                
+
+
+
+
+
+
+
+
+
+
+
 
 
                 <div ui-view></div>
@@ -256,7 +334,8 @@
         </div>
 
     </div>
-            <!-- /#page-content-wrapper -->
+    <!-- /#page-content-wrapper -->
 
-        </div>
+</div>
 
+   

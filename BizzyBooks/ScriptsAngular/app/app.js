@@ -1,7 +1,7 @@
-﻿var myApp = angular
+var myApp = angular
     .module('myApp', ['ui.router', 'datatables',
         //'ngtimeago',
-        'oitozero.ngSweetAlert', 'fsm','ui.select', 'ngSanitize'])
+        'oitozero.ngSweetAlert', 'fsm', 'ui.select', 'ngSanitize'])
     .config(['$stateProvider','$urlRouterProvider',function ($stateProvider,   $urlRouterProvider) {
 
        $urlRouterProvider.otherwise('/');
@@ -131,16 +131,19 @@
             templateUrl: "Customer/PurchaseOrder",
             controller: "PurchaseOrderCntrl",
             params: {
-                email: null
-               
+                poNo: null,
+                edit: null,
+                enqNo:null
             }
-
         });
 
         $stateProvider.state("Customer.Bill", {
             url: "/Bill",
             templateUrl: "Customer/Bill",
-            controller: "BillCntrl"
+            controller: "BillCntrl",
+            params: {
+                billNo:null
+            }
 
         });
 
@@ -169,7 +172,11 @@
         $stateProvider.state("Customer.MakePayment", {
             url: "/MakePayment",
             templateUrl: "Customer/MakePayment",
-            controller: "MakePaymentCntrl"
+            controller: "MakePaymentCntrl",
+            params: {
+                poNo: null
+               
+            }
 
         });
 
@@ -177,7 +184,12 @@
         $stateProvider.state("Customer.CreateInventory", {
             url: "/CreateInventory",
             templateUrl: "Customer/CreateInventory",
-            controller: "CreateInventoryCntrl"
+
+            controller: "InventoryCntrl",
+           
+
+         
+
 
         });
 
@@ -187,20 +199,42 @@
             controller: "EnquirydetailCntrl"
 
         });
+        $stateProvider.state("Customer.PdfView", {
+            url: "/PdfView",
+            templateUrl: "Customer/PdfView",
+            controller: "PdfViewCntrl",
+            params: {
+                po: null,
+                enq:null
+
+            }
+         
+           
+
+        });
+
+          $stateProvider.state("Customer.CustomerPdfView", {
+            url: "/CustomerPdfView",
+            templateUrl: "Customer/CustomerPdfView",
+            controller: "CustomerPdfViewCntrl"
+
+        });
 
 
 
         // Specify HTML5 mode (using the History APIs) or HashBang syntax.
         //$locationProvider.html5Mode(false).hashPrefix('!');
         //$locationProvider.html5Mode(true);
-    }]).controller('AppController', ['$rootScope', '$state', function ($rootScope,$state) {
+    }]).controller('AppController', ['$rootScope', '$state', function ($rootScope, $state)
+    {
         //added here to relive after refersh
         SetCompCode();
         $rootScope.BASE_URL = "";
         function SetCompCode(){
             $rootScope.comp=sessionStorage["CompCode"];
         }
-        $rootScope.loggedin = function (comp_code) {
+        $rootScope.loggedin = function (comp_code)
+        {
             if (comp_code)
                 $rootScope.comp = comp_code;
             else
@@ -211,64 +245,83 @@
 
     }]);
 
-////Ui-Select With Add New Section
 
-myApp.directive("test1", function () {
-    return {
-        restrict: 'A',
-        link: function ($scope, $elem) {
-            var entries = [];
-            angular.forEach($elem.children()[1].children, function (tr) {
-                var entry = [];
-                angular.forEach(tr.children, function (td) {
-                    entry.push(td.innerHTML);
-                });
+myApp.value('config', {
+ //login: 'http://localhost:4000/',
 
-                entries.push(entry);
-            });
-            console.log(entries);
-        }
-    }
+// api: 'http://localhost:4000/api/'
+
+
+  login: 'http://bizzy-book-api.azurewebsites.net/',
+ api: 'http://bizzy-book-api.azurewebsites.net/api/'
+
+   
+  
+
+   
 });
+myApp.factory('UserService', function ()
+{
+    var UserType = 'superadmin';
+    return UserType;
+})
+
+
+
+myApp.service('selectsuppliers', ['$rootScope',
+    function ($rootScope) {
+      
+           
+            return $rootScope.resource
+            
+    
+   
+
+}
+])
 
 myApp.directive('uiTreeSelect', [
-  'groupFactory',
+  'selectsuppliers',
   '$timeout',
-  function (groupFactory, $timeout) {
+   '$http',
+  function (selectsuppliers, $timeout, $http, $rootScope) {
       return {
-          restrict: 'E',
-          scope: { model: '=' },
-          link: function (scope, el) {
-             
-             
+          
+              restrict: 'E',
+              scope: { model: '=' },
+              link: function (scope, el) {
 
-              scope.loadChildGroupsOf = function (group, $select) {
-                  $select.search = '';
+                  
+
+                  scope.groups = selectsuppliers;
+
+                  console.log(selectsuppliers);
                  
+                // scope.groups = selectsuppliers.getSuppliers();
 
-                 
-                  scope.groups = groupFactory.data;
+                // scope.groups = data;
 
-
+                  scope.loadChildGroupsOf = function (group, $select) {
+                      $select.search = '';
 
                      
-                  
-                  scope.$broadcast('uiSelectFocus');
-              };
+                      scope.$broadcast('uiSelectFocus');
+                  };
 
-              scope.navigateBackTo = function (crumb, $select) {
+                  scope.navigateBackTo = function (crumb, $select) {
 
-                  $('#form-popoverPopup').show();
-                  
-                  /*$select.search = '';
-                  var index = _.findIndex(scope.breadcrumbs, {id: crumb.id});
-        
-                  scope.breadcrumbs.splice(index + 1, scope.breadcrumbs.length);
-                  scope.groups = groupFactory.load(_.last(scope.breadcrumbs).id);
-                  $select.open = false;
-                  scope.$broadcast('uiSelectFocus');*/
-              };
-          },
+                      //    
+                      $('#form-popoverPopup').show();
+
+                      /*$select.search = '';
+                      var index = _.findIndex(scope.breadcrumbs, {id: crumb.id});
+            
+                      scope.breadcrumbs.splice(index + 1, scope.breadcrumbs.length);
+                      scope.groups = groupFactory.load(_.last(scope.breadcrumbs).id);
+                      $select.open = false;
+                      scope.$broadcast('uiSelectFocus');*/
+                  };
+              },
           templateUrl: '/ui-tree-select.html'
       };
   }
@@ -283,7 +336,7 @@ myApp.directive('uiTreeAccount', [
           scope: { model: '=' },
           link: function (scope, el) {
               scope.breadcrumbs = [{ "id": 0, "title": "All" }];
-              scope.groups = groupFactory.load(1);
+              scope.groups = groupFactory.load(2);
 
               scope.loadChildGroupsOf = function (group, $select) {
                   $select.search = '';
@@ -320,6 +373,10 @@ myApp.directive('uiTreeItem', [
           scope: { model: '=' },
           link: function (scope, el) {
               scope.breadcrumbs = [{ "id": 0, "title": "All" }];
+
+
+
+
               scope.groups = groupFactory.load(2);
 
               scope.loadChildGroupsOf = function (group, $select) {
@@ -357,6 +414,7 @@ myApp.directive('uiTreeItem', [
           postSuppliers: function (webService, data) {
               var promise = $http.post(url + webService, data).then(function (response) {
                   return response.data;
+                 
               });
 
              
@@ -368,6 +426,8 @@ myApp.directive('uiTreeItem', [
       return http;
   });
 
+
+ 
 
 myApp.directive('uiTreeInvoice', [
   'groupFactory',
@@ -443,6 +503,8 @@ myApp.directive('uiTreeCustomer', [
   }
 ]);
 
+
+
 // Couldn't get on-focus to work, so wrote my own
 myApp.directive('uiSelectFocuser', function ($timeout) {
     return {
@@ -468,48 +530,14 @@ myApp.directive('selectWatcher', function ($timeout) {
         }
     };
 });
-myApp.directive('selectPicker', ['$parse', function ($parse) {
-    return {
-        restrict: 'A',
-        require: '?ngModel',
-        priority: 10,
-        compile: function (tElement, tAttrs, transclude) {
-            tElement.selectpicker($parse(tAttrs.selectpicker)());
-            tElement.selectpicker('refresh');
-            return function (scope, element, attrs, ngModel) {
-                if (!ngModel) return;
 
-                scope.$watch(attrs.ngModel, function (newVal, oldVal) {
-                    scope.$evalAsync(function () {
-                        if (!attrs.ngOptions || /track by/.test(attrs.ngOptions)) element.val(newVal);
-                        element.selectpicker('refresh');
-                    });
-                });
-
-                ngModel.$render = function () {
-                    scope.$evalAsync(function () {
-                        element.selectpicker('refresh');
-                    });
-                }
-            };
-        }
-            
-    };
-}])
 
 myApp.factory('groupFactory', ['$http',
   function ($http) {
+    
+      var data;
 
-      var data = {};
-      var url = "http://localhost:4000/api/suppliers";
-      $http.get(url + "?filter[fields][company]=true").then(function (response) {
-          var data = response.data;
-
-          console.log(data);
-      });
-
-
-      var data1 = {
+      var data2 = {
 
 
 
@@ -533,33 +561,14 @@ myApp.factory('groupFactory', ['$http',
       };
 
       return {
-          load: function (id) {
-              return data[id];
+          load: function () {
+              return data;
           }
       }
   }
 ]);
 
-myApp.directive('exportToPdf', function () {
-    return {
-        restrict: 'A',
-        link: function (scope, element, attrs) {
-            var el = element[0];
-            element.bind('click', function(e){
-                var table = e.target.nextElementSibling;
-                var pdfString = '<html><table></table></html>';
 
-                var a = $('<a/>', {
-                    style:'display:none',
-                    href:'data:application/pdf;base64,' + btoa(pdfString ),
-                    download:'planning.pdf'
-                }).appendTo('body')
-                a[0].click()
-                a.remove();
-            });
-        }
-    }
-});
 
 myApp.run(['$templateCache', function ($templateCache) {
     // Overrides selectize template for group select tree.
@@ -568,8 +577,8 @@ myApp.run(['$templateCache', function ($templateCache) {
       '  class="ui-select-choices group-tree selectize-dropdown single">',
       '  <div ng-show="true" class="ui-select-breadcrumbs">',
       '    <span class="ui-breadcrumb"',
-      '       ng-click="navigateBackTo(crumb, $select)">',
-      '       +Add New {{$select.search}}',
+      '       ng-click="add()">',
+      '       +Add New Suppliers {{$select.search}}',
       '    </span>',
       '  </div>',
       '  <div class="ui-select-choices-content selectize-dropdown-content">',
@@ -588,3 +597,7 @@ myApp.run(['$templateCache', function ($templateCache) {
       '</div>'
     ].join(''))
 }]);
+
+
+
+

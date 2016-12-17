@@ -15,11 +15,8 @@
             <div class="panel-heading">
                 <div class="col-sm-8 padding">
                     <strong class="heading content" style="margin-bottom:5%">{{suppliers[0].company}}</strong>
-
-                    <div class="col-sm-8 padding" style="margin-bottom:2%">
-                        <textarea class="addnote" style="height:80px" placeholder="Add note"></textarea>
-
-                    </div>
+                    <h4 class="heading content" style="margin-bottom:5%">Mobile : {{suppliers[0].phone}}</h4>
+                   
                 </div>
                 
                 <div class="col-sm-3 pull-right">
@@ -32,26 +29,21 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a href="#/Customer/Invoice">Invoice</a></li>
-                                <li><a href="">Payment</a></li>
-                                <li><a href="">Estimate</a></li>
-                                <li><a href="">Sales Receipt</a></li>
-                                <li><a href="">Credit Note</a></li>
-                                <li><a href="">Delayed Charge</a></li>
-                                <li><a href="">Time Activity</a></li>
-                                <li><a href="">Statement</a></li>
+                                <li><a ui-sref="Customer.PurchaseOrder()">Create Purchase Order</a></li>
+                                <li><a ui-sref="Customer.Bill()">Create Bill</a></li>
+                                <li><a ui-sref="Customer.MakePayment()">Make Payment</a></li></li>
+                               
+                                
                             </ul>
                         </div>
                     </div>
                     <div class="col-sm-8 pull-right" style="margin-top:5%">
                         <div class="totalIncomeSection">
-                            <div class="incomeValue">Rs0</div>
+                            <div class="incomeValue">Rs - {{suppliers[0].paymentInfo[0].openingBalance}}</div>
                             <div class="subheading">OPEN</div>
                         </div>
 
-                        <div class="totalExpensesSection">
-                            <div class="incomeValue">Rs0</div>
-                            <div class="subheading">OVERDUE</div>
-                        </div>
+                       
 
                     </div>
 
@@ -82,18 +74,18 @@
                         <section id="panel-1" style="display:block">
                             <div class="col-sm-12" style="padding-top:10px">
                                 <div class="dropdown pull-left" style="margin-bottom:10px">
+                                    @*
+    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" style="text-align:left">
+        Batch actions
+        <i class="fa fa-caret-down pull-right" style="margin-top:3px"></i>
+    </button>
 
-                                    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" style="text-align:left">
-                                        Batch actions
-                                        <i class="fa fa-caret-down pull-right" style="margin-top:3px"></i>
-                                    </button>
-
-                                    <ul class="dropdown-menu my">
-                                        <li><a href="#" style="font-weight:bold">Print transactions</a></li>
-                                        <li><a href="#" style="font-weight:bold">Category selected</a></li>
-                                        <li><a href="#" style="font-weight:bold">Void transactions</a></li>
-                                    </ul>
-
+    <ul class="dropdown-menu my">
+        <li><a href="#" style="font-weight:bold">Print transactions</a></li>
+        <li><a href="#" style="font-weight:bold">Category selected</a></li>
+        <li><a href="#" style="font-weight:bold">Void transactions</a></li>
+    </ul>
+                                    *@
                                 </div>
 
                                 <div class="pull-right">
@@ -119,17 +111,17 @@
                                     <tbody>
                                         <tr ng-repeat="data in transaction">
 
-                                            <td style="padding-left:30px; width:30px"><input type="checkbox" class="checkboxcss" /></td>
-                                            <td><a href="#/Customer/Enquirydetail" style="color:#000">{{data.DATE}}<br /></a></td>
+                                            <td style="padding-left:30px; width:30px"><input type="checkbox"  class="checkboxcss" /></td>
+                                            <td><a href="#/Customer/Enquirydetail" style="color:#000">{{data.date}}<br /></a></td>
 
-                                            <td>{{data.TYPE}}</td>
-                                            <td>{{data.NO}}</td>
-                                            <td>{{data.DUEDATE}}</td>
-                                            <td class="text-right">{{data.BALANCE}}</td>
-                                            <td class="text-right">{{data.TOTAL}}</td>
-                                            <td class="text-success">{{data.STATUS}}</td>
+                                            <td>{{data.ordertype}}</td>
+                                            <td>{{data.no}}</td>
+                                            <td>{{data.billDueDate}}</td>
+                                            <td class="text-right">{{data.balance}}</td>
+                                            <td class="text-right">{{data.amount}}</td>
+                                            <td class="text-success">{{data.status[0]}}</td>
                                             <td style="text-align:right; width:100px">
-                                                <button type="button" class="editbtn">{{data.ACTION}}</button>
+                                                <button type="button" class="editbtn"><a ui-sref="Customer.PdfView({po:data.no,enq:2})">View</a></button>
                                                 <class class="linkseparator" style="margin-top:4px; margin-right:0px">|</class>
                                                 <div class="btn-group editcaret">
                                                     <i class="fa fa-caret-down cursor" dropdown-toggle"="" data-toggle="dropdown"></i>

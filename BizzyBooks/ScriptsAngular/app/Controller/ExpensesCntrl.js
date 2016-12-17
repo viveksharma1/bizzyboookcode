@@ -4,7 +4,7 @@
     });
 
 
-
- 
+    $scope.groups = $scope.model.$selected;
+    
  
 }]);

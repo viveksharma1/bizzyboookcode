@@ -1,4 +1,4 @@
-﻿myApp.controller('BillCntrl', ['$scope', '$http', '$timeout', '$rootScope', '$state', function ($scope, $http, $timeout, $rootScope, $state) {
+﻿myApp.controller('BillCntrl', ['$scope', '$http', '$timeout','$stateParams', '$rootScope', '$state', 'config', function ($scope, $http, $timeout,$stateParams, $rootScope, $state, config) {
 
     $(".my a").click(function (e) {
         e.preventDefault();
@@ -67,38 +67,115 @@
 
 
 
-    //$scope.bill = [];
-
-    $scope.bill = [
 
 
-        {
-            po: '1004',
-            date: 17 / 08 / 2016,
-            rs: '51,000.00'
+    $scope.add = function () {
 
-        },
-         {
-             po: '#1005',
-             date: 17 / 09 / 2016,
-             rs: '151,000.00'
+        $('#form-popoverPopup').show();
 
-         },
-         {
-             po: '#1006',
-             date: 18 / 09 / 2016,
-             rs: '251,000.00'
 
-         },
-         {
-             po: '#1007',
-             date: 12 / 09 / 2016,
-             rs: '111,000.00'
+    };
 
-         }
 
-    ];
 
+    
+    $scope.no = $stateParams.billNo
+    $scope.role;
+    $scope.amount = "00,00"
+    $scope.admin = localStorage['adminrole'];
+    //get Po List
+    $http.get(config.api + "transactions" + "?filter[where][no]=" + $scope.no).then(function (response) {
+       
+        $scope.polist = response.data;
+        $scope.supplier = $scope.polist[0].supliersName;
+        $scope.billtable = $scope.polist[0].itemDetail;
+        $scope.amount = $scope.polist[0].amount;
+        $scope.email = $scope.polist[0].email;
+
+    });
+    // po count 
+    $http.get(config.api + "transactions" + "/count" + "?where[ordertype]=" + "bill").then(function (response) {
+
+        $scope.poCount = response.data.count;
+        $scope.billNo = 'BIll' + $scope.poCount;
+    });
+
+
+    // add item po to bill
+    $scope.addtoBill = function (index) {
+
+
+        $scope.billtable = $scope.polist[index].itemDetail;
+        $scope.amount = $scope.polist[index].amount;
+
+
+    }
+
+    //get selected name and email of selected supplier
+    $scope.$watch('sup', function () {
+       
+        
+        if ($scope.sup != "undefind") {
+
+            $scope.supplier = $scope.sup;
+
+            $http.get(config.api + 'suppliers' + '?filter[where][company]=' + $scope.supplier)
+        .success(function (data) {
+            $scope.supEmail = data;
+            $scope.email = data[0].email;
+
+        });
+
+            $http.get(config.api + 'transactions' + '?filter[where][supliersName]=' + $scope.supplier + "&[filter][where][ordertype]=po")
+       .success(function (data) {
+           $scope.polist = data;
+
+
+       });
+
+        }
+       
+       
+    });
+
+
+    //get suppliers 
+
+    $http.get(config.api + 'suppliers' + '?filter[fields][company]=true')
+          .success(function (data) {
+              $scope.supliers = data;
+             
+          });
+    // save suppliers 
+    $scope.saveBill = function (index) {
+        
+        var data = {
+
+            supliersName: $scope.supplier,
+            email: $scope.email,
+            role: localStorage['adminrole'],
+            currency: $scope.currency,
+            date: $scope.billDate,
+            billDueDate: $scope.billDueDate,
+            ordertype: "bill",
+            no: $scope.billNo,
+                
+            itemDetail: $scope.billtable,
+            amount: $scope.amount,
+            balance: $scope.amount
+                
+        }
+        $http.post(config.api + "transactions", data).then(function (response) {
+            window.alert(" bill  Created")
+        });
+    };
+
+
+
+
+    
+
+   
 
 
 }]);

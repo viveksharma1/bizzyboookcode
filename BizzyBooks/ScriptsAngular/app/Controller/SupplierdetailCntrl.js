@@ -1,4 +1,4 @@
-﻿myApp.controller('SupplierdetailCntrl', ['$scope', '$http', '$timeout','myService', '$rootScope','$stateParams', '$state', function ($scope, $http, $timeout, $rootScope,$myService, $stateParams,$state) {
+﻿myApp.controller('SupplierdetailCntrl', ['$scope', '$http', '$timeout', 'myService', '$rootScope', '$stateParams', '$state', 'config', function ($scope, $http, $timeout, $rootScope, $myService, $stateParams, $state, config) {
 
     $(".my a").click(function (e) {
         e.preventDefault();
@@ -61,49 +61,21 @@
 
 
     //$scope.transaction = [];
+    $scope.company = $stateParams.contactId;
+    // get transaction for particular supplier
+    $scope.transaction = [];
+    $http.get(config.api + "transactions" + "?filter[where][email] =" + $scope.company).then(function (response) {
+        $scope.transaction = response.data;
+        console.log(response);
+    });
 
-    $scope.transaction = [
-        {
-
-            DATE: '23/07/2016',
-            TYPE: 'PO',
-            NO: '1001',
-            DUEDATE: '22/08/2016',
-            BALANCE: 'Rs0.00',
-            TOTAL: 'Rs0.00',
-            STATUS: 'Paid',
-            ACTION: 'Print'
-        },
-         {
-
-             DATE: '23/07/2016',
-             TYPE: 'Invoice',
-             NO: '1001',
-             DUEDATE: '22/08/2016',
-             BALANCE: 'Rs0.00',
-             TOTAL: 'Rs0.00',
-             STATUS: 'Paid',
-             ACTION: 'Print'
-         },
-          {
-
-              DATE: '23/07/2016',
-              TYPE: 'Bill',
-              NO: '1001',
-              DUEDATE: '22/08/2016',
-              BALANCE: 'Rs0.00',
-              TOTAL: 'Rs0.00',
-              STATUS: 'Unpaid',
-              ACTION: 'Print'
-          }
-
-    ];
+    
     $scope.suppliers = [];
     console.log($stateParams.contactId);
-    $scope.company = $stateParams.contactId;
-    var url = "http://localhost:4000/api/suppliers";
+   
+   
     $scope.supplierscount = [];
-    $http.get(url + "?filter[where][email] =" + $scope.company).then(function (response) {
+    $http.get(config.api +"suppliers"+ "?filter[where][email] =" + $scope.company).then(function (response) {
         $scope.suppliers = response.data;
        console.log(response);
         
@@ -125,9 +97,9 @@
     
   
          $scope.street1 =   $scope.suppliers[0].shippingAddress[0].street,
-         $scope.city1 = $scope.suppliers[0].shippingAddress[1].city,
-         $scope.state1 = $scope.suppliers[0].shippingAddress[1].state,
-         $scope.postalCode1 =   $scope.suppliers[0].shippingAddress[1].postalCode,
+         $scope.city1 = $scope.suppliers[0].shippingAddress[0].city,
+         $scope.state1 = $scope.suppliers[0].shippingAddress[0].state,
+         $scope.postalCode1 =   $scope.suppliers[0].shippingAddress[0].postalCode,
    
   
          $scope.taxRegNo =   $scope.suppliers[0].taxInfo[0].taxRegNo,
@@ -223,10 +195,9 @@
 
         }
 
-        var webService = 'suppliers';
-        var webService1 = 'supplierscounts';
+       
 
-        $http.post(url + "/update" + "?[where][email]=" + supplier, data).then(function (response) {
+        $http.post(config.api +"suppliers" + "/update" + "?[where][email]=" + supplier, data).then(function (response) {
            
 
 
@@ -240,19 +211,11 @@
           
         }
 
-        var webService = 'suppliers';
-        var webService1 = 'supplierscounts';
+       
+       
 
-      
-        $http.post("http://localhost:4000/api/supplierscounts" + "/update" + "?[where][email]=" + supplier, data1).then(function (response) {
-
-
-
-            console.log(supplier);
-            console.log(response.data);
-        });
-
-        $scope.supplierscount.push(data1);
+     
+        $scope.suppliers.push(data1);
 
 
 

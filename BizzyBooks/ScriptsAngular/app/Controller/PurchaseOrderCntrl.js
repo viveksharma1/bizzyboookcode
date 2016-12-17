@@ -1,6 +1,6 @@
-﻿myApp.controller('PurchaseOrderCntrl', ['$scope', '$http', '$stateParams', '$timeout', '$rootScope', '$state', function ($scope, $http,$stateParams, $timeout, $rootScope, $state) {
+﻿myApp.controller('PurchaseOrderCntrl', ['$scope', '$http', '$stateParams', '$timeout', '$rootScope', '$state', 'config', 'DTOptionsBuilder', 'DTDefaultOptions', function ($scope, $http, $stateParams, $timeout, $rootScope, $state, config, DTOptionsBuilder, DTDefaultOptions) {
 
-
+   
     $('#dueDate').hide();
     $(".my a").click(function (e) {
         e.preventDefault();
@@ -23,7 +23,7 @@ $(".Additem").click(function () {
 
 
     $('#BillDate').datepicker("setDate", new Date());
-    $('#DueDate').datepicker("setDate", new Date());
+    $('#billDueDate').datepicker("setDate", new Date());
 
 
     var files, res;
@@ -51,7 +51,7 @@ $(".Additem").click(function () {
     $(document).on("click", "#upload_prev span", function () {
         res.splice($(this).index(), 1);
         $(this).remove();
-        console.log(res);
+
 
     });
 
@@ -62,11 +62,11 @@ $(".Additem").click(function () {
     },
 
     $scope.CommodityRatesbtn = function () {
-    $('#CommodityRatesDiv').modal('show');
-   },
+        $('#CommodityRatesDiv').modal('show');
+    },
 
     $('.addexchange').click(function () {
-    $('.modalbodyexchange').append('<div class="ExchangeLine"><div class="col-sm-5 padding5"><select class="form-control selectcss">         <option>Indonesian rupiah</option><option>Indian rupee</option></select></div><div class="col-sm-5 padding5"><input type="text" class="form-control" /></div><div class="col-sm-2 padding5 delete"><i class="fa fa-trash"></i> Delete</div></div>');
+        $('.modalbodyexchange').append('<div class="ExchangeLine"><div class="col-sm-5 padding5"><select class="form-control selectcss">         <option>Indonesian rupiah</option><option>Indian rupee</option></select></div><div class="col-sm-5 padding5"><input type="text" class="form-control" /></div><div class="col-sm-2 padding5 delete"><i class="fa fa-trash"></i> Delete</div></div>');
     });
 
     $(document).on('click', '.delete', function () {
@@ -98,8 +98,19 @@ $(".Additem").click(function () {
      $scope.AddTableLine = function () {
          $('#ItemTable tr:last').after('<tr class="Countedit"><td class="Count">&nbsp;</td><td class="Count" style="text-align:center;">&nbsp;</td><td class="Count" style="text-align:center">&nbsp;</td><td class="Count" style="text-align:center">&nbsp;</td><td class="Count" style="text-align:center">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="Count" style="text-align:right">&nbsp;</td><td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-pencil" style="font-size:16px"></i></a></td><td class="Count2"><ui-tree-select model="model"></ui-tree-select></td><td class="Count2" style="text-align:center;"><input type="text" class="form-control" value="" /></td><td class="Count2" style="text-align:center;"><input type="text" class="form-control text-center" value="" /> </td><td class="Count2" style="text-align:center;"><input type="text" class="form-control text-center" value="" /></td><td class="Count2" style="text-align:center;"><input type="text" class="form-control text-center" value="" /></td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /></td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="Count2" style="text-align:right"><input type="text" class="form-control text-right" value="" /> </td><td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td></tr>');
      }
+    //suppliers popup
 
-   
+    $scope.add = function () {
+
+        $('#form-popoverPopup').show();
+
+
+    }
+    $('#example').dataTable({
+        "oLanguage": {
+            "sProcessing": "DataTables is currently busy"
+        }
+    });
   
     // Get currency rate
 
@@ -120,7 +131,7 @@ $(".Additem").click(function () {
                 alert('1 USD is worth ' + parseFloat(response.rate).toFixed(2) + ' EUR');
             }
 
-            console.log(response);
+            
         }
     });
 
@@ -132,72 +143,73 @@ $(".Additem").click(function () {
     $http.get(url).then(function (response) {
 
         $scope.data = response.data;
-        console.log($scope.data);
-        console.log(response);
-        console.log(response.data.quotes.USDINR);
+      
         $('#rs').val(response.data.quotes.USDINR);
-        $('#rs1').val(response.data.quotes.USDIDR,'IDR');
+        $('#rs1').val(response.data.quotes.USDIDR, 'IDR');
 
+        $scope.ExchangeRate = Math.round(response.data.quotes.USDINR); 
     });
 
     
-    $('#amount').val('fffsfsff');
-
-
-
-
-    $scope.purchageorder = [];
-
-   
-    
-    $scope.item = [];
-
-    $scope.item = [[{ PRODUCT: "Stainless Steel Coil", FINISH: '2B', GRADE: '377', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "nickel", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "Steel Coil", FINISH: '7B', GRADE: '357', THICKNESS: '0.56', WIDTH: '1255', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "Baby Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }],
-    [{ PRODUCT: "nickel Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '51', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "Baby Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: " Nickel Coil", FINISH: '6B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1323', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "Baby Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }],
-     [{ PRODUCT: "Baby Coil", FINISH: '5B', GRADE: '237', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '9', RATE: '125.00', AMOUNT: '525.00', TAX: '0.00' }, { PRODUCT: "Baby Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "Iron Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '5454', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "Baby Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }],
-     [{ PRODUCT: "Steel Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '8', RATE: '125.00', AMOUNT: '325.00', TAX: '0.00' }, { PRODUCT: "Baby Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "Iron  Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1455', DESCRIPTION: '', QTY: '1', RATE: '125.00', AMOUNT: '125.00', TAX: '0.00' }, { PRODUCT: "Steel Coil", FINISH: '2B', GRADE: '307', THICKNESS: '0.56', WIDTH: '1234', DESCRIPTION: '', QTY: '5', RATE: '600.00', AMOUNT: '125.00', TAX: '0.00' }]];
-    
-   // $scope.name1 = $scope.purchageorder[0].name;
-   // $scope.email = $scope.purchageorder[0].email;
-    //$scope.phone = $scope.purchageorder[0].phone;
-    //$scope.add = function (i) {
-
-        //$('#dsc').val('fffsfsff');
-        //$('#amount').val('fffsfsff');
-
-        $scope.table = "dfdsff";
-        $('#txtarea').val('Mumbai , Mahrashtra');
-        $('#dsc').val('Cold rolled stainless steel sheets/plates/coils cut - exstock');
-        // $('#name').show(purchageorder[0].name);
-
-        // $scope.name1 = $scope.purchageorder.name;
-       // $scope.name1 = $scope.purchageorder[i].name;
-       // $scope.email = $scope.purchageorder[i].email;
-       // $scope.phone = $scope.purchageorder[i].phone;
-
    
 
 
-    //$scope.name1 = $scope.purchageorder[i].name;
 
-
+    
+   
+    
+    
     $scope.rate1="$683.42";
     $scope.rate2 = "$440";
     $scope.rate3="$6833.42";
    
+    //get suppliers
+    $http.get(config.api + 'suppliers' + '?filter[fields][company]=true')
+          .success(function (data) {
+              $scope.supliers = data;
+              
+          });
+    //get selected suppliers
+    $scope.$watch('sup', function () {
+        $(".sk-wave").show()
+
+        if ($scope.sup != "undefind") {
+
+            $scope.supplier = $scope.sup;
+
+            $http.get(config.api + 'suppliers' + '?filter[where][company]=' + $scope.supplier)
+             .success(function (data) {
+                 $scope.supEmail = data;
+                 $scope.email = data[0].email;
+
+             });
+        }
+       
+        
+
+        $http.get(config.api + "transactions" + "?filter[where][ordertype]=" + "enquiry" + "&filter[where][supliersName]=" + $scope.sup).then(function (response) {
+          
+            $scope.enquiryList = response.data;
+            if ($scope.enquiryList.length == 0) {
+                $("#noData").show()
+                $scope.noData = "No Enquiry";
+            }
+            else {
+                $("#noData").hide()
+               
+
+               
+            }
+            $(".sk-wave").hide()
+
+        });
+    });
 
 
     //get enquiry list 
 
-    $scope.enquiryList = [];
-    var url = "http://localhost:4000/api/enquiries";
-    $http.get(url).then(function (response) {
-        $scope.enquiryList = response.data;
-        console.log($scope.enquiryList);
-        console.log($scope.enquiryList[0].itemDetail);
-    });
-
-    $scope.poTable = [];
+    //  $scope.enquiryList = [];
+    
     $scope.index = 0;
     var i = 0
     $scope.subtotal = 0;
@@ -205,10 +217,10 @@ $(".Additem").click(function () {
     
     $scope.role;
     $scope.admin = localStorage['adminrole'];
-    console.log($scope.admin);
+  
 
     // add item row to  po table 
-
+    $scope.poTable = [];
     $scope.addrow = function () {
         if (localStorage['adminrole'] == 1) {
 
@@ -231,7 +243,7 @@ $(".Additem").click(function () {
             );
         }
         if (localStorage['adminrole'] == 2) {
-            console.log($rootScope.role);
+          
             $scope.poTable.push(
                {
 
@@ -249,8 +261,35 @@ $(".Additem").click(function () {
                }
            );
         }
+        if (localStorage['adminrole'] == 3) {
 
 
+           
+            $scope.poTable.push(
+               {
+
+
+                   grade: '',
+                   finish: '',
+                   thickness: '',
+                   width: '',
+                   length: '',
+                   netweight: '',
+                   grossweight: '',
+                   sheetNo: '',
+                   fobRate: '',
+                   cif: '',
+                   miscCharge: '',
+
+                   charges: '',
+                   adminCharge: ''
+
+               }
+
+           );
+
+           
+        }
         // calculating  total amount
         var total = 0;
         for (var i = 0; i < $scope.poTable.length; i++) {
@@ -259,7 +298,7 @@ $(".Additem").click(function () {
         }
         $scope.subtotalnew = total;
 
-        console.log(total);
+        // console.log(total);
 
 
 
@@ -275,31 +314,24 @@ $(".Additem").click(function () {
         }
         $scope.subtotalnew = total;
 
-        console.log(total);
-
-
-
-
+        
     }
 
     // remove po table row 
+
     $scope.remove = function (index) {
 
-        $http.get("http://localhost:4000/api/purchaseOrders" + "/getPo", { headers: { 'tokan': localStorage['token'] } }).then(function (response) {
-
-            console.log(response);
-        });
-      
-            $scope.poTable.splice(index, 1);
-            var total = 0;
-            for (var i = 0; i < $scope.poTable.length; i++) {
-                var product = Number($scope.poTable[i]);
-                total += Number($scope.poTable[i].charges);
-            }
-            $scope.subtotalnew = total;
+    
+        $scope.poTable.splice(index, 1);
+        var total = 0;
+        for (var i = 0; i < $scope.poTable.length; i++) {
+            var product = Number($scope.poTable[i]);
+            total += Number($scope.poTable[i].charges);
+        }
+        $scope.subtotalnew = total;
 
          
-        }
+    }
     
     // add enquiry item detail to po item detail
 
@@ -307,7 +339,7 @@ $(".Additem").click(function () {
 
 
         $scope.poTable = $scope.enquiryList[index].itemDetail;
-        console.log(index);
+       
 
 
     }
@@ -318,55 +350,138 @@ $(".Additem").click(function () {
         $scope.poTable = [];
 
     }
-    $scope.email = $stateParams.email;
 
-    // po count 
-    $http.get("http://localhost:4000/api/purchaseOrders" + "/count").then(function (response) {
+    //state params variable
 
-        $scope.poCount = response.data.count;
-        $scope.poNo = 'PO' + $scope.poCount;
-    });
-
-    console.log($scope.email);
-
-    //save purchase order
-
-    $scope.savePurchaseOrder = function (index) {
-        console.log($scope.poTable);
-
-        var index = 0;
-        var data = {
-
-            supliersName: '',
-            email: $scope.email,
-            role: localStorage['adminrole'],
-            currency: $scope.currency,
-            poDate: $scope.poDate,
-            poDueDate: $scope.poDueDate,
-            poNo: $scope.poNo,
-            
-            itemDetail: $scope.poTable,
-            amount: $scope.subtotalnew
-        }
-        console.log(data);
-        var url = "http://localhost:4000/api/purchaseOrders";
-        $http.post(url, data).then(function (response) {
-
-        });
+    $scope.no = $stateParams.poNo;
+    $scope.edit = $stateParams.edit;
+    $scope.enqNo = $stateParams.enqNo;
+   
+    $scope.model = {
         
-        // incriment po count
-        var datacount = {
+       
 
-            email: $scope.email
-        }
-        $http.post("http://localhost:4000/api/supplierscounts/incrimentPo", datacount).then(function (response) {
-
-        });
-
-
-
-    }
-
+};
+   
    
 
+    //save suppliers
+
+    $scope.saveSuppliers = function () {
+
+        var data = {
+
+            company: $scope.suppliersName,
+            email: $scope.email1,
+            mobile: $scope.mobile
+
+        }
+
+        $http.post(config.api + "suppliers", data)
+        .success(function (data) {
+
+        });
+
+    }
+        // po count 
+      
+    //get po Lis
+
+        if ($scope.edit == 1) {
+            $scope.poNo = $scope.enqNo;
+       
+            $http.get(config.api + "transactions" + "?filter[where][no]=" + $scope.enqNo).then(function (response) {
+
+
+            //console.log(response);
+            $scope.supplier = response.data[0].supliersName;
+               
+            $scope.email = response.data[0].email;
+            $scope.poDate = response.data[0].date;
+            $scope.poDueDate = response.data[0].billDueDate;
+            $scope.poNo = $scope.enqNo;
+            $scope.poTable = response.data[0].itemDetail;
+        });
+
+
+        }
+
+        else
+        {
+
+            $http.get(config.api + "transactions" + "/count" + "?where[ordertype]=" + "po").then(function (response) {
+
+                $scope.poCount = response.data.count;
+                $scope.poNo = 'PO' + $scope.poCount;
+            });
+
+            $http.get(config.api + "transactions" + "?filter[where][no]=" + $scope.no).then(function (response) {
+
+
+                //console.log(response);
+
+                $scope.email = response.data[0].email;
+                $scope.supplier = response.data[0].supliersName;
+               
+              
+                $scope.poTable = response.data[0].itemDetail;
+            });
+        }
+
+        //save purchase order
+
+        $scope.savePurchaseOrder = function (index) {
+            console.log($scope.poTable);
+
+            var index = 0;
+
+            if ($scope.edit == 1) {
+                $scope.poNo = $stateParams.enqNo;
+                var data = {
+
+                    supliersName: $scope.supplier,
+                    email: $scope.email,
+                    role: localStorage['adminrole'],
+                    currency: $scope.currency,
+                    date: $scope.poDate,
+                    billDueDate: $scope.poDueDate,
+                    ordertype: "po",
+                    no: $scope.poNo,
+                    status: [$scope.status],
+                    itemDetail: $scope.poTable,
+                    amount: $scope.subtotalnew,
+                    exchangeRate: $scope.ExchangeRate
+                }
+              
+                $http.post(config.api + "transactions" + "/update" + "?[where][no]=" + $scope.poNo, data).then(function (response) {
+
+                    window.alert(" po  is edited")
+                });
+            }
+            else {
+                var data = {
+
+                    
+                    supliersName: $scope.supplier,
+                    email: $scope.email,
+                    role: localStorage['adminrole'],
+                    currency: $scope.currency,
+                    date: $scope.poDate,
+                    billDueDate: $scope.poDueDate,
+                    ordertype: "po",
+                    no: $scope.poNo,
+                    status: [$scope.status],
+                    itemDetail: $scope.poTable,
+                    amount: $scope.subtotalnew,
+                    exchangeRate:$scope.ExchangeRate
+                }
+                $http.post(config.api + "transactions", data).then(function (response) {
+                    window.alert(" po  is saved")
+                });
+            }
+
+
+        }
+    
 }]);
+

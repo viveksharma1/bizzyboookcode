@@ -6,8 +6,9 @@
 
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
 
-
 <script type="text/ng-template" id="/ui-tree-select.html">
+
+    
     <ui-select ng-model="model.$selected"
                ui-select-focuser
                theme="selectize">
@@ -31,7 +32,9 @@
 
 
 
-<div ng-init="model = {}">
+<div id="upperdivId" ng-init="model = {}">
+
+
 
 
 
@@ -53,14 +56,14 @@
 
             </div>
 
-        
+
 
             <div class="panel-body statusBody">
                 <div class="col-sm-2 cursor padding">
 
                     <div class="col-sm-12 estimate" ng-click="SuppliersTablebtn()" style="background:#e91e63">
                         <span class="rupee">&nbsp;</span>
-                        <p class="text-uppercase marginbottom status" >{{suppliersCount.count}} suppliers</p>
+                        <p class="text-uppercase marginbottom status">{{suppliersCount.count}} suppliers</p>
                     </div>
 
                 </div>
@@ -77,8 +80,8 @@
                 <div class="col-sm-2 cursor padding">
 
                     <div class="col-sm-12 estimate blue" ng-click="PurchaseOrderTable()">
-                        <span class="rupee">Rs 50,000</span>
-                        <p class="text-uppercase marginbottom status">3 Purchase Order</p>
+                        <span class="rupee">&nbsp; </span>
+                        <p class="text-uppercase marginbottom status">{{purchaseCount.count}} Purchase Order</p>
                     </div>
 
                 </div>
@@ -86,42 +89,47 @@
 
                     <div class="col-sm-12 estimate bg-yellow padding" ng-click="OpenBillTable()">
                         <div class="col-sm-7" style="padding:10px">
-                            <span class="rupee">Rs 10,000</span>
-                            <p class="text-uppercase marginbottom status">5 OPEN BILL</p>
+                            <span class="rupee">Rs {{totalpoAmount.code[0].total}}</span>
+                            <p class="text-uppercase marginbottom status">{{billCount.count}} OPEN BILL</p>
                         </div>
-                        <div class="col-sm-5 estimate bg-red overduebox" ng-click="OverdueTable()">
-                            <span class="rupee">Rs 50,000</span>
-                            <p class="text-uppercase marginbottom status">3 overdue Bills</p>
-                        </div>
+                        @*
+                            <div class="col-sm-5 estimate bg-red overduebox" ng-click="OverdueTable()">
+                                <span class="rupee">Rs 50,000</span>
+                                <p class="text-uppercase marginbottom status">3 overdue Bills</p>
+                            </div>
+                        *@
                     </div>
                 </div>
-                <div class="col-sm-2 cursor padding">
 
-                    <div class="col-sm-12 estimate bg-green" ng-click="PaidBillbtn()">
-                        <span class="rupee">Rs 55,000</span>
-                        <p class="text-uppercase marginbottom status">5 Bills Paid last 30 days</p>
-                    </div>
-                </div>
-            </div>
+    <div class="col-sm-2 cursor padding">
+
+        <div class="col-sm-12 estimate bg-green" ng-click="PaidBillbtn()">
+            <span class="rupee">Rs 55,000</span>
+            <p class="text-uppercase marginbottom status"> Open bills</p>
         </div>
-        @*<span class="pulltab" id="menuUp" ng-click="menuUp();"><i class="fa fa-chevron-up"></i> </span>*@
+    </div>
+
+        </div>
+    </div>
+
+    @*<span class="pulltab" id="menuUp" ng-click="menuUp();"><i class="fa fa-chevron-up"></i> </span>*@
 
 
 
         <div class="col-sm-12" style="padding-top:37px">
 
             <div class="dropdown pull-left" style="margin-bottom:10px">
+        @*
+    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" style="text-align:left">
+        Batch actions
+        <i class="fa fa-caret-down pull-right" style="margin-top:3px"></i>
+    </button>
 
-                <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" style="text-align:left">
-                    Batch actions
-                    <i class="fa fa-caret-down pull-right" style="margin-top:3px"></i>
-                </button>
+    <ul class="dropdown-menu my">
+        <li><a href="#" style="font-weight:bold">Email</a></li>
 
-                <ul class="dropdown-menu my">
-                    <li><a href="#" style="font-weight:bold">Email</a></li>
-
-                </ul>
-
+    </ul>
+        *@
             </div>
 
             <div class="pull-right">
@@ -129,39 +137,50 @@
                 <i class="fa fa-clipboard tableicon" title="Export to excel"></i>
                 <i class="fa fa-gear tableicon" title="Settingd"></i>
             </div>
-            
-               
-          
+
+
+
+            <div class="sk-wave">
+                <div class="sk-rect sk-rect1"></div>
+                <div class="sk-rect sk-rect2"></div>
+                <div class="sk-rect sk-rect3"></div>
+                <div class="sk-rect sk-rect4"></div>
+                <div class="sk-rect sk-rect5"></div>
+            </div>
+
+
+
             <div id="example">
-                <table datatable ="ng"class="table table-striped table-bordered" cellspacing="0" width="100%" dt-options="dtOptions" dt-columns="dtColumns">
+                <table datatable="ng" class="table table-striped table-bordered" cellspacing="0" width="100%" dt-options="dtOptions" dt-columns="dtColumns">
                     <thead style="background:#e3eaf3; color:#486C8F; text-transform:uppercase">
                         <tr>
-                            <th style="padding-left:30px; width:30px"><input type="checkbox" class="checkboxcss" /></th>
+                            <th style="padding-left:30px; width:30px"></th>
                             <th class="fontnormal">Company Name </th>
                             <th class="fontnormal">Email</th>
-                            <th class="fontnormal">Enquiries</th>
-                            <th class="fontnormal">Purchase Order</th>
-                            <th style="background:#c0d0e4">Open Bill</th>
+                            <th class="fontnormal">contact No</th>
+                            <th class="fontnormal">Oppening Balance</th>
+
                             <th class="fontnormal text-right">Action</th>
                         </tr>
                     </thead>
 
+
                     <tbody>
-                        <tr ng-repeat="data in supplierscount">
+                        <tr ng-repeat="data in suppliers">
                             <td style="padding-left:30px; width:30px"><input type="checkbox" class="checkboxcss" /></td>
-                            <td><a href="#/Customer/Supplierdetail{{data.email}}" style="color:#000">{{data.companyName}}<br /><small class="text-info">2 Enquiry</small></a></td>
+                            <td><a href="#/Customer/Supplierdetail{{data.email}}" style="color:#000">{{data.company}}<br /></a></td>
                             <td>{{data.email}}</td>
-                            <td>{{data.enquiry}}</td>
-                            <td>{{data.po}}</td>
-                            <td>{{data.openBill}}</td>
-                              
+                            <td>{{data.mobile}}</td>
+                            <td>{{data.paymentInfo[0].openingBalance}}</td>
+
+
                             <td style="text-align:right; width:150px">
-                                <button type="button" class="editbtn"><a href="#/Customer/Enquiry{{data.email}}">Add Enquiry</a></button>
+                                <button type="button" class="editbtn"><a href="#/Customer/Enquiry">Add Enquiry</a></button>
                                 <class class="linkseparator" style="margin-top:4px; margin-right:0px">|</class>
                                 <div class="btn-group editcaret">
                                     <i class="fa fa-caret-down cursor" dropdown-toggle" data-toggle="dropdown"></i>
                                     <ul class="dropdown-menu editdrpdwn" role="menu" style="left:-135px">
-                                        <li><a ui-sref="Customer.Enquiry({email:data.email})">Add Enquiry</a></li>
+                                        <li><a ui-sref="Customer.Enquiry({email:data.company})">Add Enquiry</a></li>
                                         <li><a ui-sref="Customer.PurchaseOrder({email:data.email})">Create Purchase Order</a></li>
                                         <li><a href="#/Customer/Bill">Create Bill</a></li>
                                         <li><a href="#/Customer/CreateInventory">Create Inventory</a></li>
@@ -178,55 +197,12 @@
 
                 </table>
             </div>
-                            @*
-            </div>"
-        <table id="SuppliersTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
-            <thead style="background:#e3eaf3; color:#486C8F; text-transform:uppercase">
-                <tr>
-                    <th style="padding-left:30px; width:30px"><input type="checkbox" class="checkboxcss" /></th>
-                    <th class="fontnormal">Company Name </th>
-                    <th class="fontnormal">Email</th>
-                    <th class="fontnormal">Enquiries</th>
-                    <th class="fontnormal">Purchase Order</th>
-                    <th style="background:#c0d0e4">Open Bill</th>
-                    <th class="fontnormal text-right">Action</th>
-                </tr>
-            </thead>
-
-            <tbody ng-repeat="data in suppliers">
-                <tr>
-                    <td style="padding-left:30px; width:30px"><input type="checkbox" class="checkboxcss" /></td>
-                    <td><a href="#/Customer/Supplierdetail" style="color:#000">{{data.suppliers}}<br /> <small class="text-info">2 Enquiry</small></a></td>
-                    <td>{{data.email}}</td>
-                    <td>{{data.enquiryNo}}</td>
-                    <td>{{data.purchageOrder}}</td>
-                    <td>{{data.OpenBill}}</td>
-                    <td style="text-align:right; width:150px">
-                        <button type="button" class="editbtn"><a href="#/Customer/MakePayment">{{data.action}}</a></button>
-                        <class class="linkseparator" style="margin-top:4px; margin-right:0px">|</class>
-                        <div class="btn-group editcaret">
-                            <i class="fa fa-caret-down cursor" dropdown-toggle" data-toggle="dropdown"></i>
-                            <ul class="dropdown-menu editdrpdwn" role="menu" style="left:-135px">
-                                <li><a href="#/Customer/Enquiry">Add Enquiry</a></li>
-                                <li><a href="#/Customer/PurchaseOrder">Create Purchase Order</a></li>
-                                <li><a href="#/Customer/Bill">Create Bill</a></li>
-                                <li><a href="#/Customer/CreateInventory">Create Inventory</a></li>
-                                <li><a href="#/Customer/Expense">Create expense</a></li>
-                                <li><a href="#/Customer/AdvancePayment">Create advance payment</a></li>
-                            </ul>
-
-                        </div>
-                    </td>
-                </tr>
 
 
 
-            </tbody>
-        </table>
-                         *@
-            <button class="btn btn-default btn-sm" type="button" ng-disabled="TransferCtrl.transfersFiltrated.length == 0" export-to-pdf>Export PDF</button>  
+
             <div id="EnquiryTable">
-                <table id="EnquiryTable" datatable="ng"class="table table-striped table-bordered" cellspacing="0" width="100%" dt-options="dtOptions" dt-columns="dtColumns">
+                <table id="EnquiryTable" datatable="ng" class="table table-striped table-bordered" cellspacing="0" width="100%" dt-options="dtOptions" dt-columns="dtColumns">
 
                     <thead style="background:#e3eaf3; color:#486C8F; text-transform:uppercase">
                         <tr>
@@ -245,16 +221,18 @@
                             <td>{{data.no}}</td>
                             <td>{{data.date}}</td>
                             <td style="color:red">{{data.billDueDate}}</td>
-                            <td><a href="#/Customer/Supplierdetail" style="color:#000">{{data.supliersName}}<br /> <small class="text-info">2 Enquiry</small></a></td>
+                            <td><a href="#/Customer/Supplierdetail{{data.email}}" style="color:#000">{{data.supliersName}}<br /> </a></td>
                             <td style="text-align:right; width:150px">
-                                <button type="button" class="editbtn"><a ui-sref="Customer.Enquiry({email:data.no,edit:1})">Edit</a></button>
-                             
+                                <button type="button" class="editbtn"><a ui-sref="Customer.PdfView({po:data.no,enq:1})">View</a></button>
+
                                 <class class="linkseparator" style="margin-top:4px; margin-right:0px">|</class>
                                 <div class="btn-group editcaret">
                                     <i class="fa fa-caret-down cursor" dropdown-toggle" data-toggle="dropdown"></i>
                                     <ul class="dropdown-menu editdrpdwn" role="menu" style="left:-135px">
-                                        <li><a href="">PDF</a></li>
-                                        <li><a href="#/Customer/PurchaseOrder">Create Purchase Order</a></li>
+
+                                        <li><a ui-sref="Customer.Enquiry({email:data.no,edit:1})">Edit</a></li>
+                                        <li><a ui-sref="Customer.PurchaseOrder({poNo:data.no})">Create Purchase Order</a></li>
+
                                         <li><a href="">Cancel</a></li>
 
                                     </ul>
@@ -269,7 +247,7 @@
                 </table>
             </div>
             <div id="PurchaseOrderTable">
-                <table  datatable="ng" class="table table-striped table-bordered" cellspacing="0" width="100%"dt-options="dtOptions" dt-columns="dtColumns">
+                <table datatable="ng" class="table table-striped table-bordered" cellspacing="0" width="100%" dt-options="dtOptions" dt-columns="dtColumns">
                     <thead style="background:#e3eaf3; color:#486C8F; text-transform:uppercase">
                         <tr>
                             <th style="padding-left:30px; width:30px"><input type="checkbox" class="checkboxcss" /></th>
@@ -283,23 +261,23 @@
                     </thead>
 
                     <tbody>
-                        <tr  ng-repeat="data in purchaseOrder">
+                        <tr ng-repeat="data in purchaseOrder">
                             <td style="padding-left:30px; width:30px"><input type="checkbox" class="checkboxcss" /></td>
-                            <td>{{data.poNo}}</td>
-                            <td>{{data.poDate}}</td>
-                            <td style="color:red">{{data.poDueDate}}</td>
+                            <td>{{data.no}}</td>
+                            <td>{{data.date}}</td>
+                            <td style="color:red">{{data.billDueDate}}</td>
                             <td>{{data.supliersName}}</td>
                             <td>{{data.amount}}</td>
                             <td style="text-align:right; width:150px">
-                                <button type="button" class="editbtn"><a href="#/Customer/Bill">{{data.action}}</a></button>
+                                <button type="button" class="editbtn"><a ui-sref="Customer.PdfView({po:data.no,enq:2})">View</a></button>
                                 <class class="linkseparator" style="margin-top:4px; margin-right:0px">|</class>
                                 <div class="btn-group editcaret">
                                     <i class="fa fa-caret-down cursor" dropdown-toggle" data-toggle="dropdown"></i>
                                     <ul class="dropdown-menu editdrpdwn" role="menu" style="left:-135px">
-                                        <li><a href="">Edit</a></li>
-                                        <li><a href="">PDF</a></li>
-                                        <li><a href="#/Customer/CreateInventory">Add PL</a></li>
-                                        <li><a href="#/Customer/Expense">Add expense</a></li>
+                                        <li><a ui-sref="Customer.PurchaseOrder({enqNo:data.no,edit:1})">Edit</a></li>
+
+
+                                        <li><a ui-sref="Customer.Bill({billNo:data.no})">Create Bill</a></li>
                                         <li><a href="">Cancel</a></li>
                                     </ul>
 
@@ -310,317 +288,324 @@
                     </tbody>
                 </table>
             </div>
+            <div id=OpenBill>
+                <table datatable="ng" class="table table-striped table-bordered" cellspacing="0" width="100%" dt-options="dtOptions" dt-columns="dtColumns">
+
+                    <thead style="background:#e3eaf3; color:#486C8F; text-transform:uppercase">
+                        <tr>
+                            <th style="padding-left:30px; width:30px"><input type="checkbox" class="checkboxcss" /></th>
+                            <th class="fontnormal">Suppliers / Company</th>
+                            <th class="fontnormal">Email</th>
+                            <th class="fontnormal">Bill no.</th>
+                            <th class="fontnormal">Bill Date</th>
+
+                            <th class="fontnormal">Bill Amount</th>
+                            <th style="background:#c0d0e4">Bal Amount</th>
+
+                            <th class="fontnormal text-right">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="data in bill">
+                            <td style="padding-left:30px; width:30px"><input type="checkbox" class="checkboxcss" /></td>
+                            <td>{{data.supliersName}}</td>
+                            <td>{{data.email}}</td>
+                            <td>{{data.no}}</td>
+                            <td>{{data.date}}</td>
+                            <td>{{data.amount}}</td>
+                            <td>{{data.balance}}</td>
+
+                            <td style="text-align:right; width:150px">
+                                <button type="button" class="editbtn"></button>
+                                <class class="linkseparator" style="margin-top:4px; margin-right:0px">|</class>
+                                <div class="btn-group editcaret">
+                                    <i class="fa fa-caret-down cursor" dropdown-toggle" data-toggle="dropdown"></i>
+                                    <ul class="dropdown-menu editdrpdwn" role="menu" style="left:-135px">
+                                        <li><a ui-sref="Customer.MakePayment({poNo:data.no})">Make Payment</a></li>
+                                        <li><a href="">Cancel</a></li>
+
+                                    </ul>
+
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div>
+                    <table id="PaidBillTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead style="background:#e3eaf3; color:#486C8F; text-transform:uppercase">
+                            <tr>
+                                <th style="padding-left:30px; width:30px"><input type="checkbox" class="checkboxcss" /></th>
+                                <th class="fontnormal">Suppliers / Company</th>
+                                <th class="fontnormal">Email</th>
+                                <th class="fontnormal">Bill no.</th>
+                                <th class="fontnormal">Bill Amount</th>
+                                <th style="background:#c0d0e4">Bal Amount</th>
+                                <th class="fontnormal text-right">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr ng-repeat="data in bill">
+                                <td style="padding-left:30px; width:30px"><input type="checkbox" class="checkboxcss" /></td>
+                                <td>{{data.suppliers}}</td>
+                                <td>{{data.email}}</td>
+                                <td>{{data.billno}}</td>
+                                <td>{{data.bilamt}}</td>
+                                <td>{{data.balamt}}</td>
+                                <td style="text-align:right; width:150px">
+                                    <button type="button" class="editbtn"><a href="#/Customer/MakePayment">{{data.action}}</a></button>
+                                    <class class="linkseparator" style="margin-top:4px; margin-right:0px">|</class>
+                                    <div class="btn-group editcaret">
+                                        <i class="fa fa-caret-down cursor" dropdown-toggle" data-toggle="dropdown"></i>
+                                        <ul class="dropdown-menu editdrpdwn" role="menu" style="left:-135px">
+                                            <li><a href="">Edit</a></li>
+                                            <li><a href="">Cancel</a></li>
+
+                                        </ul>
+
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
 
 
-    <table id="OpenBill" class="table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead style="background:#e3eaf3; color:#486C8F; text-transform:uppercase">
-            <tr>
-                <th style="padding-left:30px; width:30px"><input type="checkbox" class="checkboxcss" /></th>
-                <th class="fontnormal">Suppliers / Company</th>
-                <th class="fontnormal">Email</th>
-                <th class="fontnormal">Bill no.</th>
-                <th class="fontnormal">Bill Amount</th>
-                <th style="background:#c0d0e4">Bal Amount</th>
-                <th class="fontnormal text-right">Action</th>
-            </tr>
-        </thead>
 
-        <tbody ng-repeat="data in Bill">
-            <tr>
-                <td style="padding-left:30px; width:30px"><input type="checkbox" class="checkboxcss" /></td>
-                <td>{{data.suppliers}}</td>
-                <td>{{data.email}}</td>
-                <td>{{data.billno}}</td>
-                <td>{{data.bilamt}}</td>
-                <td>{{data.balamt}}</td>
-                <td style="text-align:right; width:150px">
-                    <button type="button" class="editbtn"><a href="#/Customer/MakePayment">{{data.action}}</a></button>
-                    <class class="linkseparator" style="margin-top:4px; margin-right:0px">|</class>
-                    <div class="btn-group editcaret">
-                        <i class="fa fa-caret-down cursor" dropdown-toggle" data-toggle="dropdown"></i>
-                        <ul class="dropdown-menu editdrpdwn" role="menu" style="left:-135px">
-                            <li><a href="">Edit</a></li>
-                            <li><a href="">Cancel</a></li>
 
-                        </ul>
 
-                    </div>
-                </td>
-            </tr>
+            @*New supplier*@
+            <div class="modal fade" id="NewCustomerCreateModal">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content content">
+                        <div class="modal-header popupheader content">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">Supplier Information</h4>
+                        </div>
+                        <div class="modal-body content" style="padding:0px 15px">
+                            <div class="col-sm-6 paddinright">
+                                <div class="col-sm-1 form-group padding5">
+                                    <label>Title</label>
+                                    <input type="text" ng-model="title" class="form-control" />
+                                </div>
+                                <div class="col-sm-3 form-group padding5">
+                                    <label>First name</label>
+                                    <input type="text" ng-model="firstName" class="form-control" />
+                                </div>
+                                <div class="col-sm-3 form-group padding5">
+                                    <label>Middle name</label>
+                                    <input type="text" ng-model="middleName" class="form-control" />
+                                </div>
+                                <div class="col-sm-3 form-group padding5">
+                                    <label>Last name</label>
+                                    <input type="text" ng-model="lastName" class="form-control" />
+                                </div>
+                                <div class="col-sm-2 form-group padding5">
+                                    <label>Suffix</label>
+                                    <input type="text" ng-model="suffix" class="form-control" />
+                                </div>
+                                <div class="col-sm-12 form-group padding5">
+                                    <label>Company</label>
+                                    <input type="text" ng-model="company" class="form-control" />
+                                </div>
+                                <div class="col-sm-12 form-group padding5">
+                                    <label><span class="red">*</span>Display name as</label>
+                                    <input type="text" ng-model="displayName" class="form-control" />
+                                </div>
+                            </div>
 
-        </tbody>
-    </table>
 
-    <table id="PaidBillTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead style="background:#e3eaf3; color:#486C8F; text-transform:uppercase">
-            <tr>
-                <th style="padding-left:30px; width:30px"><input type="checkbox" class="checkboxcss" /></th>
-                <th class="fontnormal">Suppliers / Company</th>
-                <th class="fontnormal">Email</th>
-                <th class="fontnormal">Bill no.</th>
-                <th class="fontnormal">Bill Amount</th>
-                <th style="background:#c0d0e4">Bal Amount</th>
-                <th class="fontnormal text-right">Action</th>
-            </tr>
-        </thead>
 
-        <tbody ng-repeat="data in Bill">
-            <tr>
-                <td style="padding-left:30px; width:30px"><input type="checkbox" class="checkboxcss" /></td>
-                <td>{{data.suppliers}}</td>
-                <td>{{data.email}}</td>
-                <td>{{data.billno}}</td>
-                <td>{{data.bilamt}}</td>
-                <td>{{data.balamt}}</td>
-                <td style="text-align:right; width:150px">
-                    <button type="button" class="editbtn"><a href="#/Customer/MakePayment">{{data.action}}</a></button>
-                    <class class="linkseparator" style="margin-top:4px; margin-right:0px">|</class>
-                    <div class="btn-group editcaret">
-                        <i class="fa fa-caret-down cursor" dropdown-toggle" data-toggle="dropdown"></i>
-                        <ul class="dropdown-menu editdrpdwn" role="menu" style="left:-135px">
-                            <li><a href="">Edit</a></li>
-                            <li><a href="">Cancel</a></li>
+                            <div class="col-sm-6 paddinright">
 
-                        </ul>
+                                <div class="col-sm-12 form-group padding5">
+                                    <label>Email</label>
+                                    <input type="text" ng-model="email" class="form-control" placeholder="Separate multiple emails with commas" />
+                                </div>
+                                <div class="col-sm-4 form-group padding5">
+                                    <label>Phone</label>
+                                    <input type="text" ng-model="phone" class="form-control" />
+                                </div>
+                                <div class="col-sm-4 form-group padding5">
+                                    <label>Mobile</label>
+                                    <input type="text" ng-model="mobile" class="form-control" />
+                                </div>
+                                <div class="col-sm-4 form-group padding5">
+                                    <label>Fax</label>
+                                    <input type="text" ng-model="fax" class="form-control" />
+                                </div>
+                                <div class="col-sm-4 form-group padding5">
+                                    <label>Other</label>
+                                    <input type="text" ng-model="other" class="form-control" />
+                                </div>
+                                <div class="col-sm-8 form-group padding5">
+                                    <label>Website</label>
+                                    <input type="text" ng-model="website" class="form-control" />
+                                </div>
 
-                    </div>
-                </td>
-            </tr>
+                                <div class="col-sm-12 form-group padding5">
+                                    <label><input type="checkbox" /> Is sub-customer</label>
 
-        </tbody>
-    </table>
+                                </div>
+                                <div class="col-sm-6 form-group padding5">
+                                    <input type="text" class="form-control" placeholder="Enter parent customer" />
+                                </div>
+                                <div class="col-sm-6 form-group padding5">
 
-</div>
+                                    <select data-dojo-type="dijit/form/ComboBox" class="form-control" id="CustomerBill"></select>
+                                </div>
 
+                            </div>
+
+                            <div class="col-sm-12 padding" style="padding-top:20px !important">
+                                <ul class="nav nav-tabs tabnav my">
+                                    <li class="active"><a href="#Address" data-toggle="tab"><i class="fa fa-map-marker"></i> Address</a></li>
+                                    <li><a href="#Notes" data-toggle="tab"><i class="fa fa-file"></i> Notes</a></li>
+                                    <li><a href="#TaxInfo" data-toggle="tab"><i class="fa fa-info"></i> Tax Info</a></li>
+                                    <li><a href="#Payment" data-toggle="tab"><i class="fa fa-money"></i> Payment and billing</a></li>
+                                    <li><a href="#Attachments" data-toggle="tab"><i class="fa fa-paperclip"></i> Attachments</a></li>
+                                </ul>
+
+                                <div class="tab-content tabcontent">
+
+                                    <div id="Address" class="tab-pane fade in active">
+                                        <div class="col-sm-6 padding">
+                                            <h4 class="tabheading">Billing Address</h4>
+                                            <div class="form-group col-sm-12 padding5">
+                                                <textarea class="form-control" ng-model="street" placeholder="Street"></textarea>
+                                            </div>
+                                            <div class="form-group col-sm-6 padding5">
+                                                <input type="text" class="form-control" ng-model="city" placeholder="City/Town" />
+                                            </div>
+                                            <div class="form-group col-sm-6 padding5">
+                                                <input type="text" class="form-control" ng-model="state" placeholder="State" />
+                                            </div>
+                                            <div class="form-group col-sm-6 padding5">
+                                                <input type="text" class="form-control" ng-model="postalCode" placeholder="Postal Code" />
+                                            </div>
+                                            <div class="form-group col-sm-6 padding5">
+                                                <input type="text" class="form-control" ng-model="country" placeholder="Country" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 padding">
+                                            <h4 class="tabheading">Shipping Address <small class="pull-right" style="line-height:13px"><input type="checkbox" class="pull-left" style="margin:0px" /> Same as billing address</small></h4>
+                                            <div class="form-group col-sm-12 padding5">
+                                                <textarea class="form-control" ng-model="street1" placeholder="Street"></textarea>
+                                            </div>
+                                            <div class="form-group col-sm-6 padding5">
+                                                <input type="text" class="form-control" ng-model="city1" placeholder="City/Town" />
+                                            </div>
+                                            <div class="form-group col-sm-6 padding5">
+                                                <input type="text" class="form-control" ng-model="state1" placeholder="State" />
+                                            </div>
+                                            <div class="form-group col-sm-6 padding5">
+                                                <input type="text" class="form-control" ng-model="postalCode1" placeholder="Postal Code" />
+                                            </div>
+                                            <div class="form-group col-sm-6 padding5">
+                                                <input type="text" class="form-control" ng-model="country1" placeholder="Country" />
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div id="Notes" class="tab-pane fade">
+                                        <h4 class="tabheading">Notes</h4>
+                                        <textarea class="form-control" ng-model="notes" style="height:100px"></textarea>
+                                    </div>
+
+                                    <div id="TaxInfo" class="tab-pane fade">
+                                        <div class="col-sm-4">
+                                            <label class="tabheading">Tax Reg. No.</label>
+                                            <input type="text" ng-model="taxRegNo" class="form-control" />
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label class="tabheading">CST Reg. No.</label>
+                                            <input type="text" ng-model="cstRegNo" class="form-control" />
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label class="tabheading">PAN No.</label>
+                                            <input type="text" ng-model="panNo" class="form-control" />
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <label class="tabheading"><input type="checkbox" /> Apply TDS for this customer</label>
+
+                                        </div>
+                                    </div>
+                                    <div id="Payment" class="tab-pane fade">
+                                        <div class="col-sm-4">
+                                            <label class="tabheading">Preferred payment method</label>
+                                            <select class="form-control" ng-model="paymentMethod">
+                                                <option>Cash</option>
+                                                <option>Cheque</option>
+                                                <option>Credit Card</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label class="tabheading">Terms</label>
+                                            <select class="form-control" ng-model="terms">
+                                                <option>Due on receipt</option>
+                                                <option>Net 15</option>
+                                                <option>Net 30</option>
+                                                <option>Net 60</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label class="tabheading">Preferred delivery method</label>
+                                            <select class="form-control" ng-model="deliveryMethod">
+                                                <option>Print later</option>
+                                                <option>Send later</option>
+                                                <option>None</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <label class="tabheading">Opening balance</label>
+                                            <input type="text" ng-model="openingBalance" class="form-control" />
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label class="tabheading">as of</label>
+                                            <div class='input-group' id='datetimepicker1'>
+                                                <input type='text' ng-model="asOf" class="form-control" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="Attachments" class="tab-pane fade">
+                                        <h4 class="tabheading">Attachments</h4>
+
+                                        <div class="attachmets">
+                                            <input type="file" />
+                                            <div>
+                                                <i class="fa fa-plus"></i>
+                                                <p>Add file</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer content">
+                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" ng-click="createNewSupplier()">Save changes</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+        </div>
     </div>
-
-
-
-
-
-    @*New supplier*@
-    <div class="modal fade" id="NewCustomerCreateModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content content">
-                <div class="modal-header popupheader content">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title">Supplier Information</h4>
-                </div>
-                <div class="modal-body content" style="padding:0px 15px">
-                    <div class="col-sm-6 paddinright">
-                        <div class="col-sm-1 form-group padding5">
-                            <label>Title</label>
-                            <input type="text" ng-model="title" class="form-control" />
-                        </div>
-                        <div class="col-sm-3 form-group padding5">
-                            <label>First name</label>
-                            <input type="text" ng-model="firstName" class="form-control" />
-                        </div>
-                        <div class="col-sm-3 form-group padding5">
-                            <label>Middle name</label>
-                            <input type="text" ng-model="middleName" class="form-control" />
-                        </div>
-                        <div class="col-sm-3 form-group padding5">
-                            <label>Last name</label>
-                            <input type="text" ng-model="lastName" class="form-control" />
-                        </div>
-                        <div class="col-sm-2 form-group padding5">
-                            <label>Suffix</label>
-                            <input type="text" ng-model="suffix" class="form-control" />
-                        </div>
-                        <div class="col-sm-12 form-group padding5">
-                            <label>Company</label>
-                            <input type="text" ng-model="company" class="form-control" />
-                        </div>
-                        <div class="col-sm-12 form-group padding5">
-                            <label><span class="red">*</span>Display name as</label>
-                            <input type="text" ng-model="displayName" class="form-control" />
-                        </div>
-                    </div>
-
-
-
-                    <div class="col-sm-6 paddinright">
-
-                        <div class="col-sm-12 form-group padding5">
-                            <label>Email</label>
-                            <input type="text" ng-model="email" class="form-control" placeholder="Separate multiple emails with commas" />
-                        </div>
-                        <div class="col-sm-4 form-group padding5">
-                            <label>Phone</label>
-                            <input type="text" ng-model="phone" class="form-control" />
-                        </div>
-                        <div class="col-sm-4 form-group padding5">
-                            <label>Mobile</label>
-                            <input type="text" ng-model="mobile" class="form-control" />
-                        </div>
-                        <div class="col-sm-4 form-group padding5">
-                            <label>Fax</label>
-                            <input type="text" ng-model="fax" class="form-control" />
-                        </div>
-                        <div class="col-sm-4 form-group padding5">
-                            <label>Other</label>
-                            <input type="text" ng-model="other" class="form-control" />
-                        </div>
-                        <div class="col-sm-8 form-group padding5">
-                            <label>Website</label>
-                            <input type="text" ng-model="website" class="form-control" />
-                        </div>
-
-                        <div class="col-sm-12 form-group padding5">
-                            <label><input type="checkbox" /> Is sub-customer</label>
-
-                        </div>
-                        <div class="col-sm-6 form-group padding5">
-                            <input type="text" class="form-control" placeholder="Enter parent customer" />
-                        </div>
-                        <div class="col-sm-6 form-group padding5">
-
-                            <select data-dojo-type="dijit/form/ComboBox" class="form-control" id="CustomerBill"></select>
-                        </div>
-
-                    </div>
-
-                    <div class="col-sm-12 padding" style="padding-top:20px !important">
-                        <ul class="nav nav-tabs tabnav my">
-                            <li class="active"><a href="#Address" data-toggle="tab"><i class="fa fa-map-marker"></i> Address</a></li>
-                            <li><a href="#Notes" data-toggle="tab"><i class="fa fa-file"></i> Notes</a></li>
-                            <li><a href="#TaxInfo" data-toggle="tab"><i class="fa fa-info"></i> Tax Info</a></li>
-                            <li><a href="#Payment" data-toggle="tab"><i class="fa fa-money"></i> Payment and billing</a></li>
-                            <li><a href="#Attachments" data-toggle="tab"><i class="fa fa-paperclip"></i> Attachments</a></li>
-                        </ul>
-
-                        <div class="tab-content tabcontent">
-
-                            <div id="Address" class="tab-pane fade in active">
-                                <div class="col-sm-6 padding">
-                                    <h4 class="tabheading">Billing Address</h4>
-                                    <div class="form-group col-sm-12 padding5">
-                                        <textarea class="form-control" ng-model="street" placeholder="Street"></textarea>
-                                    </div>
-                                    <div class="form-group col-sm-6 padding5">
-                                        <input type="text" class="form-control" ng-model="city" placeholder="City/Town" />
-                                    </div>
-                                    <div class="form-group col-sm-6 padding5">
-                                        <input type="text" class="form-control" ng-model="state" placeholder="State" />
-                                    </div>
-                                    <div class="form-group col-sm-6 padding5">
-                                        <input type="text" class="form-control" ng-model="postalCode" placeholder="Postal Code" />
-                                    </div>
-                                    <div class="form-group col-sm-6 padding5">
-                                        <input type="text" class="form-control" ng-model="country" placeholder="Country" />
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6 padding">
-                                    <h4 class="tabheading">Shipping Address <small class="pull-right" style="line-height:13px"><input type="checkbox" class="pull-left" style="margin:0px" /> Same as billing address</small></h4>
-                                    <div class="form-group col-sm-12 padding5">
-                                        <textarea class="form-control" ng-model="street1" placeholder="Street"></textarea>
-                                    </div>
-                                    <div class="form-group col-sm-6 padding5">
-                                        <input type="text" class="form-control" ng-model="city1" placeholder="City/Town" />
-                                    </div>
-                                    <div class="form-group col-sm-6 padding5">
-                                        <input type="text" class="form-control" ng-model="state1" placeholder="State" />
-                                    </div>
-                                    <div class="form-group col-sm-6 padding5">
-                                        <input type="text" class="form-control" ng-model="postalCode1" placeholder="Postal Code" />
-                                    </div>
-                                    <div class="form-group col-sm-6 padding5">
-                                        <input type="text" class="form-control" ng-model="country1" placeholder="Country" />
-                                    </div>
-                                </div>
-
-
-                            </div>
-                            <div id="Notes" class="tab-pane fade">
-                                <h4 class="tabheading">Notes</h4>
-                                <textarea class="form-control" ng-model="notes" style="height:100px"></textarea>
-                            </div>
-
-                            <div id="TaxInfo" class="tab-pane fade">
-                                <div class="col-sm-4">
-                                    <label class="tabheading">Tax Reg. No.</label>
-                                    <input type="text" ng-model="taxRegNo" class="form-control" />
-                                </div>
-                                <div class="col-sm-4">
-                                    <label class="tabheading">CST Reg. No.</label>
-                                    <input type="text" ng-model="cstRegNo" class="form-control" />
-                                </div>
-                                <div class="col-sm-4">
-                                    <label class="tabheading">PAN No.</label>
-                                    <input type="text" ng-model="panNo" class="form-control" />
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <label class="tabheading"><input type="checkbox" /> Apply TDS for this customer</label>
-
-                                </div>
-                            </div>
-                            <div id="Payment" class="tab-pane fade">
-                                <div class="col-sm-4">
-                                    <label class="tabheading">Preferred payment method</label>
-                                    <select class="form-control" ng-model="paymentMethod">
-                                        <option>Cash</option>
-                                        <option>Cheque</option>
-                                        <option>Credit Card</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label class="tabheading">Terms</label>
-                                    <select class="form-control" ng-model="terms">
-                                        <option>Due on receipt</option>
-                                        <option>Net 15</option>
-                                        <option>Net 30</option>
-                                        <option>Net 60</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label class="tabheading">Preferred delivery method</label>
-                                    <select class="form-control" ng-model="deliveryMethod">
-                                        <option>Print later</option>
-                                        <option>Send later</option>
-                                        <option>None</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <label class="tabheading">Opening balance</label>
-                                    <input type="text" ng-model="openingBalance" class="form-control" />
-                                </div>
-                                <div class="col-sm-4">
-                                    <label class="tabheading">as of</label>
-                                    <div class='input-group' id='datetimepicker1'>
-                                        <input type='text' ng-model="asOf" class="form-control" />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="Attachments" class="tab-pane fade">
-                                <h4 class="tabheading">Attachments</h4>
-
-                                <div class="attachmets">
-                                    <input type="file" />
-                                    <div>
-                                        <i class="fa fa-plus"></i>
-                                        <p>Add file</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer content">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" ng-click="createNewSupplier()">Save changes</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
 </div>

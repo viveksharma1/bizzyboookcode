@@ -130,7 +130,7 @@
                         <th>Net Weight</th>
                         <th>Gross Weight</th>
                         <th>Sheets</th>
-                        <th>Running Meter</th>
+                        @*<th>Running Meter</th>*@
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -147,23 +147,23 @@
                         <td style="padding:5px !important;">(MT)</td>
                         <td style="padding:5px !important;">(MT)</td>
                         <td style="padding:5px !important;">NOS.</td>
-                        <td style="padding:5px !important;">(MM)</td>
+                        @*<td style="padding:5px !important;">(MM)</td>*@
                         <td style="padding:5px !important;">&nbsp;</td>
                     </tr>
 
-                    <tr>
-                        <td>Baby Coil</td>
-                        <td>ECNU-2308159</td>
-                        <td>630798B</td>
-                        <td class="text-center">304</td>
-                        <td class="text-center">2B</td>
-                        <td class="text-center">0.80</td>
-                        <td class="text-center">1219</td>
-                        <td class="text-center">Coil</td>
-                        <td class="text-center">0.430</td>
-                        <td class="text-center">0.460</td>
-                        <td class="text-center">&nbsp;</td>
-                        <td class="text-center">&nbsp;</td>
+                    <tr ng-repeat="data in InventoryList">
+                        <td>{{data.Remarks}}</td>
+                        <td>{{data.ContainerNOS}}</td>
+                        <td>{{data.ParticularSheets}}</td>
+                        <td class="text-center">{{data.Grade}}</td>
+                        <td class="text-center">{{data.Finish}}</td>
+                        <td class="text-center">{{data.Thickness}}</td>
+                        <td class="text-center">{{data.Width}}</td>
+                        <td class="text-center">{{data.Length}}</td>
+                        <td class="text-center">{{data.NetWeight}}</td>
+                        <td class="text-center">{{data.GrossWeight}}</td>
+                        <td class="text-center">{{data.StockCount}}</td>
+                        @*<td class="text-center">&nbsp;</td>*@
                         <td style="text-align:right;">
                             <button type="button" class="editbtn" ng-click="GRNDetail()">Detail</button>
                             <class class="linkseparator" style="margin-top:4px; margin-right:0px">|</class>
@@ -177,7 +177,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    @*<tr>
                         <td style="padding:5px !important">&nbsp;</td>
                         <td colspan="12" class="tdheading" style="padding:5px !important"><strong>Coil</strong></td>
                     </tr>
@@ -314,9 +314,36 @@
 
                             </div>
                         </td>
-                    </tr>
+                    </tr>*@
                 </tbody>
             </table>
+            <div class="pagination-div" style="float:left; width:100%;">
+                Total :  {{TotalCount}} entries
+                <ul class="pagination pull-right" style="margin-top:-10px" >
+
+                    <li ng-class="DisablePrevPage()">
+
+                        <a href ng-click="prevPage()"> Prev</a>
+
+                    </li>
+
+                    <li ng-repeat="n in range()"
+                        ng-class="{active: n == currentPage}"
+                        ng-click="setPage(n)">
+
+                        <a href="">{{n+1}}</a>
+
+                    </li>
+
+                    <li ng-class="DisableNextPage()">
+
+                        <a href ng-click="nextPage()">Next </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
         </div>
 
 

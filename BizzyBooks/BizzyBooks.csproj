@@ -174,6 +174,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="css\angular-datatables.min.css" />
     <Content Include="css\bootstrap-select.min.css" />
+    <Content Include="css\bootstrap-theme.min.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\calendar\fullcalendar.css" />
     <Content Include="css\calendar\fullcalendar.min.css" />
@@ -202,6 +203,7 @@
     <Content Include="css\floatexamples.css" />
     <Content Include="css\ion.rangeSlider.css" />
     <Content Include="css\ion.rangeSlider.skinFlat.css" />
+    <Content Include="css\loader.css" />
     <Content Include="css\normalize.css" />
     <Content Include="css\select.min.css" />
     <Content Include="css\select2.css" />
@@ -216,6 +218,7 @@
     <Content Include="Global.asax" />
     <Content Include="images\bg.jpg" />
     <Content Include="images\bg2.png" />
+    <Content Include="images\captcha-bg.jpg" />
     <Content Include="images\captcha.png" />
     <Content Include="images\drop.png" />
     <Content Include="images\error.png" />
@@ -274,6 +277,9 @@
     <Content Include="js\jquery.js" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\jquery.scrollTo.js" />
+    <Content Include="js\jspdf.min.js" />
+    <Content Include="js\jszip.js" />
+    <Content Include="js\kendo.all.min.js" />
     <Content Include="js\modernizr.custom.js" />
     <Content Include="js\moment.js" />
     <Content Include="js\moment\moment.js" />
@@ -327,6 +333,7 @@
     <Content Include="fonts\scss\_stacked.scss" />
     <Content Include="fonts\scss\_variables.scss" />
     <Content Include="js\waitMe.js" />
+    <Content Include="js\xlsx.js" />
     <Content Include="ScriptsAngular\Angular\._ion.sound.min.js" />
     <Content Include="ScriptsAngular\Angular\angluar.ieCors.js" />
     <Content Include="ScriptsAngular\Angular\angular-datatables.js" />
@@ -360,6 +367,7 @@
     <Content Include="ScriptsAngular\app\Controller\CreateInventoryCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\CustomerCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\CustomerdetailCntrl.js" />
+    <Content Include="ScriptsAngular\app\Controller\CustomerPdfViewCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\EnquiryCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\EnquirydetailCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\ExpenseCntrl.js" />
@@ -371,6 +379,7 @@
     <Content Include="ScriptsAngular\app\Controller\InvoiceCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\LogisticsCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\MakePaymentCntrl.js" />
+    <Content Include="ScriptsAngular\app\Controller\PdfViewCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\PurchaseOrderCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\ReceivePaymentCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\SalesCntrl.js" />
@@ -447,6 +456,8 @@
     <Content Include="Views\Customer\AdvancePayment.cshtml" />
     <Content Include="Views\Customer\CreateInventory.cshtml" />
     <Content Include="Views\Customer\Enquirydetail.cshtml" />
+    <Content Include="Views\Customer\PdfView.cshtml" />
+    <Content Include="Views\Customer\CustomerPdfView.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -12,6 +12,7 @@ namespace Restaurant
 
             bundles.Add(new StyleBundle("~/bundles/appcss").Include(
                 "~/css/bootstrap.min.css",
+                "~/css/bootstrap-theme.min.css",
                 "~/css/selectize.bootstrap3.min.css",
                 "~/css/select.min.css",
                 "~/css/datepicker.css",
@@ -20,7 +21,8 @@ namespace Restaurant
                   "~/css/dataTables.min.css",
                    "~/css/angular-datatables.min.css",
                     "~/css/xeditable.css",
-                    "~/css/select2.css"
+                    "~/css/select2.css",
+                    "~/css/loader.css"
                 ));
 
 
@@ -61,14 +63,19 @@ namespace Restaurant
                        "~/js/xeditable.js", 
                         "~/js/xeditable.min.js",
                         "~/js/angular-mocks.js",
-                         "~/js/select2.min.js"
+                         "~/js/select2.min.js",
+                          "~/js/jspdf.min.js"
+
 
 
                ));
             bundles.Add(new ScriptBundle("~/bundles/appjs")
                 .Include(
+                   
+                  "~/js/jszip.js",
+                  "~/js/xlsx.js",
+                "~/js/kendo.all.min.js",
                 "~/js/custom.js",
-                //"~/js/ngtimeago.js",
                 "~/js/sweetalert-dev.js",
                 "~/js/SweetAlert.js",
                 "~/js/modernizr.custom.js",
@@ -104,7 +111,10 @@ namespace Restaurant
                  "~/ScriptsAngular/app/Controller/AdvancePaymentCntrl.js",
                  "~/ScriptsAngular/app/Controller/MakePaymentCntrl.js",
                  "~/ScriptsAngular/app/Controller/CreateInventoryCntrl.js",
-                  "~/ScriptsAngular/app/Controller/EnquirydetailCntrl.js"
+                  "~/ScriptsAngular/app/Controller/EnquirydetailCntrl.js",
+                  "~/ScriptsAngular/app/Controller/PdfViewCntrl.js",
+                   "~/ScriptsAngular/app/Controller/CustomerPdfViewCntrl.js"
+
 
                 ));
 

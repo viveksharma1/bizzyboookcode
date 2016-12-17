@@ -1,38 +1,25 @@
-﻿myApp.controller('SupplierCntrl', ['$scope', '$http', '$timeout', '$rootScope','myService', '$state' ,function ($scope, $http, $timeout,  $rootScope, myService, $state) {
+﻿myApp.controller('SupplierCntrl', ['$scope', '$http', '$timeout', '$rootScope', 'myService', '$state', 'config', '$location','DTOptionsBuilder', 'DTDefaultOptions', function ($scope, $http, $timeout, $rootScope, myService, $state, config, $location, DTOptionsBuilder, DTDefaultOptions) {
     $(".my a").click(function (e) {
         e.preventDefault();
     });
 
    
-
-    $scope.suppliers = [];
-   
-
-    var url = "http://localhost:4000/api/supplierscounts";
-    $scope.supplierscount = [];
-    $http.get(url).then(function (response) {
-        $scope.supplierscount = response.data;
-
-        console.log($scope.supplierscount[0].companyName);
-    });
-    $http.get(url + "/count").then(function (response) {
-
-        $scope.suppliersCount = response.data;
-    });
-
-    $scope.suppliersCounts1 = 'fetgfdghfdgfdgfdtewtew';
-    $http.get("http://localhost:4000/api/enquiries" + "/count", { headers: { 'tokan': $rootScope.tok } }).then(function (response) {
-
-        $scope.enquiryCount = response.data;
-    });
-    
-
+    $(".sk-wave").show()
     $('#PurchaseOrderTable').hide();
     $('#OpenBill').hide();
     $('#PaidBillTable').hide();
     $('#EnquiryTable').hide();
-   
+
     $scope.SuppliersTablebtn = function () {
+        $(".sk-wave").show()
+        $scope.suppliers;
+        $http.get(config.api + "suppliers").then(function (response) {
+            $(".sk-wave").hide()
+            // $scope.suppliers = [];
+            $scope.suppliers = response.data;
+            console.log($scope.suppliers);
+        });
+
         $('#example').show();
         $('#PurchaseOrderTable').hide();
         $('#EnquiryTable').hide();
@@ -41,15 +28,36 @@
     },
 
     $scope.PurchaseOrderTable = function () {
+       
+        $(".sk-wave").show()
+        $scope.purchaseOrder;
+        $http.get(config.api + "transactions" + "?filter[where][ordertype]=po" + "&filter[fields][supliersName]=true&filter[fields][date]=true&filter[fields][billDueDate]=true&filter[fields][no]=true&filter[fields][amount]=true").then(function (response) {
+            $(".sk-wave").hide()
+            // $scope.purchaseOrder = [];
+            $scope.purchaseOrder = response.data;
+
+
+        });
         $('#example').hide();
         $('#PurchaseOrderTable').show();
         $('#EnquiryTable').hide();
         $('#OpenBill').hide();
         $('#PaidBillTable').hide();
-       
+
     },
 
     $scope.OpenBillTable = function () {
+
+        $(".sk-wave").show()
+       
+        $scope.bill;
+        $http.get(config.api + "transactions" + "?filter[where][ordertype]=" + "bill").then(function (response) {
+            // $scope.enquiries = [];
+             $(".sk-wave").hide()
+            $scope.bill = response.data;
+
+
+        });
         $('#OpenBill').show();
         $('#PurchaseOrderTable').hide();
         $('#EnquiryTable').hide();
@@ -67,13 +75,23 @@
     },
 
     $scope.EnquiryTablebtn = function () {
+        $(".sk-wave").show()
+        $scope.enquiries = [];
+        $http.get(config.api + "transactions" + "?filter[where][ordertype]=" + "enquiry").then(function (response) {
+            // $scope.enquiries = [];
+            $(".sk-wave").hide()
+            $scope.enquiries = response.data;
+
+
+        });
+
         $('#PaidBillTable').hide();
         $('#OpenBill').hide();
         $('#PurchaseOrderTable').hide();
         $('#EnquiryTable').show();
         $('#example').hide();
 
-    },
+    }
 
 
 
@@ -88,18 +106,94 @@
     };
 
 
-
-
-
-
-
     $('#NewCustomerCreate').click(function () {
         $('#NewCustomerCreateModal').modal('show');
 
-     
+
     });
 
+    //
+
+    $scope.viewPo = function (data) {
+
+        $location.path('#/Customer/PdfView' + data);
+
+
+
+    }
+
+    // HTML to PDF file by Harpal Singh
+    $scope.generatePDF = function ()
+    {
+        kendo.drawing.drawDOM($("#upperdivId")).then(function (group)
+        {
+            kendo.drawing.pdf.saveAs(group, "Converted PDF.pdf");
+        });
+    }
    
+    //get total PO Amount
+
+    $http.post(config.api + "transactions" + "/totalpoAmount", { headers: { 'tokan': localStorage['token'] } }).then(function (response) {
+
+
+        $scope.totalpoAmount = response.data;
+
+        console.log($scope.totalpoAmount)
+
+
+    });
+
+
+    //get suppliers count
+
+
+    $http.get(config.api + "suppliers" + "/count").then(function (response) {
+        
+
+        $scope.suppliersCount = response.data;
+    });
+
+    //get bill count
+    $http.get(config.api + "transactions" + "/count" + "?where[ordertype]=" + "bill").then(function (response) {
+
+
+        $scope.billCount = response.data;
+    });
+
+    // Get enquiry count
+
+    $http.get(config.api + "transactions"+ "/count"+ "?where[ordertype]="+"enquiry").then(function (response) {
+
+        $scope.enquiryCount = response.data;
+    });
+
+    //get purchase order count 
+
+    $http.get(config.api + "transactions" + "/count" + "?where[ordertype]=" + "po").then(function (response) {
+
+        $scope.purchaseCount = response.data;
+    });
+
+    //get suppliers data 
+   
+    $http.get(config.api + "suppliers").then(function (response) {
+        $(".sk-wave").hide()
+        // $scope.suppliers = [];
+        $scope.suppliers = response.data;
+       
+    });
+    //get Enquiry List table
+   
+   
+
+    //Get PurchaseOrder Table 
+
+
+   
+    
+
+    //create New Suppliers
+
     $scope.createNewSupplier = function () {
        
         var data = {
@@ -161,28 +255,31 @@
         }
         var data1 = {
 
-            companyName: $scope.company,
+            company: $scope.company,
             email: $scope.email,
-            po: 0,
-            enquiry: 0,
-            openBill:0
+            mobile: $scope.mobile,
+            paymentInfo: [
+              {
+              
+                  openingBalance: $scope.openingBalance
+
+              }
+            ]
 
         }
         if (!data.email=='') {
             var webService = 'suppliers';
-            var webService1 = 'supplierscounts';
+        
 
             myService.postSuppliers(webService, data).then(function (data) {
                 console.log(data);
             });
 
-            myService.postSuppliers(webService1, data1).then(function (data) {
-                console.log(data);
-            });
+           
 
-            $scope.supplierscount.push(data1);
+            $scope.suppliers.push(data1);
 
-
+   
    $scope.middleName = null,
    $scope.suffix = null,
    $scope.email = null,
@@ -217,11 +314,7 @@
          $scope.deliveryMethod = null,
          $scope.openingBalance = null,
          $scope.asOf = null,
-
-
-
-
-        $scope.notes = null
+         $scope.notes = null
 
 
 
@@ -231,167 +324,7 @@
 
     };
 
-    var url = "http://localhost:4000/api/enquiries";
-    $scope.enquiries = [];
-    $http.get(url).then(function (response) {
-        $scope.enquiries = response.data;
-
-        console.log($scope.enquiries);
-    });
   
-
-
-
-   
-    $scope.purchageOrder = [];
-
-
-    $scope.purchageOrder = [
-
-        {
-            ponumber: '47598479',
-            podt: '18/Oct/2016',
-            duedt: '22/Oct/2016',
-            suppliers: 'Phoenix Imports and Exports ',
-            poAmount: 'Rs0.00',
-            action: 'Create Bill'
-
-
-        },
-        {
-            ponumber: '47598479',
-            podt: '18/Oct/2016',
-            duedt: '22/Oct/2016',
-            suppliers: 'jindal Stainless Steel',
-            poAmount: 'Rs0.00',
-            action: 'Create Bill'
-
-
-        },
-        {
-            ponumber: '47598479',
-            podt: '18/Oct/2016',
-            duedt: '22/Oct/2016',
-            suppliers: 'Shenzhen Import & Export',
-            poAmount: 'Rs0.00',
-            action: 'Create Bill'
-
-
-        },
-        {
-            ponumber: '47598479',
-            podt: '18/Oct/2016',
-            duedt: '22/Oct/2016',
-            suppliers: 'Paynna ',
-            poAmount: 'Rs0.00',
-            action: 'Create Bill'
-
-
-        }
-    ];
-
-
-    $scope.Enquiries = [];
-
-
-    $scope.Enquiries = [
-
-        {
-            enquiryNo: '2323',
-            enquirydate: '18/Oct/2016',
-            enquiryduedt: '22/Oct/2016',
-            suppliers: 'System Architect',
-            action: 'Edit'
-
-
-        },
-        {
-            enquiryNo: '2329',
-            enquirydate: '10/Oct/2016',
-            enquiryduedt: '15/Oct/2016',
-            suppliers: 'Paynna',
-            action: 'Edit'
-
-
-        },
-        {
-            enquiryNo: '2332',
-            enquirydate: '1/Oct/2016',
-            enquiryduedt: '10/Oct/2016',
-            suppliers: 'Shenzhen Import & Export',
-            action: 'Edit'
-
-
-        },
-        {
-            enquiryNo: '2335',
-            enquirydate: '18/Sep/2016',
-            enquiryduedt: '22/Sep/2016',
-            suppliers: 'Jindal Stainless Steel',
-            action: 'Edit'
-
-
-        }
-    ];
-
-
-    $scope.Bill = [];
-
-
-    $scope.Bill = [
-
-        {
-            suppliers: 'System Architect',
-            email: 'System@gmail.com',
-            billno: '23424',
-            bilamt: 'Rs0',
-            balamt: 'Rs0',
-            action: 'Make payment'
-
-
-        },
-        {
-            suppliers: 'Paynna',
-            email: 'Paynna@gmail.com',
-            billno: '23429',
-            bilamt: 'Rs0',
-            balamt: 'Rs0',
-            action: 'Make payment'
-
-
-        },
-        {
-            suppliers: 'Shenzhen Import & Export',
-            email: 'Shenzhen@gmail.com',
-            billno: '4234',
-            bilamt: 'Rs0',
-            balamt: 'Rs0',
-            action: 'Make payment'
-
-
-        },
-        {
-            suppliers: 'Jindal Stainless Steel',
-            email: 'Jindal@gmail.com',
-            billno: '34534',
-            bilamt: 'Rs0',
-            balamt: 'Rs0',
-            action: 'Make payment'
-
-
-        }
-    ];
-
-    //Get PurchaseOrder Table 
-
-    var url = "http://localhost:4000/api/purchaseOrders";
-    $scope.purchaseOrder = [];
-    $http.get(url +"?filter[fields][supliersName]=true&filter[fields][poDate]=true&filter[fields][poDueDate]=true&filter[fields][poNo]=true&filter[fields][amount]=true").then(function (response) {
-        $scope.purchaseOrder = response.data;
-
-        console.log($scope.purchaseOrder);
-    });
-
 
 
 
