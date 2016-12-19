@@ -1,4 +1,4 @@
-﻿myApp.controller('MakePaymentCntrl', ['$scope', '$http', '$stateParams', '$timeout', '$rootScope', '$state', 'config', function ($scope, $http, $stateParams,$timeout, $rootScope, $state, config) {
+﻿myApp.controller('MakePaymentCntrl', ['$scope', '$http', '$stateParams', '$timeout', 'myService','$rootScope', '$state', 'config', function ($scope, $http, $stateParams,$timeout,myService, $rootScope, $state, config) {
 
     $(".my a").click(function (e) {
         e.preventDefault();
@@ -64,52 +64,51 @@
 
     
 
-    $http.get(config.api + 'suppliers' + '?filter[fields][company]=true')
-          .success(function (data) {
-              $scope.supliers = data;
-              
-          });
-
-
+    $scope.suppliers = [];
     $scope.$watch('sup', function () {
      
 
-        $http.get(config.api + 'suppliers' + '?filter[where][company]=' + $scope.sup)
-         .success(function (data) {
-             $scope.supEmail = data;
-             $scope.email = data[0].email;
-           
-         });
-        /*
-        $http.get(config.api + "transactions" + "?filter[where][ordertype]=" + "bill" + "&filter[where][supliersName]=" + $scope.sup).then(function (response) {
-      
-            $scope.bill = response.data;
-             //$scope.amount = data[0].amount;
-            // $scope.balance = data[0].balance;
+        myService.getSuppliers().then(function (data) {
 
+            $scope.suppliers = data;
+
+            console.log(data);
         });
-        */
+
+        
         $http.get(config.api + 'transactions' + '?filter[where][no]=' + $scope.no)
         .success(function (data) {
-            $scope.bill = data;
-            $scope.amount = data[0].amount;
-            $scope.supplier = data[0].supliersName;
-            $scope.email = data[0].email;
-            if (data[0].balance == null) {
 
-               
-                $scope.bill[0].balance = data[0].amount;
-                $scope.balance = data[0].amount;
+            if (data.length > 0)
+            {
+                $scope.bill = data;
+                $scope.amount = data[0].amount;
 
-                console.log($scope.balance)
+                $scope.supplier = data[0].supliersName;
+                $scope.email = data[0].email;
+
+                if (data[0].balance == null) {
+
+
+                    $scope.bill[0].balance = data[0].amount;
+                    $scope.balance = data[0].amount;
+
+                    console.log($scope.balance)
+                }
+                else {
+                    $scope.balance = data[0].balance;
+                }
+
+                if ($scope.balance == 0) {
+                    $scope.status = "PAID";
+                }
+
+
             }
-            else {
-                $scope.balance = data[0].balance;
-            }
-         
-            if ($scope.balance == 0) {
-                $scope.status = "PAID";
-            }
+
+          
+    
+           
 
           
         });
@@ -124,6 +123,8 @@
     $scope.makePayment = function ()
     {
         var paymentAmount = $("#abc").val();
+
+        $scope.paidAmount = paymentAmount;
         
         $scope.newAmount = Number($scope.balance - paymentAmount);
        
@@ -137,7 +138,7 @@
 
         }
 
-        //comment by vivek
+      
         var date = $("#PaymentdateCheque").val()
 
         $scope.No = "REF " + $scope.no
@@ -149,7 +150,8 @@
             date: date,
             no: $scope.No,
             balance: $scope.newAmount,
-            amount: $scope.amount,
+           
+            amount: $scope.paidAmount
 
 
 

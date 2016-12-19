@@ -29,8 +29,8 @@
 <div class="FlexPopup" style="display:block" ng-init="model = {}">
     <div class="flexheader">
         <ul class="list-unstyled submenu InvoiceMenu" style="float:left">
-            <li><a href="#"><i class="fa fa-history"></i></a></li>
-            <li><a href="#"><span>Make Payment</span></a></li>
+          
+            <li><a href=""><span>Make Payment</span></a></li>
         </ul>
         <ul class="list-unstyled submenu InvoiceMenu">
             <li><a href="#"><i class="fa fa-question-circle"></i></a></li>
@@ -44,7 +44,7 @@
                            ui-select-focuser
                            theme="selectize">
                     <ui-select-match placeholder="Select Suppliers...">{{ $select.selected.company }}</ui-select-match>
-                    <ui-select-choices repeat="group in supliers | filter: $select.search">
+                    <ui-select-choices repeat="group in suppliers | filter: $select.search">
                         <div>
                             <span ng-bind-html="group.company | highlight: $select.search"></span>
                         </div>
@@ -54,6 +54,8 @@
                 </ui-select>
                 <p ng-init="{{sup = model.people.company}}"> </p>
                 <p ng-init="{{sup = model.people.company}}"> </p>
+
+               <h3>{{supplier}}</h3>
             </div>
             
             <div id="form-popoverPopup" class="popupbox">
@@ -116,7 +118,7 @@
 
             <div class="col-sm-1 padding5 pull-right">
                 <h4 class="tabheading">Ref no.</h4>
-                <input type="text" class="form-control" value="3" disabled />
+                <input type="text" ng-model="no" class="form-control" value="3" disabled />
             </div>
         </div>
 

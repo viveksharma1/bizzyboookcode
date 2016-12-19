@@ -1,5 +1,26 @@
 ﻿myApp.controller('PdfViewCntrl', ['$scope', '$http', '$timeout', '$stateParams', '$rootScope', '$state', 'config', function ($scope, $http, $timeout, $stateParams, $rootScope, $state, config) {
 
+
+    if (localStorage.VAT_TIN_NO == "undefined") {
+        $scope.VAT_TIN_NO = localStorage.VAT_TIN_NO;
+        $scope.CST_TIN_NO = localStorage.CST_TIN_NO;
+    }
+    else {
+        $scope.VAT_TIN_NO = localStorage.VAT_TIN_NO;
+        $scope.CST_TIN_NO = localStorage.CST_TIN_NO;
+    }
+
+    if (localStorage.ChangeCompanyName == "undefined") {
+        $scope.CompanyName = localStorage.DefaultCompanyName
+    }
+    else {
+        $scope.CompanyName = localStorage.ChangeCompanyName;
+    }
+
+
+
+
+
     $(".my a").click(function (e) {
         e.preventDefault();
     });

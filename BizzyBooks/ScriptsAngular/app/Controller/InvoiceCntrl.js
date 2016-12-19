@@ -2,7 +2,11 @@
 var CustomerId_Invoice;
 
 myApp.controller('InvoiceCntrl', ['$scope', '$http', '$timeout', '$rootScope', '$state', 'config', function ($scope, $http, $timeout, $rootScope, $state, config) {
-    //CustomerId_Invoice=  localStorage.CustomerId_Invoice;
+    var currentDate = new Date();
+
+    $scope.CompanyName = localStorage.ChangeCompanyName;
+    $scope.VAT_TIN_NO = localStorage.VAT_TIN_NO;
+    $scope.CST_TIN_NO = localStorage.CST_TIN_NO;
     $scope.usertype = localStorage.userType_Role;
     if (localStorage.userType_Role == "3") {
         $("#ItemTable").show();
@@ -50,7 +54,7 @@ myApp.controller('InvoiceCntrl', ['$scope', '$http', '$timeout', '$rootScope', '
      $('#DueDate').datepicker("setDate", new Date());
 
     $('#InvoiceDate').datepicker("setDate", new Date());
-
+    // $('#InvoiceDate').val(currentDate.getDate() + "/" + currentDate.getMonth() + "/" + currentDate.getFullYear());
     $('.Discountfilter > li').click(function () {
         var $toggle = $(this).parent().siblings('.dropdown-toggle');
         $toggle.html("" + $(this).text() + "<i class=\"fa fa-sort pull-right\" style=\"margin-top:3px\"></i>")
@@ -134,6 +138,7 @@ myApp.controller('InvoiceCntrl', ['$scope', '$http', '$timeout', '$rootScope', '
     $http.get(url).success(function (response) {
         $scope.customerNameList = response;
     })
+
     $scope.$watch('sup', function () {
         $scope.CustomerEmail = $scope.sup;
         customerName = $scope.cname;
@@ -152,10 +157,7 @@ myApp.controller('InvoiceCntrl', ['$scope', '$http', '$timeout', '$rootScope', '
         })
 
     }
-    $scope.textChanged = function () {
 
-
-    };
     function create_Invoice(Invoice_count) {
         var productName, productDiscription, productQty, rate, amount;
         var ProductArr = $scope.enquiryTable;
@@ -185,6 +187,7 @@ myApp.controller('InvoiceCntrl', ['$scope', '$http', '$timeout', '$rootScope', '
                 $scope.billingAddress = null;
                 $scope.displayoninvoice = null;
                 $scope.statementMemo = null;
+
             }
 
         })

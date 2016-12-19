@@ -326,23 +326,26 @@
 
     <div class="flexfooter">
         <span class="pull-left">
-            <button type="button" class="btn btn-sm btn-primary"><a href="/#/Customer/Suppliers">Cancel</a></button>
+           
             <button type="button" class="btn btn-sm btn-primary">Clear</button>
         </span>
 
         <div class="pull-right">
-            <button type="button" class="btn btn-sm btn-primary">Save</button>
+            <button type="button" class="btn btn-sm btn-primary"  ng-click ="saveBill()">Save</button>
             <div class="btn-group dropup">
-                <button type="button" class="btn btn-info btn-sm" ng-click ="saveBill()">Save and send</button>
-                <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:25px">
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" style="right:-2px !important">
-                    <li><a href="#">Save and close</a></li>
-                    <li><a href="#">Save and send</a></li>
-                    <li><a href="#">Save and new</a></li>
-                    <li><a href="#">Save and share link</a></li>
-                </ul>
+                @*
+    <button type="button" class="btn btn-info btn-sm" ng-click ="saveBill()">Save and send</button>
+    <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:25px">
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" style="right:-2px !important">
+        <li><a href="#">Save and close</a></li>
+        <li><a href="#">Save and send</a></li>
+        <li><a href="#">Save and new</a></li>
+        <li><a href="#">Save and share link</a></li>
+    </ul>
+
+                *@
             </div>
         </div>
     </div>

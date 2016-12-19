@@ -185,6 +185,7 @@ var myApp = angular
             url: "/CreateInventory",
             templateUrl: "Customer/CreateInventory",
 
+
             controller: "InventoryCntrl",
            
 
@@ -249,7 +250,7 @@ var myApp = angular
 myApp.value('config', {
  //login: 'http://localhost:4000/',
 
-// api: 'http://localhost:4000/api/'
+ //api: 'http://localhost:4000/api/'
 
 
   login: 'http://bizzy-book-api.azurewebsites.net/',
@@ -408,7 +409,7 @@ myApp.directive('uiTreeItem', [
 
   myApp.factory('myService', function ($http) {
 
-      var url = "http://localhost:4000/api/"
+      var url = "http://bizzy-book-api.azurewebsites.net/api/"
 
       var http = {
           postSuppliers: function (webService, data) {
@@ -419,7 +420,19 @@ myApp.directive('uiTreeItem', [
 
              
               return promise;
-          }
+          },
+          getSuppliers: function () {
+          var promise = $http.get(url+"suppliers").then(function (response) {
+              return response.data;
+                 
+          });
+
+             
+          return promise;
+      }
+
+
+
 
       };
 

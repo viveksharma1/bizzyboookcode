@@ -83,7 +83,9 @@
     $scope.role;
     $scope.amount = "00,00"
     $scope.admin = localStorage['adminrole'];
+
     //get Po List
+
     $http.get(config.api + "transactions" + "?filter[where][no]=" + $scope.no).then(function (response) {
        
         $scope.polist = response.data;
@@ -93,8 +95,10 @@
         $scope.email = $scope.polist[0].email;
 
     });
+
     // po count 
-    $http.get(config.api + "transactions" + "/count" + "?where[ordertype]=" + "bill").then(function (response) {
+
+    $http.get(config.api + "transactions" + "/count" + "?where[ordertype]=" + "BILL").then(function (response) {
 
         $scope.poCount = response.data.count;
         $scope.billNo = 'BIll' + $scope.poCount;
@@ -102,6 +106,7 @@
 
 
     // add item po to bill
+
     $scope.addtoBill = function (index) {
 
 
@@ -115,7 +120,7 @@
     $scope.$watch('sup', function () {
        
         
-        if ($scope.sup != "undefind") {
+        if ($scope.sup != undefined) {
 
             $scope.supplier = $scope.sup;
 
@@ -157,7 +162,7 @@
             currency: $scope.currency,
             date: $scope.billDate,
             billDueDate: $scope.billDueDate,
-            ordertype: "bill",
+            ordertype: "BILL",
             no: $scope.billNo,
                 
             itemDetail: $scope.billtable,

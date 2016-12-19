@@ -7,6 +7,10 @@
     $(".my a").click(function (e) {
         e.preventDefault();
     });
+
+    $scope.moreEmployeebtn = function () {
+        $('#moreEmployeeModal').modal('show');
+    },
    
     $scope.goBack = function () {
         window.history.back();
@@ -28,7 +32,7 @@ $(".Additem").click(function () {
     $scope.suppliersList = function () {
         $scope.sup2 = $('.selectpicker option:selected').val();
         $scope.sup2 = $('.selectpicker option:selected').val();
-        console.log($scope.sup2);
+       
 
     };
 
@@ -66,7 +70,7 @@ $(".Additem").click(function () {
     $(document).on("click", "#upload_prev span", function () {
         res.splice($(this).index(), 1);
         $(this).remove();
-        console.log(res);
+        
 
     });
 
@@ -109,11 +113,14 @@ $(".Additem").click(function () {
             $scope.billDueDate = response.data[0].billDueDate;
             $scope.no = $scope.enqNo;
             $scope.enquiryTable = response.data[0].itemDetail;
+            $scope.supplierList = response.data[0].sentSupplier;
         });
 
     }
     else {
-        $http.get(config.api + "transactions" + "/count" + "?where[ordertype]=" + "enquiry").then(function (response) {
+
+             
+        $http.get(config.api + "transactions" + "/count" + "?where[ordertype]=" + "ENQUIRY").then(function (response) {
 
             $scope.enquiryCount = response.data;
 
@@ -152,27 +159,43 @@ $(".Additem").click(function () {
         $scope.enquiryTable.splice(index, 1);
     }
     
+    $scope.removeS = function (index) {
+
+        $scope.supplierList.splice(index, 1);
+    }
 
 
     //get suppliers
+    $scope.supplierList = [];
+ 
+   
+    
+
+
+
     $scope.$watch('sup', function () {
-       
 
-        if ($scope.sup != "undefind") {
+        $http.get(config.api + 'suppliers')
+           .success(function (data) {
+               $scope.supliers = data;
 
-            $scope.supplier = $scope.sup;
+             
 
-            $http.get(config.api + 'suppliers' + '?filter[where][company]=' + $scope.supplier)
-         .then(function (response) {
-         
-             $scope.supEmail = response.data;
-             $scope.email = $scope.supEmail[0].email;
+           });
+           
+            
+        if ($scope.sup != undefined) {
+            $scope.email = $scope.sup;
+                $scope.email1 = $scope.email
 
-         });
-
-        }
-       
-       
+              
+                $scope.supplier = $scope.supplierName
+             
+                $scope.supplierList.push({ "supplier": $scope.supplier, "email": $scope.email1 })
+             
+            }
+           
+        
     });
 
     // save enquiry
@@ -194,9 +217,10 @@ $(".Additem").click(function () {
             date: $scope.billDate,
             billDueDate: $scope.billDueDate,
             no: $scope.no,
-            ordertype: "enquiry",
-            status: [$scope.status],
-            itemDetail: $scope.enquiryTable
+            ordertype: "ENQUIRY",
+            status: ["OPEN"],
+            itemDetail: $scope.enquiryTable,
+            sentSupplier: $scope.supplierList
         }
 
         // edit enquiry 
@@ -212,13 +236,15 @@ $(".Additem").click(function () {
                 date: $scope.billDate,
                 billDueDate: $scope.billDueDate,
                 no: $scope.enqNo,
-                ordertype: "enquiry",
+                ordertype: "ENQUIRY",
                 status: [$scope.status],
-                itemDetail: $scope.enquiryTable
+                itemDetail: $scope.enquiryTable,
+                sentSupplier: $scope.supplierList
             }
 
             $http.post(config.api +"transactions" + "/update" + "?[where][no]=" + $scope.enqNo, data).then(function (response) {
 
+                alert("Enquiry Updated");
             });
         }
 
@@ -235,19 +261,6 @@ $(".Additem").click(function () {
         
     }
 
-
-
-    //get suppliers 
-
-    $http.get(config.api + 'suppliers' + '?filter[fields][company]=true')
-          .success(function (data) {
-              $scope.supliers = data;
-            
-          });
-
-   
-
-    
    
    $scope.add = function () {
 

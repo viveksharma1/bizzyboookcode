@@ -3,7 +3,9 @@
     ViewBag.Title = "Enquiry";
     Layout = null;
 }
-
+<style>
+    .modal-backdrop{display:none}
+</style>
 
     <div ng-init="model = {}">
         <div ng-include="ui-tree-select.html" ng-controller="EnquiryCntrl"></div>
@@ -32,48 +34,101 @@
                             <ui-select-match placeholder="Select Suppliers...">{{ $select.selected.company }}</ui-select-match>
                             <ui-select-choices repeat="group in supliers | filter: $select.search">
                                 <div>
-                                    <span ng-bind-html="group.company | highlight: $select.search"></span>
+                                    <span   ng-bind-html="group.company | highlight: $select.search"></span>
                                 </div>
                                
                     
                     </ui-select-choices>
                     </ui-select>
-                    <p ng-init="{{sup = model.people.company}}"> </p>
-                        <h3>{{supplier}}</h3>
+                    <em ng-init="{{sup = model.people.email}}"> </em>
+                        <em ng-init="{{supplierName = model.people.company}}"> </em>
+                        
+                        @*<h3>{{supplier}}</h3>*@
+
+
+
                        
                 </div>
-                    <div class="col-sm-6" style="margin-top:10px;width:250px">
+                    <div class="col-sm-3" style="margin-top:10px;">
+                       
                         <input type="text" class="form-control" ng-model="email" placeholder="Email address" />
                     </div>
-                    <div id="form-popoverPopup" class="popupbox">
-                        <div class="dijitDialogTitle">
-                            New Suppliers 
-                            <i class="fa fa-times-circle cursor pull-right" title="close" ng-click="popuclose()"></i>
+                   
+                    
+                    <div class="col-sm-12 padding5" style="margin-bottom:5px" ng-repeat ="supplier in supplierList  | limitTo:2" >
+                        <strong class="col-sm-3 padding5">
+                          <i class="fa fa-user"></i>  {{supplier.supplier}}
+                        </strong>
+                        <div class="col-sm-3">
+                            <i class="fa fa-envelope"></i> {{supplier.email}}
                         </div>
-                        <div class="form-content">
-                            <div class="form-group">
-                                <label><span class="red">*</span>Suppliers Name</label>
-                                <input type="text" ng-model="suppliersName" class="form-control" />
+                        </div>
+
+
+                    
+
+<small ng-click="moreEmployeebtn()" style="float: left; margin: 5px; cursor:pointer; font-weight: bold; color: #0b4462; padding-left:46%">More...</small>
+
+                    <!-- moreEmployeeModal -->
+                    <div id="moreEmployeeModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Suppliers List</h4>
+                                </div>
+                                <div class="modal-body" style="height:400px; overflow:auto;">
+                            <table class="table" cellpadding="10" cellspacing="10">
+                                <tr  ng-repeat ="supplier in supplierList">
+                                    <td style="border-bottom:1px solid #ddd; border-top:none">
+                                        <strong><i class="fa fa-user"></i> {{supplier.supplier}}<i class="fa fa-times-circle cursor RemoveTR pull-right" ng-click="removeS($index)"></i> </strong>
+                                        <p><i class="fa fa-envelope"></i> {{supplier.email}}</p>
+                                       
+                                    </td>
+                                </tr>
+                                
+                            </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label><span class="red">*</span>Email</label>
-                                <input type="text"ng-model="email1" class="form-control" />
+
+                        </div>
+                    </div>   
+                    
+                    
+                     <div id="form-popoverPopup" class="popupbox">
+                            <div class="dijitDialogTitle">
+                                New Suppliers
+                                <i class="fa fa-times-circle cursor pull-right" title="close" ng-click="popuclose()"></i>
                             </div>
-                            <div class="form-group">
-                                <label><span class="red">*</span>Mobile No.</label>
-                                <input type="text" ng-model="mobile"class="form-control" />
-                            </div>
+                            <div class="form-content">
+                                <div class="form-group">
+                                    <label><span class="red">*</span>Suppliers Name</label>
+                                    <input type="text" ng-model="suppliersName" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label><span class="red">*</span>Email</label>
+                                    <input type="text" ng-model="email1" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label><span class="red">*</span>Mobile No.</label>
+                                    <input type="text" ng-model="mobile" class="form-control" />
+                                </div>
 
 
 
-                            <div class="form-footer">
-                                <button type="button" class="btn btn-sm btn-default" ng-click="saveSuppliers()">Save</button>
+                                <div class="form-footer">
+                                    <button type="button" class="btn btn-sm btn-default" ng-click="saveSuppliers()">Save</button>
+                                </div>
                             </div>
                         </div>
+
+
                     </div>
-
-
-                </div>
                 <div class="lightblue bluebrdr content" style="padding:10px 0px">
                     <div class="col-sm-8" style="padding:0px">
                         
@@ -81,9 +136,8 @@
 
                         <div class="col-sm-12">
                             <div class="dropdown" title="Status">
-
-                                <select ng-model="status">
-
+                                <label class="pull-left" style="margin:3px 10px 0px 0px">Status</label>
+                                <select ng-model="status" class="form-control" style="width:100px">
                                     <option>open</option>
                                     <option>close</option>
                                     <option>cancel</option>
@@ -103,13 +157,7 @@
                         <textarea class="form-control" ng-model="remarks" style="height:95px"></textarea>
                     </div>
 
-                    <div class="col-sm-2 padding5 claro">
-                       
-
-
-
-
-                    </div>
+                  
 
                     <div class="col-sm-2 padding5">
                         <h4 class="tabheading font_11">Enquiry Date</h4>
@@ -171,14 +219,14 @@
                                 <tr>
 
 
-                                    <td class="Count"><input ng:model="item.grade" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
-                                    <td class="Count"><input ng:model="item.finish" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
-                                    <td class="Count"><input ng:model="item.thickness" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
-                                    <td class="Count"><input ng:model="item.width" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
-                                    <td class="Count"><input ng:model="item.length" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
-                                    <td class="Count"><input ng:model="item.netweight" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
-                                    <td class="Count"><input ng:model="item.grossweight" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
-                                    <td class="Count"><input ng:model="item.sheetNo" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
+                                    <td class="Count"><input ng:model="item.grade" class="form-control" value="0.00" ng:required ng:validate="number" style="border:none;" /></td>
+                                    <td class="Count"><input ng:model="item.finish" class="form-control" value="0.00" ng:required ng:validate="number" style="border:none;" /></td>
+                                    <td class="Count"><input ng:model="item.thickness" class="form-control" value="0.00" ng:required ng:validate="number" style="border:none;" /></td>
+                                    <td class="Count"><input ng:model="item.width" class="form-control" value="0.00" ng:required ng:validate="number" style="border:none;" /></td>
+                                    <td class="Count"><input ng:model="item.length" class="form-control" value="0.00" ng:required ng:validate="number" style="border:none;" /></td>
+                                    <td class="Count"><input ng:model="item.netweight" class="form-control" value="0.00" ng:required ng:validate="number" style="border:none;" /></td>
+                                    <td class="Count"><input ng:model="item.grossweight" class="form-control" value="0.00" ng:required ng:validate="number" style="border:none;" /></td>
+                                    <td class="Count"><input ng:model="item.sheetNo" class="form-control" value="0.00" ng:required ng:validate="number" style="border:none;" /></td>
                                     <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-times-circle cursor RemoveTR" style="font-size:16px" ng-click="remove($index)"></i></a></td>
 
                                 </tr>

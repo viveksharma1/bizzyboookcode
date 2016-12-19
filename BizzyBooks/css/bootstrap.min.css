@@ -8512,3 +8512,5 @@ main {
 .dialogdemoBasicUsage .footer, .dialogdemoBasicUsage .footer > code {
   font-size: 0.8em;
   margin-top: 50px; }
+
+#moreEmployeeModal .modal-dialog{width:40%;}

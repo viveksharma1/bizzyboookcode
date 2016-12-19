@@ -31,7 +31,7 @@
        
         $(".sk-wave").show()
         $scope.purchaseOrder;
-        $http.get(config.api + "transactions" + "?filter[where][ordertype]=po" + "&filter[fields][supliersName]=true&filter[fields][date]=true&filter[fields][billDueDate]=true&filter[fields][no]=true&filter[fields][amount]=true").then(function (response) {
+        $http.get(config.api + "transactions" + "?filter[where][ordertype]=PO" + "&filter[fields][supliersName]=true&filter[fields][date]=true&filter[fields][billDueDate]=true&filter[fields][no]=true&filter[fields][amount]=true").then(function (response) {
             $(".sk-wave").hide()
             // $scope.purchaseOrder = [];
             $scope.purchaseOrder = response.data;
@@ -51,7 +51,7 @@
         $(".sk-wave").show()
        
         $scope.bill;
-        $http.get(config.api + "transactions" + "?filter[where][ordertype]=" + "bill").then(function (response) {
+        $http.get(config.api + "transactions" + "?filter[where][ordertype]=" + "BILL").then(function (response) {
             // $scope.enquiries = [];
              $(".sk-wave").hide()
             $scope.bill = response.data;
@@ -77,7 +77,7 @@
     $scope.EnquiryTablebtn = function () {
         $(".sk-wave").show()
         $scope.enquiries = [];
-        $http.get(config.api + "transactions" + "?filter[where][ordertype]=" + "enquiry").then(function (response) {
+        $http.get(config.api + "transactions" + "?filter[where][ordertype]=" + "ENQUIRY").then(function (response) {
             // $scope.enquiries = [];
             $(".sk-wave").hide()
             $scope.enquiries = response.data;
@@ -138,7 +138,7 @@
 
         $scope.totalpoAmount = response.data;
 
-        console.log($scope.totalpoAmount)
+       
 
 
     });
@@ -154,7 +154,7 @@
     });
 
     //get bill count
-    $http.get(config.api + "transactions" + "/count" + "?where[ordertype]=" + "bill").then(function (response) {
+    $http.get(config.api + "transactions" + "/count" + "?where[ordertype]=" + "BILL").then(function (response) {
 
 
         $scope.billCount = response.data;
@@ -162,14 +162,14 @@
 
     // Get enquiry count
 
-    $http.get(config.api + "transactions"+ "/count"+ "?where[ordertype]="+"enquiry").then(function (response) {
+    $http.get(config.api + "transactions" + "/count" + "?where[ordertype]=" + "ENQUIRY").then(function (response) {
 
         $scope.enquiryCount = response.data;
     });
 
     //get purchase order count 
 
-    $http.get(config.api + "transactions" + "/count" + "?where[ordertype]=" + "po").then(function (response) {
+    $http.get(config.api + "transactions" + "/count" + "?where[ordertype]=" + "PO").then(function (response) {
 
         $scope.purchaseCount = response.data;
     });

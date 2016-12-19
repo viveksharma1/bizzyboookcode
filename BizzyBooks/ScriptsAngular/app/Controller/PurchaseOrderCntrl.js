@@ -1,4 +1,4 @@
-﻿myApp.controller('PurchaseOrderCntrl', ['$scope', '$http', '$stateParams', '$timeout', '$rootScope', '$state', 'config', 'DTOptionsBuilder', 'DTDefaultOptions', function ($scope, $http, $stateParams, $timeout, $rootScope, $state, config, DTOptionsBuilder, DTDefaultOptions) {
+﻿myApp.controller('PurchaseOrderCntrl', ['$scope', '$http', '$stateParams', '$timeout', 'myService', '$rootScope', '$state', 'config', 'DTOptionsBuilder', 'DTDefaultOptions', function ($scope, $http, $stateParams, $timeout, myService,$rootScope, $state, config, DTOptionsBuilder, DTDefaultOptions) {
 
    
     $('#dueDate').hide();
@@ -147,10 +147,35 @@ $(".Additem").click(function () {
         $('#rs').val(response.data.quotes.USDINR);
         $('#rs1').val(response.data.quotes.USDIDR, 'IDR');
 
-        $scope.ExchangeRate = Math.round(response.data.quotes.USDINR); 
+        $scope.ExchangeRate = Math.round(response.data.quotes.USDINR);
+        $scope.ExchangeRate1 = Math.round(response.data.quotes.USDIDR);
+
+        $scope.ExchangeRateINR = $scope.ExchangeRate
+        $scope.ExchangeRateIDR = $scope.ExchangeRate1
+
+
     });
 
+    $scope.currency = $("#currency").val();
+
+    console.log($scope.currency);
+    if ($scope.currency == "Rupee") {
+        console.log($scope.currency);
+        $scope.ExchangeRate = $scope.ExchangeRateINR
+    }
+    if ($scope.currency == "Rupiah") {
+        $scope.ExchangeRate = $scope.ExchangeRateIDR
+
+    }
     
+    $scope.saveExchangeRate = function () {
+
+        
+        $scope.ExchangeRate = $scope.ExchangeRateINR
+        $scope.ExchangeRate1 = $scope.ExchangeRateIDR
+
+
+    }
    
 
 
@@ -164,45 +189,43 @@ $(".Additem").click(function () {
     $scope.rate3="$6833.42";
    
     //get suppliers
-    $http.get(config.api + 'suppliers' + '?filter[fields][company]=true')
-          .success(function (data) {
-              $scope.supliers = data;
-              
-          });
+   
+
     //get selected suppliers
     $scope.$watch('sup', function () {
         $(".sk-wave").show()
 
-        if ($scope.sup != "undefind") {
+        myService.getSuppliers().then(function (data) {
+
+            $scope.supliers = data;
+
+        });
+
+        if ($scope.sup != undefined) {
 
             $scope.supplier = $scope.sup;
+            $http.get(config.api + "transactions" + "?filter[where][ordertype]=" + "ENQUIRY" + "&filter[where][supliersName]=" + $scope.sup).then(function (response) {
 
-            $http.get(config.api + 'suppliers' + '?filter[where][company]=' + $scope.supplier)
-             .success(function (data) {
-                 $scope.supEmail = data;
-                 $scope.email = data[0].email;
+                $scope.enquiryList = response.data;
+                if ($scope.enquiryList.length == 0) {
+                    $("#noData").show()
+                    $scope.noData = "No Enquiry";
+                }
+                else {
+                    $("#noData").hide()
 
-             });
+
+
+                }
+                $(".sk-wave").hide()
+
+            });
+           
         }
        
         
 
-        $http.get(config.api + "transactions" + "?filter[where][ordertype]=" + "enquiry" + "&filter[where][supliersName]=" + $scope.sup).then(function (response) {
-          
-            $scope.enquiryList = response.data;
-            if ($scope.enquiryList.length == 0) {
-                $("#noData").show()
-                $scope.noData = "No Enquiry";
-            }
-            else {
-                $("#noData").hide()
-               
-
-               
-            }
-            $(".sk-wave").hide()
-
-        });
+       
     });
 
 
@@ -222,6 +245,8 @@ $(".Additem").click(function () {
     // add item row to  po table 
     $scope.poTable = [];
     $scope.addrow = function () {
+
+      
         if (localStorage['adminrole'] == 1) {
 
             $scope.poTable.push(
@@ -401,6 +426,7 @@ $(".Additem").click(function () {
             $scope.poDueDate = response.data[0].billDueDate;
             $scope.poNo = $scope.enqNo;
             $scope.poTable = response.data[0].itemDetail;
+            
         });
 
 
@@ -409,7 +435,7 @@ $(".Additem").click(function () {
         else
         {
 
-            $http.get(config.api + "transactions" + "/count" + "?where[ordertype]=" + "po").then(function (response) {
+            $http.get(config.api + "transactions" + "/count" + "?where[ordertype]=" + "PO").then(function (response) {
 
                 $scope.poCount = response.data.count;
                 $scope.poNo = 'PO' + $scope.poCount;
@@ -422,6 +448,7 @@ $(".Additem").click(function () {
 
                 $scope.email = response.data[0].email;
                 $scope.supplier = response.data[0].supliersName;
+                $scope.ExchangeRate = response.data[0].ExchangeRate;
                
               
                 $scope.poTable = response.data[0].itemDetail;
@@ -445,12 +472,13 @@ $(".Additem").click(function () {
                     currency: $scope.currency,
                     date: $scope.poDate,
                     billDueDate: $scope.poDueDate,
-                    ordertype: "po",
+                    ordertype: "PO",
                     no: $scope.poNo,
-                    status: [$scope.status],
+                    status: ["OPEN"],
                     itemDetail: $scope.poTable,
                     amount: $scope.subtotalnew,
-                    exchangeRate: $scope.ExchangeRate
+                    exchangeRate: $scope.ExchangeRate,
+                    exchangeRate1:$scope.ExchangeRate1
                 }
               
                 $http.post(config.api + "transactions" + "/update" + "?[where][no]=" + $scope.poNo, data).then(function (response) {
@@ -468,12 +496,13 @@ $(".Additem").click(function () {
                     currency: $scope.currency,
                     date: $scope.poDate,
                     billDueDate: $scope.poDueDate,
-                    ordertype: "po",
+                    ordertype: "PO",
                     no: $scope.poNo,
-                    status: [$scope.status],
+                    status: ["OPEN"],
                     itemDetail: $scope.poTable,
                     amount: $scope.subtotalnew,
-                    exchangeRate:$scope.ExchangeRate
+                    exchangeRate: $scope.ExchangeRate,
+                    exchangeRate1: $scope.ExchangeRate1
                 }
                 $http.post(config.api + "transactions", data).then(function (response) {
                     window.alert(" po  is saved")

@@ -22,7 +22,7 @@
 
     <div class="col-sm-10" style="padding:0px">
         <div class="flexcontainer" >
-            <div class="lightblue bluebrdr content" style="padding:0px 10px 10px 10px">
+            <div class="lightblue bluebrdr content" style="padding:10px 10px 10px 10px">
 
 
                
@@ -91,58 +91,77 @@
 
             </div>
             <div class="col-sm-12">
-               
+
 
                 <div class="col-sm-2 padding5 claro">
-                    
-                    
-
-
-                    <h4 class="tabheading">Currency</h4>
-                    <select class="form-control selectcss" ng-model ="currency">
-                        <option>Dollar</option>
-                        <option>Rupee</option>
-                        <option>Rupiah</option>
-                    </select>
-                    <div>
-                        <h4 class="tabheading">&nbsp;</h4>
-                        <button type="button" class="btn btn-default btn-sm currencybtn" ng-click="CommodityRatesbtn()">Commodity Rates</button>
-
-                    </div>
-                </div>
-
-                <div class="col-sm-2 padding5">
-                    <h4 class="tabheading">P.O Date</h4>
-                    <div class='input-group'>
-                        <input type='text' class="form-control" ng-model="poDate"id='BillDate' />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-                    <h4 class="tabheading">Due Date</h4>
-                    <div class='input-group'>
-
-                        <input type='text' ng-model="poDueDate" class="form-control" id='billDueDate' />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
+                   
+                    <table class="table NewTable" style="border: 1px solid #e3e3e3;  margin:5% 2% 0% -4%; width: 99%;">
+                        <tr>
+                            <td style="background:#f3f5f8; width:50px"><label>INR</label></td>
+                            <td><input type="text" ng-model="ExchangeRateINR" class="form-control" /></td>
+                        </tr>
+                        <tr>
+                            <td style="background:#f3f5f8; width:50px"><label>IDR</label></td>
+                            <td><input type="text" ng-model="ExchangeRateIDR" class="form-control" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="background:rgba(175, 175, 175, 0.21)" align="right">
+        <button class="btn btn-xs btn-primary" ng-click ="saveExchangeRate()"type="button" style="background: #fff;    color: #000 !important;
+    border: none;">Save</button>
+                            </td>
+                        </tr>
+                    </table>
                     </div>
 
-                    <div >
-                        <h4 class="tabheading">&nbsp;</h4>
-                        <button type="button" class="btn btn-default btn-sm currencybtn" ng-click="ExchangeRatebtn()">$ Exchange Rate</button>
+
+                    <div class="col-sm-2 padding5 claro">
+
+
+
+
+                        <h4 class="tabheading">Currency</h4>
+                        <select class="form-control selectcss" id = "currency" >
+                            <option>Dollar</option>
+                            <option>Rupee</option>
+                            <option>Rupiah</option>
+                        </select>
+                        <div>
+                           
+                            <button type="button" class="btn btn-default btn-sm currencybtn" ng-click="CommodityRatesbtn()">Commodity Rates</button>
+                            <button type="button" class="btn btn-default btn-sm currencybtn" ng-click="ExchangeRatebtn()">$ Exchange Rate</button>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <h4 class="tabheading">P.O Date</h4>
+                        <div class='input-group'>
+                            <input type='text' class="form-control" id='BillDate' ng-model="poDate" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+
+                        <h4 class="tabheading">Due Date</h4>
+                        <div class='input-group'>
+
+                            <input type='text' ng-model="poDueDate" class="form-control" id='billDueDate' />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
 
                     </div>
 
-                </div>
-             
-                
                   
-                <div class="col-sm-1 padding5 pull-right">
-                    <h4 class="tabheading">P.O No.</h4>
-                    <input type="text" class="form-control" ng-model="poNo"  disabled />
+
+
+
+                    <div class="col-sm-1 padding5 pull-right">
+                        <h4 class="tabheading">P.O No.</h4>
+                        <input type="text" class="form-control" ng-model="poNo" disabled />
+                    </div>
                 </div>
-            </div>
 
             <div class="modal fade" id="ExchangeRateDiv">
                 <div class="modal-dialog" style="width:460px; margin-top:60px">
@@ -477,18 +496,18 @@
                             <tr>
 
 
-                                <td class="Count"><input ng:model="item.grade" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
-                                <td class="Count"><input ng:model="item.finish" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
-                                <td class="Count"><input ng:model="item.thickness" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
-                                <td class="Count"><input ng:model="item.width" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
-                                <td class="Count"><input ng:model="item.length" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
-                                <td class="Count"><input ng:model="item.netweight" value="0.00" ng:required type="number" ng:validate="number" style="border:none;width:80px" /></td>
-                                <td class="Count"><input ng:model="item.grossweight" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
-                                <td class="Count"><input ng:model="item.sheetNo" value="0.00" ng:required ng:validate="number" style="border:none;width:80px" /></td>
-                                <td class="Count"><input ng:model="item.fobRate" value="0.00" ng:required type="number"ng:validate="number" style="border:none;width:80px" /></td>
-                                <td class="Count"><input ng:model="item.cif=item.netweight*item.fobRate" value="0.00" ng:required type="number" ng:validate="number" style="border:none;width:80px" /></td>
-                                <td class="Count" ng-hide="role =='2'||role =='1'"><input ng:model="item.miscCharge" value="0.00" ng:required type="number"ng:validate="number" style="border:none;width:80px" /></td>
-                                <td class="Count"><input ng:model="item.charges=(item.netweight*item.fobRate*ExchangeRate)+item.miscCharge" value="0.00" type="number"ng:required ng:validate="number" style="border:none;width:80px" /></td>
+                                <td class="Count"><input ng:model="item.grade" class="form-control" value="0.00" ng:required ng:validate="number" style="border:none;" /></td>
+                                <td class="Count"><input ng:model="item.finish" class="form-control" value="0.00" ng:required ng:validate="number" style="border:none;" /></td>
+                                <td class="Count"><input ng:model="item.thickness" class="form-control" value="0.00" ng:required ng:validate="number" style="border:none;" /></td>
+                                <td class="Count"><input ng:model="item.width" class="form-control" value="0.00" ng:required ng:validate="number" style="border:none;" /></td>
+                                <td class="Count"><input ng:model="item.length" class="form-control" value="0.00" ng:required ng:validate="number" style="border:none;" /></td>
+                                <td class="Count"><input ng:model="item.netweight" class="form-control" value="0.00" ng:required type="number" ng:validate="number" style="border:none;" /></td>
+                                <td class="Count"><input ng:model="item.grossweight" class="form-control" value="0.00" ng:required ng:validate="number" style="border:none;" /></td>
+                                <td class="Count"><input ng:model="item.sheetNo" class="form-control" value="0.00" ng:required ng:validate="number" style="border:none;" /></td>
+                                <td class="Count"><input ng:model="item.fobRate" class="form-control" value="0.00" ng:required type="number"ng:validate="number" style="border:none;" /></td>
+                                <td class="Count"><input ng:model="item.cif=item.netweight*item.fobRate" class="form-control" value="0.00" ng:required type="number" ng:validate="number" style="border:none;" /></td>
+                                <td class="Count" ng-hide="role =='2'||role =='1'"><input ng:model="item.miscCharge" class="form-control" value="0.00" ng:required type="number"ng:validate="number" style="border:none;" /></td>
+                                <td class="Count"><input ng:model="item.charges=(item.netweight*item.fobRate*ExchangeRate)+item.miscCharge" class="form-control" value="0.00" type="number"ng:required ng:validate="number" style="border:none;" /></td>
                                 <td class="text-right Count"ng:model="item.adminCharge = item.charges-item.miscCharge" value="0.00" ><a class="edit" title="Edit"> <i class="fa fa-times-circle cursor RemoveTR" style="font-size:16px" ng-click="remove($index)"></i></a></td>
 
                             </tr>

@@ -124,7 +124,7 @@
 
     });
 
-   
+   //update Supplier
 
     $scope.updateSupplier = function (supplier) {
 

@@ -2,7 +2,9 @@
 
 
     var CustomerId = localStorage.CustomerId;
+    $scope.CompanyList = JSON.parse(localStorage.comobj);
     $scope.CustomerName = localStorage.customerName;
+    $scope.CompanyName = localStorage.ChangeCompanyName;
     $(".my a").click(function (e) {
         e.preventDefault();
     });

@@ -198,7 +198,7 @@
 
 
                     <ul class="list-unstyled submenu my">
-                        <li id="CompanyInfo" class="flytopbar"><a href=""><i class="fa fa-gear"></i> Labdhi Engineering & Co.</a></li>
+                        <li id="CompanyInfo" class="flytopbar"><a href=""><i class="fa fa-gear"></i>{{DefaultCompanyName}}</a></li>
                         <li id="Changename" class="flytopbar"><a href=""><i class="fa fa-refresh"></i> Change </a></li>
                     </ul>
 
@@ -292,11 +292,9 @@
                         <div class="flyoutdiv">
 
                             <div class="col-sm-12" style="padding:0px">
-                                <ul class="list-unstyled my">
-                                    <li><a href="#">Labdhi Engineering & Co.</a></li>
-                                    <li><a href="#">Aacharang Metal</a></li>
-                                    <li><a href="#">Paynna Anugrah Indonesia</a></li>
-                                    <li><a href="#">Prathna Indonesia</a></li>
+                                <ul class="list-unstyled my" ng-repeat="list in CompanyList">
+                                    <li><a ng-click="BindCompanyName(list.CompanyName,list.VAT_TIN_NO,list.CST_TIN_NO)">{{list.CompanyName}}</a></li>
+                                    
                                 </ul>
                             </div>
 

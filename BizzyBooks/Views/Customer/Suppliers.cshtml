@@ -175,12 +175,12 @@
 
 
                             <td style="text-align:right; width:150px">
-                                <button type="button" class="editbtn"><a href="#/Customer/Enquiry">Add Enquiry</a></button>
+                                <button type="button" class="editbtn"><a ui-sref="Customer.Enquiry({email:data.company})">Add Enquiry</a></button>
                                 <class class="linkseparator" style="margin-top:4px; margin-right:0px">|</class>
                                 <div class="btn-group editcaret">
                                     <i class="fa fa-caret-down cursor" dropdown-toggle" data-toggle="dropdown"></i>
                                     <ul class="dropdown-menu editdrpdwn" role="menu" style="left:-135px">
-                                        <li><a ui-sref="Customer.Enquiry({email:data.company})">Add Enquiry</a></li>
+                                        
                                         <li><a ui-sref="Customer.PurchaseOrder({email:data.email})">Create Purchase Order</a></li>
                                         <li><a href="#/Customer/Bill">Create Bill</a></li>
                                         <li><a href="#/Customer/CreateInventory">Create Inventory</a></li>
@@ -317,7 +317,7 @@
                             <td>{{data.balance}}</td>
 
                             <td style="text-align:right; width:150px">
-                                <button type="button" class="editbtn"></button>
+                                <button type="button" class="editbtn"><a ui-sref="Customer.MakePayment({poNo:data.no})">Make Payment</a></button>
                                 <class class="linkseparator" style="margin-top:4px; margin-right:0px">|</class>
                                 <div class="btn-group editcaret">
                                     <i class="fa fa-caret-down cursor" dropdown-toggle" data-toggle="dropdown"></i>

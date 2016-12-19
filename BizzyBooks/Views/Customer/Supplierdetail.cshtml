@@ -14,8 +14,8 @@
         <div class="panel lightblue bluebrdr marginbottom content">
             <div class="panel-heading">
                 <div class="col-sm-8 padding">
-                    <strong class="heading content" style="margin-bottom:5%">{{suppliers[0].company}}</strong>
-                    <h4 class="heading content" style="margin-bottom:5%">Mobile : {{suppliers[0].phone}}</h4>
+                    <strong class="heading content" >{{suppliers[0].company}}</strong>
+                    <h4 class="heading content">Mobile : {{suppliers[0].phone}}</h4>
                    
                 </div>
                 
@@ -72,7 +72,7 @@
                 <div class="Tabmask">
                     <div class="panelbox">
                         <section id="panel-1" style="display:block">
-                            <div class="col-sm-12" style="padding-top:10px">
+                            <div class="col-sm-12" style="padding-top:10px; height:400px; overflow:auto ">
                                 <div class="dropdown pull-left" style="margin-bottom:10px">
                                     @*
     <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" style="text-align:left">
@@ -126,9 +126,11 @@
                                                 <div class="btn-group editcaret">
                                                     <i class="fa fa-caret-down cursor" dropdown-toggle"="" data-toggle="dropdown"></i>
                                                     <ul class="dropdown-menu editdrpdwn my" role="menu" style="left:-135px">
-                                                        <li><a href="">Send</a></li>
-                                                        <li><a href="">Print delivery challan</a></li>
-                                                        <li><a href="">Copy</a></li>
+                                                        <li ng-show="data.ordertype =='ENQUIRY'"><a ui-sref="Customer.PurchaseOrder({poNo:data.no})">Create Purchase Order</a></li>
+                                                        <li ng-show="data.ordertype =='BILL'"><a ui-sref="Customer.MakePayment({poNo:data.no})">Make Payment</a></li>
+                                                        <li  ng-show="data.ordertype =='PO'"><a ui-sref="Customer.Bill({billNo:data.no})">Create Bill</a></li>
+                                                        <li ><a ui-sref="Customer.PdfView({po:data.no,enq:2})">View</a></li>
+                                                        
 
                                                     </ul>
                                                 </div>

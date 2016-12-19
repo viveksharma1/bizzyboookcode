@@ -1,9 +1,27 @@
-﻿myApp.controller('CustomerPdfViewCntrl', ['$scope', '$http', '$timeout', '$stateParams', '$rootScope', '$state', 'config', function ($scope, $http, $timeout, $stateParams, $rootScope, $state, config) {
+﻿//var CompanyName;
+myApp.controller('CustomerPdfViewCntrl', ['$scope', '$http', '$timeout', '$stateParams', '$rootScope', '$state', 'config', function ($scope, $http, $timeout, $stateParams, $rootScope, $state, config) {
 
     $(".my a").click(function (e) {
         e.preventDefault();
     });
+    if (localStorage.VAT_TIN_NO == "undefined") {
+        $scope.VAT_TIN_NO = localStorage.VAT_TIN_NO;
+        $scope.CST_TIN_NO = localStorage.CST_TIN_NO;
+    }
+    else {
+        $scope.VAT_TIN_NO = localStorage.VAT_TIN_NO;
+        $scope.CST_TIN_NO = localStorage.CST_TIN_NO;
+    }
+
+    if (localStorage.ChangeCompanyName == "undefined") {
+        $scope.CompanyName = localStorage.DefaultCompanyName
+    }
+    else {
+        $scope.CompanyName = localStorage.ChangeCompanyName;
+    }
+
     $scope.usertype = localStorage.userType_Role;
+
     $scope.goBack = function () {
         window.history.back();
     }

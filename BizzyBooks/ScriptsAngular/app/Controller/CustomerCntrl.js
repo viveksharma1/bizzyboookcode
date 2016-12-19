@@ -4,10 +4,6 @@
         e.preventDefault();
     });
 
-
-
-
-
     $scope.menuUp = function (e) {
         $(".statusBody").slideToggle("slow", function () {
             // Animation complete.
@@ -54,13 +50,27 @@
     });
 
     var url = config.api + "customers";
+    $scope.loading = true;
     $http.get(url).success(function (data) {
-        $scope.customerlist = data;
 
+        $scope.customerlist = data;
+        $scope.loading = false;
     })
 
     $scope.createNewCustomer = function () {
-
+        if ($scope.firstName == undefined) {
+            alert("Please Enter First Name .")
+            return;
+        }
+        if ($scope.company == undefined) {
+            alert("Please Enter Company Name .")
+            return;
+        }
+        if ($scope.mobile == undefined) {
+            alert("Please Enter Mobile No.")
+            return;
+        }
+        $scope.loading = true;
         var data = {
 
             title: $scope.title,
@@ -124,6 +134,7 @@
             if (response != null) {
                 $('#NewCustomerCreateModal').modal('hide');
                 $http.get(url).success(function (res) {
+                    $scope.loading = false;
                     $scope.customerlist = res;
 
                 })
