@@ -96,8 +96,6 @@ $(".Additem").click(function () {
     
     
 
-    //geting enquiry count for enquiry no generation
-
    
     //get enquiry list for edit enquiry
 
@@ -166,12 +164,16 @@ $(".Additem").click(function () {
 
 
     //get suppliers
+    //get suppliers
     $scope.supplierList = [];
  
    
     
 
-    //coment bu vivek sharma
+    
+
+    //coment by vivek sharma
+    //coment by vivek sharma
 
     $scope.$watch('sup', function () {
 
@@ -222,6 +224,8 @@ $(".Additem").click(function () {
             itemDetail: $scope.enquiryTable,
             sentSupplier: $scope.supplierList
         }
+
+        // edit enquiry 
 
         // edit enquiry 
         if ($scope.edit == 1) {
