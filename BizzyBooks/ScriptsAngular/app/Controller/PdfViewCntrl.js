@@ -60,6 +60,8 @@
         $scope.billDueDate = $scope.data.billDueDate;
         $scope.no = $scope.data.no;
         $scope.amount = $scope.data.amount;
+
+        $scope.adminAmount = $scope.data.adminAmount;
     $scope.itemDetail = [];
     $scope.itemDetail = $scope.data.itemDetail;
     $scope.exchangeRate = $scope.data.exchangeRate;
@@ -102,9 +104,11 @@
        kendo.drawing.drawDOM($("#upperdivId")).then(function (group)
        {
 
-           console.log(group);
+            console.log(group);
            
-           console.log(kendo.drawing.pdf.saveAs(group, "PurchaseOrder PDF.pdf"))
+            //console.log(kendo.drawing.pdf.saveAs(group, "PurchaseOrder PDF.pdf"))
+            var file = new Blob([group], { type: 'application/pdf' });
+            var fileURL = URL.createObjectURL(file);
            
             group.options.set("font", "30px Verdana");
         });

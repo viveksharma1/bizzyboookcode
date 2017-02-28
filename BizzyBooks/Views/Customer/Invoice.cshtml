@@ -85,19 +85,20 @@
     <div class="flexcontainer">
         <div class="lightblue bluebrdr content" style="padding:10px 10px">
             <div class="col-sm-3" style="margin-top:10px">
-                <ui-select ui-tree-select ng-model="model.people" id="countryCode"
+               
+                <ui-select ui-tree-select ng-model="customer.selected" id="countryCode"
                            ui-select-focuser
                            theme="selectize">
-                    <ui-select-match placeholder="....Select Customer...">{{ $select.selected.firstName }}</ui-select-match>
-                    <ui-select-choices repeat="group in customerNameList | filter: $select.search">
-                        <div id="customerName">
-                            <span ng-model="customerName" ng-bind-html="group.firstName | highlight: $select.search"></span>
+                    <ui-select-match placeholder="Select customer">{{ $select.selected.company }}</ui-select-match>
+
+                    <ui-select-choices repeat="person in customers  | filter: $select.search">
+                        <div>
+                            <span  ng-bind-html="person.company | highlight: $select.search"></span>
                         </div>
+
+
                     </ui-select-choices>
                 </ui-select>
-                <p ng-init="{{sup = model.people.email}}"> </p>
-                <p style="display:none" ng-init="{{cname = model.people.firstName}}"> </p>
-                <p style="display:none" ng-init="{{id = model.people.id}}"> </p>
                 <div id="form-popoverPopupCustomer" class="popupbox">
                     <div class="dijitDialogTitle">
                         New Customer
@@ -127,7 +128,7 @@
             </div>
             <div class="pull-right">
                 <p class="text-right">BALANCE DUE</p>
-                <span class="balancedue">Rs0.00</span>
+                <span class="balancedue">{{Amount}}</span>
 
             </div>
         </div>
@@ -197,58 +198,14 @@
                     </span>
                 </div>
             </div>
+            <div class="col-sm-1 padding5 pull-right">
+                <h4 class="tabheading font_11">Invoice No.</h4>
+                <input type="text" class="form-control" required="" ng-model="invoiceNo" />
+            </div>
         </div>
 
         <div class="col-sm-12" style="padding-top:30px">
-            @*<table class="table NewTable" id="InvoiceTable">
-                    <thead>
-                        <tr>
-                            <th class="text-right">#</th>
-                            <th>Product/Service</th>
-                            <th>Description</th>
-                            <th class="text-right">Qty</th>
-                            <th class="text-right">Rate</th>
-                            <th class="text-right">Amount</th>
-                            <th>&nbsp;</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="Countedit">
-                            <td class="text-right Count">1</td>
-                            <td class="Count"></td>
-                            <td class="Count"></td>
-                            <td class="text-right Count"></td>
-                            <td class="text-right Count"></td>
-                            <td class="text-right Count"></td>
-                            <td class="text-right Count"><a> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
-
-                            <td class="text-right Count2"><input type="text" class="form-control" style="width:30px" value="1" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" ng-model="productName"  /></td>
-                            <td class="Count2"><input type="text" class="form-control" ng-model="productDiscription" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" ng-model="productQty" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" ng-model="rate"  /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" ng-model="amount"  /></td>
-                            <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
-                        </tr>
-                        <tr class="Countedit">
-                            <td class="text-right Count">2</td>
-                            <td class="Count">&nbsp;</td>
-                            <td class="Count">&nbsp;</td>
-                            <td class="text-right Count">&nbsp;</td>
-                            <td class="text-right Count">&nbsp;</td>
-                            <td class="text-right Count">&nbsp;</td>
-                            <td class="text-right Count"><a> <i class="fa fa-pencil" style="font-size:16px"></i></a></td>
-
-                            <td class="text-right Count2"><input type="text" class="form-control" style="width:30px" value="2"  /></td>
-                            <td class="Count2"><input type="text" class="form-control" ng-model="productName1" /></td>
-                            <td class="Count2"><input type="text" class="form-control" ng-model="productDiscription1" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" ng-model="productQty1" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" ng-model="rate1" /></td>
-                            <td class="text-right Count2"><input type="text" class="form-control" ng-model="amount1" /></td>
-                            <td class="text-right Count2 savetr"><a> <i class="fa fa-save" style="font-size:16px"></i></a></td>
-                        </tr>
-                    </tbody>
-                </table>*@
+           
 
 
             <table class="table NewTable" id="ItemTable">
@@ -283,47 +240,56 @@
 
             </table>
 
-            <table class="table NewTable" id="ItemTable1">
-
-
+            <table class="table table-bordered" id="ItemTable">
                 <thead>
                     <tr>
-                        <th>Product/Service</th>
-                        <th>Discription</th>
-                        <th>Quantity</th>
-                        <th>Rate</th>
-                        <th>Amount</th>
-                        <th>&nbsp;</th>
+
+                        <th style="width:300px; padding:5px;">PRODUCT</th>
+                        <th style="padding:5px;">QUANTITY</th>
+
+                        <th style="width:100px; padding:5px; white-space:nowrap">AMOUNT  (&#8377;)</th>
+                        <th style="width:15px; padding:5px;">&nbsp;</th>
+
+
+
+
                     </tr>
                 </thead>
-                <tbody ng-repeat="item in enquiryTable">
+
+                <tbody ng-repeat="item in accountTable">
                     <tr>
+                        <td class="Count" ng:model="item.productList =(accounts[$index].selected.name)">
+                            <ui-select ng-model="accounts[$index].selected"
+                                       ui-select-focuser
+                                       theme="bootstrap">
+                                <ui-select-match placeholder="Choose an Item" ><em ng-bind-html="$select.selected.name"></em></ui-select-match>
+
+                                <ui-select-choices repeat="person in account  | filter: $select.search">
+                                    <div>
+                                        <span ng-click="addAccount($select.selected.accountName)" ng-bind-html="person.name | highlight: $select.search"></span>
+                                    </div>
 
 
-                        <td class="Count"><input ng:model="item.product" value="0.00" ng:required ng:validate="string" style="border:none" /></td>
-                        <td class="Count"><input ng:model="item.discription" value="0.00" ng:required ng:validate="string" style="border:none" /></td>
-                        <td class="Count"><input ng:model="item.quantity" value="0.00" ng:required ng:validate="number" style="border:none" /></td>
-                        <td class="Count"><input ng:model="item.rate" value="0.00" ng:required ng:validate="number" style="border:none" /></td>
-                        <td class="Count"><input ng:model="item.amount" value="0.00" ng:required ng:validate="number" style="border:none" /></td>
-                        <td class="text-right Count"><a class="edit" title="Edit"> <i class="fa fa-times-circle cursor RemoveTR" style="font-size:16px" ng-click="remove($index)"></i></a></td>
+                                </ui-select-choices>
+                            </ui-select>
+
+                        </td>
+
+                        <td class="Count"><input class="form-control" style="border:none;" /></td>
+                        <td class="Count"><input ng:model="item.amount" class="form-control" value="0.00" ng:required ng:validate="number" style="border:none;" /></td>
+                        <td class="text-right Count" value="0.00"><a class="edit" title="Edit"> <i class="fa fa-times-circle cursor RemoveTR" style="font-size:16px" ng-click="remove1($index)"></i></a></td>
+
+
 
                     </tr>
 
 
                 </tbody>
-
-
             </table>
 
         </div>
         <div class="col-sm-12">
             <div class="pull-left" id="btnid">
-
-                @*<button type="button" class="btn btn-default btn-sm btn-xs" ng-click="addRow()">Add lines</button>*@
-
-
-                <button type="button" class="btn btn-default btn-sm btn-xs" ng-click="addRowMisliniusCh()">Add lines</button>
-
                 <div class="form-group">
                     <h4 class="tabheading">Message displayed on invoice</h4>
                     <textarea class="form-control" ng-model="displayoninvoice" style="height:80px"></textarea>
@@ -335,7 +301,7 @@
             </div>
             <div class="pull-left" id="btnid1">
 
-                <button type="button" class="btn btn-default btn-sm btn-xs" ng-click="addRow()">Add lines</button>
+                <button type="button" class="btn btn-default btn-sm btn-xs" ng-click="addAccount(accounts)">Add lines</button>
 
 
                 @*<button type="button" class="btn btn-default btn-sm btn-xs" ng-click="addRowMisliniusCh()">Add lines</button>*@
@@ -349,31 +315,7 @@
                     <textarea class="form-control" ng-model="statementMemo" style="height:80px"></textarea>
                 </div>
             </div>
-            <span class="pull-right" style="width:350px">
-                @*<label class="subtotal">Subtotal</label>
-                    <span class="subtotalvalue">Rs0.00</span>*@
-                @*<label class="subtotal">
-                        <div class="btn-group pull-left" style="margin-right:10px">
-                            <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" style="width:145px; color:#000 !important; text-align:left">
-                                Discount percent
-                                <i class="fa fa-sort pull-right" style="margin-top:3px"></i>
-                            </button>
-
-                            <ul class="dropdown-menu my Discountfilter" style="width:150px;">
-                                <li><a href="#">Discount percent</a></li>
-                                <li><a href="#">Discount value</a></li>
-
-                            </ul>
-
-                        </div>
-                        <input type="text" class="form-control" style="width:50px; text-align:right" />
-                    </label>*@
-                @*<span class="subtotalvalue">Rs0.00</span>*@
-                @*<label class="subtotal">Total</label>
-                    <span class="subtotalvalue">Rs0.00</span>
-                    <label class="subtotal" style="font-size:1.5rem;">Balance due</label>
-                    <span class="subtotalvalue" style="font-size:1.5rem; font-weight:bold">Rs0.00</span>*@
-            </span>
+            
         </div>
     </div>
 
@@ -386,9 +328,9 @@
 
         <div class="pull-right">
             <a href="#/Customer/CustomerPdfView" class="pull-right btn-primary" style="height:30px;margin-left:10px;width:90px">Invoice View</a>
-            <button type="button" class="btn btn-sm btn-primary" ng-click="CreateNewInvoice()">Save</button>
+            <button type="button" class="btn btn-sm btn-primary" ng-click="createInvoice()">Save</button>
             <div class="btn-group dropup">
-                <button type="button" class="btn btn-info btn-sm">Save and send</button>
+                <button type="button" class="btn btn-info btn-sm" >Save and send</button>
                 <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:25px">
                     <span class="caret"></span>
                 </button>

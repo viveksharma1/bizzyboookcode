@@ -22,7 +22,12 @@ namespace Restaurant
                    "~/css/angular-datatables.min.css",
                     "~/css/xeditable.css",
                     "~/css/select2.css",
-                    "~/css/loader.css"
+                    "~/css/loader.css",
+                      "~/css/accordion.min.css",
+                       "~/css/loading-bar.css",
+                       "~/css/bootstrap-datepicker.css",
+                        "~/css/daterangepicker.css",
+                        "~/css/jquery.toastmessage-min.css"
                 ));
 
 
@@ -33,8 +38,9 @@ namespace Restaurant
                    "~/js/datatables/jquery.dataTables.js",
                    "~/js/nicescroll/jquery.nicescroll.min.js",
                    "~/js/bootstrap.min.js",
+                    "~/js/moment/moment.js",
                    "~/js/progressbar/bootstrap-progressbar.min.js",
-                   "~/js/moment/moment.js",
+                  
                     "~/js/prefixfree.min.js",
                    "~/js/datepicker/daterangepicker.js",
                    "~/ScriptsAngular/Angular/angular.js",
@@ -55,7 +61,7 @@ namespace Restaurant
                     "~/js/waitMe.js",
                     "~/js/underscore-min.js",
                     "~/js/fsm-sticky-header.js",
-                    "~/js/moment.js",
+                   
                     "~/js/datepicker.js",
                     "~/js/Common.js",
                       "~/js/bootstrap-select.min.js",
@@ -63,8 +69,13 @@ namespace Restaurant
                        "~/js/xeditable.js", 
                         "~/js/xeditable.min.js",
                         "~/js/angular-mocks.js",
-                         "~/js/select2.min.js",
-                          "~/js/jspdf.min.js"
+                         "~/js/select2.min.js", 
+                          "~/js/jspdf.min.js",
+                           "~/js/accordion.min.js",
+                                "~/js/loading-bar.js",
+                                "~/js/bootstrap-datepicker.js",
+                                "~/js/daterangepicker.js",
+                                "~/js/jquery.toastmessage-min.js"
 
 
 
@@ -113,7 +124,10 @@ namespace Restaurant
                  "~/ScriptsAngular/app/Controller/CreateInventoryCntrl.js",
                   "~/ScriptsAngular/app/Controller/EnquirydetailCntrl.js",
                   "~/ScriptsAngular/app/Controller/PdfViewCntrl.js",
-                   "~/ScriptsAngular/app/Controller/CustomerPdfViewCntrl.js"
+                   "~/ScriptsAngular/app/Controller/CustomerPdfViewCntrl.js",
+                    "~/ScriptsAngular/app/Controller/ChartofAccountsCntrl.js",
+                     "~/ScriptsAngular/app/Controller/accountHistoryCntrl.js"
+
 
 
                 ));

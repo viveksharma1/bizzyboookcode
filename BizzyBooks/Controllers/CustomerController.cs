@@ -138,5 +138,18 @@ namespace Restaurant.Controllers
         {
             return View();
         }
+
+        public ActionResult enquirytable()
+        {
+            return View();
+        }
+        public ActionResult ChartofAccounts()
+        {
+            return View();
+        }
+        public ActionResult accountHistory()
+        {
+            return View();
+        }
     }
 }

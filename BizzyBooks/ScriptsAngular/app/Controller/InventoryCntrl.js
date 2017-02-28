@@ -1,9 +1,9 @@
-
+﻿
 var Id = "";
 var recalledBlocked = "";
 var TotalCount = "";
 var Skip;
-myApp.controller('InventoryCntrl', ['$scope', '$http', '$timeout', '$rootScope', '$state', 'config', 'fileUpload', function ($scope, $http, $timeout, $rootScope, $state, config, fileUpload) {
+myApp.controller('InventoryCntrl', ['$scope', '$http', '$timeout', '$rootScope', '$state', 'config', 'fileUpload','$filter', function ($scope, $http, $timeout, $rootScope, $state, config, fileUpload, $filter) {
     $(".my a").click(function (e) {
         e.preventDefault();
     });
@@ -20,9 +20,7 @@ myApp.controller('InventoryCntrl', ['$scope', '$http', '$timeout', '$rootScope',
     $('#InventoryFilter').click(function (e) {
         $('#InventoryFilterDiv').toggle();
     });
-    $scope.GRNDetail = function () {
-        $('#GRNDetailDiv').slideDown();
-    },
+    
     $scope.invoiceclose = function () {
         $('.FlexPopup').slideUp();
     },
@@ -51,10 +49,13 @@ myApp.controller('InventoryCntrl', ['$scope', '$http', '$timeout', '$rootScope',
     //{
     //    $scope.InventoryList = response.data;
     //});
-    var url = config.api + "balk_Inventories?filter[limit]=10&filter[skip]=0";
+    var url = config.api + "Inventories?filter[limit]=10&filter[skip]=0";
 
     $http.get(url).then(function (response) {
         $scope.InventoryList = response.data;
+
+        console.log($scope.InventoryList)
+        console.log($scope.response)
     });
 
     //Create New Inventory and update
@@ -140,7 +141,7 @@ myApp.controller('InventoryCntrl', ['$scope', '$http', '$timeout', '$rootScope',
             }
 
             dataobj.push(data);
-            var url = "" + config.api + "balk_Inventories/" + Id + "";
+            var url = "" + config.api + "Inventories/" + Id + "";
             $http.put(url, dataobj).success(function (response) {
                 if (response != null) {
                     if (Skip == undefined)
@@ -191,7 +192,7 @@ myApp.controller('InventoryCntrl', ['$scope', '$http', '$timeout', '$rootScope',
 
     $scope.deleteRecord = function (id) {
         recalledBlocked = id;
-        var url = "" + config.api + "balk_Inventories/" + id + ""
+        var url = "" + config.api + "Inventories/" + id + ""
         $http.delete(url).success(function (response) {
             if (response != null) {
                 if (Skip == undefined)
@@ -236,6 +237,7 @@ myApp.controller('InventoryCntrl', ['$scope', '$http', '$timeout', '$rootScope',
         $scope.ExeclDataRows = [];
         $scope.Key = [];
         $scope.KeyArray = [];
+        var KeyName1;
         var file = $scope.myFile;
         this.parseExcel = function (file) {
             var reader = new FileReader();
@@ -253,16 +255,26 @@ myApp.controller('InventoryCntrl', ['$scope', '$http', '$timeout', '$rootScope',
                         // var i = 0;
                         //retObj[obj.name] = obj.value;
                         for (var obj in XL_row_object[key]) {
-                            retObj[obj] = XL_row_object[key][obj];
+                          
+                            var obj1 = obj.replace(" ", "");
+                           
+                           
+                            retObj[obj1] = XL_row_object[key][obj];
+                           
                             //    //var rowobj = [];
                             var Keyobj = [];
                             var KeyName = obj;
+                           
+                            KeyName1 = KeyName.replace(" ", "");
+                            
                             //     //var Value = XL_row_object[key][obj];
 
                             //     //rowobj[KeyName] = Value;
                             //    retObj[obj.name] = obj.value;
 
-                            Keyobj[KeyName] = KeyName;
+                            Keyobj[KeyName1] = KeyName1;
+
+                           
                             //     $scope.rows.push(rowobj);
                             //     //$scope.rows.insert(i, rowobj)
                             //     $scope.Key.push(Keyobj);
@@ -282,15 +294,24 @@ myApp.controller('InventoryCntrl', ['$scope', '$http', '$timeout', '$rootScope',
 
                 })
                 var ExcelData = $scope.ExeclDataRows
-                var url = config.api + "balk_Inventories";
 
-                $http.post(url, ExcelData).success(function (response) {
+                console.log(ExcelData)
+                var url = config.api + "Inventories";
+
+                console.log(ExcelData);
+
+                var data = {
+
+                    Inventory: ExcelData
+                }
+
+                $http.post(url, data).success(function (response) {
 
                     if (response != null) {
                         //  alert("Excel Upload Successfully");
                         if (Skip == undefined)
                             Skip = 0;
-                        var url = "" + config.api + "balk_Inventories?filter[limit]=10&filter[skip]=" + Skip + "";
+                        var url = "" + config.api + "Inventories?filter[limit]=10&filter[skip]=" + Skip + "";
 
                         $http.get(url).then(function (response) {
                             $scope.InventoryList = response.data;
@@ -310,10 +331,10 @@ myApp.controller('InventoryCntrl', ['$scope', '$http', '$timeout', '$rootScope',
     };
 
 
-    var url = config.api + "balk_Inventories/count";
+    var url = config.api + "Inventories/count";
 
     $http.get(url).then(function (response) {
-        $scope.TotalCount = response.data.count;
+        $scope.TotalCount = "20";
     });
 
 
@@ -362,12 +383,35 @@ myApp.controller('InventoryCntrl', ['$scope', '$http', '$timeout', '$rootScope',
         return ps;
     };
 
+    $scope.nextPage = function () {
+
+
+        console.log($scope.currentPage)
+        if ($scope.currentPage == 0) {
+
+            $scope.currentPage++
+            $scope.setPage($scope.currentPage);
+
+        }
+        else {
+            $scope.currentPage++
+            $scope.setPage($scope.currentPage);
+        }
+    };
+
+
+    $scope.DisableNextPage = function () {
+
+        return $scope.currentPage === $scope.pageCount() ? "disabled" : "";
+
+    };
+
+
     $scope.prevPage = function () {
 
         if ($scope.currentPage > 0) {
-
             $scope.currentPage--;
-
+            $scope.setPage($scope.currentPage--);
         }
     };
 
@@ -381,19 +425,12 @@ myApp.controller('InventoryCntrl', ['$scope', '$http', '$timeout', '$rootScope',
     $scope.pageCount = function () {
         return Math.ceil($scope.TotalCount / $scope.itemsPerPage) - 1;
     };
-    $scope.nextPage = function () {
-
-        if ($scope.currentPage > $scope.pageCount()) {
-
-            $scope.currentPage++;
-
-        }
-    };
+   
 
 
     $scope.DisableNextPage = function () {
 
-        return $scope.currentPage === $scope.pageCount() ? "enabled" : "";
+        return $scope.currentPage === $scope.pageCount() ? "disabled" : "";
 
     };
 
@@ -411,7 +448,7 @@ myApp.controller('InventoryCntrl', ['$scope', '$http', '$timeout', '$rootScope',
         DispLength = $scope.itemsPerPage;
 
         //var url = config.api + "balk_Inventories?filter[limit]=10&filter[skip]=0";
-        var empUrl = config.api + "balk_Inventories?filter[limit]=" + DispLength + "&filter[skip]=" + Skip;
+        var empUrl = config.api + "Inventories?filter[limit]=" + DispLength + "&filter[skip]=" + Skip;
         //if (EmpFilter.length != 0)
         //{
         //    var empQuery = "EmpFilter=";
@@ -469,7 +506,7 @@ myApp.controller('InventoryCntrl', ['$scope', '$http', '$timeout', '$rootScope',
             $scope.InventoryList = response.data;
 
             if (response.data.length > 0) {
-                var url = config.api + "balk_Inventories/count";
+                var url = config.api + "Inventories/count";
 
                 $http.get(url).then(function (response) {
                     $scope.TotalCount = response.data.count;
@@ -509,8 +546,58 @@ myApp.controller('InventoryCntrl', ['$scope', '$http', '$timeout', '$rootScope',
 
     };
 
-    //-----------------------Pagination end
+  
 
+    // my code starts here
+
+
+    $scope.GRNDetail = function (data) {
+        $scope.itemData = data;
+
+
+        console.log(data);
+        console.log(data.id);
+        $('#GRNDetailDiv').slideDown();
+      
+        $scope.billNo = data.NO;
+        $scope.NetWeight = data.netweight;
+        $scope.itemAmount1 = data.cifrate * data.netweight * data.exchangeRate;
+        $scope.itemAmountinINR = $filter('currency')($scope.itemAmount1, '₹', 2)
+        $scope.costPerMTinINR = $filter('currency')($scope.itemAmount1 / data.netweight, '₹', 2)
+       
+
+        $http.get(config.api + "transactions" + "?[filter][where][refNo]=" + $scope.billNo + "&[filter][where][ordertype]=EXPENSE").then(function (response) {
+
+            $scope.expenseData = response.data;
+            console.log(response.data)
+            $scope.supliersName1 = response.data.supliersName;
+            $scope.amount1 = response.data.amount;
+            $scope.date1 = response.data.date;
+            console.log($scope.expenseData)
+
+            var total = 0;
+            for (var i = 0; i < $scope.expenseData.length; i++) {
+                var product = Number($scope.expenseData[i]);
+                total += Number($scope.expenseData[i].amount);
+            }
+            $scope.tatalExpense = Math.round(total);
+            $scope.totalCostPerMT = ($scope.tatalExpense + $scope.itemAmount1) / $scope.NetWeight
+        })
+
+        $http.get(config.api + "ledgers" + "?[filter][where][refNo]=" + $scope.billNo + "&[filter][where][type]=Tax").then(function (response) {
+
+            $scope.taxData = response.data;
+            console.log(response.data)
+            $scope.supliersName1 = response.data.supliersName;
+            $scope.amount1 = response.data.amount;
+            $scope.date1 = response.data.date;
+            console.log($scope.expenseData)
+
+        })
+    }
+    // get inventory ledger 
+
+    
 
 }]);
 

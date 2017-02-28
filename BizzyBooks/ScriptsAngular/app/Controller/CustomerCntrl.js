@@ -13,33 +13,48 @@
         e.preventDefault();
     };
 
+    $scope.totalCustomerbtn = function () {
 
-    $scope.customer = [];
+        $('#overdueInvoiceTable').hide();
+        $('#paidInvoiceTable').hide();
+        $('#example').show();
+        $('#openInvoiceTable').hide();
+    },
 
-    $scope.customer = [
 
-        {
-            customer: 'vijay',
-            companyName: 'vijay Ishpat',
-            contactNo: '99815435',
-            balance: '55,5566'
-        },
 
-       {
-           customer: 'vijay',
-           companyName: 'vijay Ishpat',
-           contactNo: '99815435',
-           balance: "55,5566"
+   $scope.overDueInvoicebtn = function (status) {
 
-       },
-       {
-           customer: 'vijay',
-           companyName: 'vijay Ishpat',
-           contactNo: '99815435',
-           balance: '55,5566'
-       }
-    ]
+       $('#overdueInvoiceTable').show();
+       $('#paidInvoiceTable').hide();
+       $('#example').hide();
+       $('#openInvoiceTable').hide();
+   },
 
+   $scope.paidInvoicebtn = function () {
+       $('#overdueInvoiceTable').hide();
+       $('#paidInvoiceTable').show();
+       $('#example').hide();
+       $('#openInvoiceTable').hide();
+
+   },
+
+   $scope.openInvoicebtn = function (status) {
+      
+       $('#overdueInvoiceTable').hide();
+       $('#paidInvoiceTable').hide();
+       $('#example').hide();
+       $('#openInvoiceTable').show();
+       $scope.getTransaction();
+
+   }
+
+    $('#overdueInvoiceTable').hide();
+    $('#paidInvoiceTable').hide();
+    $('#example').show();
+    $('#openInvoiceTable').hide();
+
+   
 
     console.log($scope.customer);
 
@@ -57,35 +72,29 @@
         $scope.loading = false;
     })
 
-    $scope.createNewCustomer = function () {
-        if ($scope.firstName == undefined) {
-            alert("Please Enter First Name .")
-            return;
-        }
-        if ($scope.company == undefined) {
-            alert("Please Enter Company Name .")
-            return;
-        }
-        if ($scope.mobile == undefined) {
-            alert("Please Enter Mobile No.")
-            return;
-        }
-        $scope.loading = true;
+    
+    $scope.UpdateCustomerInfo = function (id, Name) {
+        localStorage.CustomerId = id;
+        localStorage.customerName = Name;
+
+    }
+
+    $scope.GetId_Customer = function (id) {
+        localStorage.CustomerId_Invoice = id;
+
+
+    }
+
+    $scope.createNewSupplier = function () {
+
         var data = {
 
-            title: $scope.title,
-            firstName: $scope.firstName,
-            middleName: $scope.middleName,
-            lastName: $scope.lastName,
-            suffix: $scope.suffix,
+            compCode: localStorage.CompanyId,
             email: $scope.email,
             company: $scope.company,
             phone: $scope.phone,
             mobile: $scope.mobile,
             fax: $scope.fax,
-            displayName: $scope.displayName,
-            other: $scope.other,
-            website: $scope.website,
             billingAddress: [
               {
                   street: $scope.street,
@@ -114,80 +123,79 @@
 
               }
             ],
-            paymentInfo: [
-              {
-                  paymentMethod: $scope.paymentMethod,
-                  terms: $scope.terms,
-                  deliveryMethod: $scope.deliveryMethod,
-                  openingBalance: $scope.openingBalance,
-                  asOf: $scope.asOf
 
-
-
-              }
-            ],
-            notes: $scope.notes
+            notes: $scope.notes,
+            account: {
+                compCode: localStorage.CompanyId,
+                accountName: $scope.company,
+                category: 'Supplier',
+                group: 'Sundry Debitor',
+                type: 'Current Liability',
+                credit: 0,
+                debit: 0
+            }
 
         }
 
-        $http.post(url, data).success(function (response) {
-            if (response != null) {
-                $('#NewCustomerCreateModal').modal('hide');
-                $http.get(url).success(function (res) {
-                    $scope.loading = false;
-                    $scope.customerlist = res;
 
-                })
-
-            }
-
-            $scope.title = null;
-            $scope.firstName = null;
-            $scope.lastName = null;
-            $scope.middleName = null;
-            $scope.state = null;
-            $scope.city = null;
-            $scope.country = null;
-            $scope.postalCode = null;
-            $scope.city1 = null;
-            $scope.state1 = null;
-            $scope.country1 = null;
-            $scope.postalCode1 = null;
-            $scope.notes = null;
-            $scope.paymentMethod = null;
-            $scope.asOf = null;
-            $scope.openingBalance = null;
-            $scope.openingBalance = null;
-            $scope.taxRegNo = null;
-            $scope.cstRegNo = null;
-            $scope.panNo = null;
-            $scope.website = null;
-            $scope.other = null;
-            $scope.displayName = null;
-            $scope.fax = null;
-            $scope.mobile = null;
-            $scope.phone = null;
-            $scope.company = null;
-            $scope.email = null;
-            $scope.suffix = null;
+        if (!data.email == '') {
 
 
-        })
 
+
+            $http.post(config.login + "createCustomer", data).then(function (response) {
+
+            });
+            $scope.email = null,
+            $scope.company = null,
+            $scope.phone = null,
+            $scope.mobile = null,
+            $scope.fax = null,
+
+
+                  $scope.street = null,
+                  $scope.city = null,
+                  $scope.state = null,
+                  $scope.postalCode = null,
+
+
+                  $scope.street1 = null,
+                  $scope.city1 = null,
+                  $scope.state1 = null,
+                  $scope.postalCode1 = null,
+
+
+                  $scope.taxRegNo = null,
+                  $scope.cstReg = null,
+                  $scope.panNo = null,
+
+
+
+                  $scope.paymentMethod = null,
+                  $scope.terme = null,
+                  $scope.deliveryMethod = null,
+                  $scope.openingBalance = null,
+                  $scope.asOf = null,
+                  $scope.notes = null
+        }
     };
 
-    $scope.UpdateCustomerInfo = function (id, Name) {
-        localStorage.CustomerId = id;
-        localStorage.customerName = Name;
+
+    //get customer data
+    $http.get(config.api + "customerTransactions" + "/count").then(function (response) {
+        $scope.openInvoiceCount = response.data;
+    });
+    $http.get(config.api + "customers" + "/count").then(function (response) {
+        $scope.customerCount = response.data;
+    });
+
+    $scope.getTransaction = function () {
+
+        $http.get(config.api + "customerTransactions").then(function (response) {
+            $scope.transactions = response.data;
+        });
+
 
     }
-
-    $scope.GetId_Customer = function (id) {
-        localStorage.CustomerId_Invoice = id;
-
-
-    }
-
-
 
 }]);

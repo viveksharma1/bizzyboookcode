@@ -1,5 +1,5 @@
 var myApp = angular
-    .module('myApp', ['ui.router', 'datatables',
+    .module('myApp', ['ui.router', 'datatables','angular-loading-bar', 'ngAnimate',
         //'ngtimeago',
         'oitozero.ngSweetAlert', 'fsm', 'ui.select', 'ngSanitize'])
     .config(['$stateProvider','$urlRouterProvider',function ($stateProvider,   $urlRouterProvider) {
@@ -39,11 +39,24 @@ var myApp = angular
 
 
         $stateProvider.state("Customer.Suppliers", {
-            url: "/Suppliers",
+            url: "/Suppliers/:type",
             templateUrl: "Customer/Suppliers",
-            controller: "SupplierCntrl"
+            controller: "SupplierCntrl",
+            params: {
+                type: null
+               
+            }
+            
         });
 
+        $stateProvider.state("Customer.enquirytable", {
+            url: "/Supplier/enquirytable",
+            templateUrl: "Customer/enquirytable",
+            controller: "SupplierCntrl"
+            
+
+        });
+       
 
         $stateProvider.state("Customer.SearchTransactions", {
             url: "/SearchTransactions",
@@ -52,7 +65,7 @@ var myApp = angular
         });
 
         $stateProvider.state("Customer.Supplierdetail", {
-            url: "/Supplierdetail:contactId",
+            url: "/Supplierdetail:supCode",
             templateUrl: "Customer/Supplierdetail",
             controller: "SupplierdetailCntrl"
         });
@@ -104,7 +117,12 @@ var myApp = angular
         $stateProvider.state("Customer.Invoice", {
             url: "/Invoice",
             templateUrl: "Customer/Invoice",
-            controller: "InvoiceCntrl"
+            controller: "InvoiceCntrl",
+            params: {
+                cusCode: null,
+                cusName: null
+
+            }
 
         });
 
@@ -116,7 +134,7 @@ var myApp = angular
         });
 
         $stateProvider.state("Customer.Enquiry", {
-            url: "/Enquiry",
+            url: "/Enquiry/:email/:edit",
             templateUrl: "Customer/Enquiry",
             controller: "EnquiryCntrl",
             params: {
@@ -127,7 +145,7 @@ var myApp = angular
         });
 
         $stateProvider.state("Customer.PurchaseOrder", {
-            url: "/PurchaseOrder",
+            url: "/PurchaseOrder/:enqNo/:edit",
             templateUrl: "Customer/PurchaseOrder",
             controller: "PurchaseOrderCntrl",
             params: {
@@ -138,11 +156,13 @@ var myApp = angular
         });
 
         $stateProvider.state("Customer.Bill", {
-            url: "/Bill",
+            url: "/Bill/:billNo/:suppliers",
             templateUrl: "Customer/Bill",
             controller: "BillCntrl",
             params: {
-                billNo:null
+                billNo: null,
+                suppliers: null
+               
             }
 
         });
@@ -150,7 +170,12 @@ var myApp = angular
         $stateProvider.state("Customer.Expense", {
             url: "/Expense",
             templateUrl: "Customer/Expense",
-            controller: "ExpenseCntrl"
+            controller: "ExpenseCntrl",
+            params: {
+                no: null,
+                suppliers: null
+
+            }
 
         });
 
@@ -170,11 +195,13 @@ var myApp = angular
         });
 
         $stateProvider.state("Customer.MakePayment", {
-            url: "/MakePayment",
+            url: "/MakePayment/:poNo",
             templateUrl: "Customer/MakePayment",
             controller: "MakePaymentCntrl",
             params: {
-                poNo: null
+                poNo: null,
+                suppliers: null,
+                Code: null
                
             }
 
@@ -201,7 +228,7 @@ var myApp = angular
 
         });
         $stateProvider.state("Customer.PdfView", {
-            url: "/PdfView",
+            url: "/PdfView/:po/:enq",
             templateUrl: "Customer/PdfView",
             controller: "PdfViewCntrl",
             params: {
@@ -220,6 +247,22 @@ var myApp = angular
             controller: "CustomerPdfViewCntrl"
 
         });
+          $stateProvider.state("Customer.ChartofAccounts", {
+              url: "/ChartofAccounts",
+              templateUrl: "Customer/ChartofAccounts",
+              controller: "ChartofAccountsCntrl"
+          });
+
+          $stateProvider.state("Customer.accountHistory", {
+              url: "/accountHistory/:accountName",
+              templateUrl: "Customer/accountHistory",
+              controller: "accountHistoryCntrl",
+              params: {
+                  accountName: null,
+                  
+
+              }
+          });
 
 
 
@@ -247,20 +290,19 @@ var myApp = angular
     }]);
 
 
+
 myApp.value('config', {
- //login: 'http://localhost:4000/',
 
- //api: 'http://localhost:4000/api/'
+ login: 'http://localhost:4000/',
+
+ api: 'http://localhost:4000/api/'
 
 
-  login: 'http://bizzy-book-api.azurewebsites.net/',
- api: 'http://bizzy-book-api.azurewebsites.net/api/'
-
-   
-  
-
-   
+ // login: 'http://bizzy-book-api.azurewebsites.net/',
+ // api: 'http://bizzy-book-api.azurewebsites.net/api/'
 });
+
+
 myApp.factory('UserService', function ()
 {
     var UserType = 'superadmin';
@@ -271,13 +313,7 @@ myApp.factory('UserService', function ()
 
 myApp.service('selectsuppliers', ['$rootScope',
     function ($rootScope) {
-      
-           
             return $rootScope.resource
-            
-    
-   
-
 }
 ])
 
@@ -408,34 +444,21 @@ myApp.directive('uiTreeItem', [
 
 
   myApp.factory('myService', function ($http) {
-
       var url = "http://bizzy-book-api.azurewebsites.net/api/"
-
       var http = {
           postSuppliers: function (webService, data) {
               var promise = $http.post(url + webService, data).then(function (response) {
                   return response.data;
-                 
-              });
-
-             
+              });     
               return promise;
           },
           getSuppliers: function () {
           var promise = $http.get(url+"suppliers").then(function (response) {
               return response.data;
-                 
           });
-
-             
           return promise;
       }
-
-
-
-
       };
-
       return http;
   });
 
@@ -591,7 +614,7 @@ myApp.run(['$templateCache', function ($templateCache) {
       '  <div ng-show="true" class="ui-select-breadcrumbs">',
       '    <span class="ui-breadcrumb"',
       '       ng-click="add()">',
-      '       +Add New Suppliers {{$select.search}}',
+      '       + Add New  {{$select.search}}',
       '    </span>',
       '  </div>',
       '  <div class="ui-select-choices-content selectize-dropdown-content">',
@@ -609,6 +632,40 @@ myApp.run(['$templateCache', function ($templateCache) {
       '  </div>',
       '</div>'
     ].join(''))
+
+    
+
+
+}]);
+
+myApp.run(['$templateCache', function ($templateCache) {
+    $templateCache.put('bootstrap/choices.tpl.html', [
+     '<div ng-show="$select.open"',
+     '  class="ui-select-choices group-tree selectize-dropdown single">',
+     '  <div ng-show="true" class="ui-select-breadcrumbs">',
+     '    <span class="ui-breadcrumb"',
+     '       ng-click="add3()">',
+     '       + Add new  {{$select.search}}',
+     '    </span>',
+     '  </div>',
+     '  <div class="ui-select-choices-content selectize-dropdown-content">',
+     '    <div class="ui-select-choices-group optgroup">',
+     '      <div ng-show="$select.isGrouped"',
+     '        class="ui-select-choices-group-label optgroup-header">',
+     '        {{$group}}',
+     '      </div>',
+     '      <div class="ui-select-choices-row">',
+     '        <div class="option ui-select-choices-row-inner"',
+     '           data-selectable="">',
+     '        </div>',
+     '      </div>',
+     '    </div>',
+     '  </div>',
+     '</div>'
+    ].join(''))
+
+
+
 }]);
 
 

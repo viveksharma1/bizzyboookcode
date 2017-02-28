@@ -1,7 +1,7 @@
 ﻿var customerName;
 var CustomerId_Invoice;
 
-myApp.controller('InvoiceCntrl', ['$scope', '$http', '$timeout', '$rootScope', '$state', 'config', function ($scope, $http, $timeout, $rootScope, $state, config) {
+myApp.controller('InvoiceCntrl', ['$scope', '$http', '$timeout', '$rootScope', '$state', 'config', '$stateParams', function ($scope, $http, $timeout, $rootScope, $state, config,$stateParams) {
     var currentDate = new Date();
 
     $scope.CompanyName = localStorage.ChangeCompanyName;
@@ -89,7 +89,26 @@ myApp.controller('InvoiceCntrl', ['$scope', '$http', '$timeout', '$rootScope', '
 
     $scope.enquiryTable = [];
 
+    //get customer
+    $scope.customerName = $stateParams.cusName
+    $scope.cusCode = $stateParams.cusCode
+
+    $scope.customer = { selected: { company: $stateParams.cusName } };
+
+
+    $scope.customers = []
+    $http.get(config.api + "customers" + "?filter[where][compCode]=" + localStorage.CompanyId).then(function (response) {
+        $scope.customers = response.data;
+    });
+
+
+
+
     //Add row to the enquiry Item detail table
+
+
+
+
 
     $scope.addRow = function () {
         $scope.enquiryTable.push(
@@ -189,6 +208,97 @@ myApp.controller('InvoiceCntrl', ['$scope', '$http', '$timeout', '$rootScope', '
                 $scope.statementMemo = null;
 
             }
+
+        })
+    }
+
+
+    //
+    $scope.accounts = {};
+    $scope.accountTable = [];
+
+    $scope.totalAmount = function () {
+        var total1 = 0;
+        for (var i = 0; i < $scope.accountTable.length; i++) {
+            var product = Number($scope.accountTable[i]);
+            total1 += Number($scope.accountTable[i].amount);
+        }
+        $scope.Amount = total1.toFixed(2);
+
+        console.log($scope.totalAmount);
+        
+    }
+
+    $scope.remove1 = function (index) {
+        $scope.accountTable.splice(index, 1);
+        $scope.totalAmount();
+    }
+
+    $scope.accountTable.push({ "productList": '', "quantity": '', "amount": '' })
+
+    $scope.addAccount = function () {
+
+        $scope.accountTable.push({ "productList": '', "quantity": '', "amount": '' })
+        console.log($scope.accountTable)
+        $scope.totalAmount();
+        consolelog($scope.accountTable)
+    }
+
+    $http.get(config.api + "inventoryStocks").then(function (response) {
+        $scope.account = response.data;
+    });
+
+    //create invoice
+
+    $scope.createInvoice = function () {
+
+        data = {
+            invoiceNo: $scope.invoiceNo,
+            customerName: $scope.customer.selected.company,         
+            invoiceDate: $scope.invoiceDate,
+            invoiceDueDate: $scope.invoiceDueDate,         
+            productInfo: $scope.accountTable,
+            amount: $scope.Amount,
+            cuscode: $scope.cusCode
+        }
+        var url = config.api + "customerTransactions";
+        $http.post(url, data).success(function (response) {
+           
+
+                    var data1 = {
+                        compCode: localStorage.CompanyId,    
+                        supliersName: $scope.customer.selected.company,
+                        accountName: $scope.customer.selected.company,
+                       
+                        date: $scope.invoiceDate,
+                        particular: 'Inventory',
+                        no: $scope.invoiceNo,
+                        debit: $scope.Amount,
+                        credit: 0,
+                        value: $scope.Amount,
+                        type: 'Invoice',
+                        lastModified: new Date(),
+                        Inventory: {
+                            supliersName: $scope.customer.selected.company,
+                            compCode: localStorage.CompanyId,           
+                            accountName: 'Inventory',
+                           
+                            date: $scope.invoiceDate,
+                            particular: $scope.customer.selected.company,
+                            no: $scope.invoiceNo,
+                            debit: $scope.Amount,
+                            credit: 0,
+                            value: $scope.Amount,
+                            type: 'invoice',
+                            lastModified: new Date(),
+
+                        }
+                    }
+
+                    $http.post(config.login + "transaction", data1).then(function (response) {
+
+                    });
+               
 
         })
     }

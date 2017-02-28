@@ -25,174 +25,299 @@
         </ui-select-choices>
     </ui-select>
 </script>
-<div class="FlexPopup" style="display:block" ng-init="model = {}">
-    <div class="flexheader">
-        <ul class="list-unstyled submenu InvoiceMenu" style="float:left">
-            <li><a href="#"><i class="fa fa-history"></i></a></li>
-            <li><a href="#"><span>Receive Payment</span></a></li>
-        </ul>
-        <ul class="list-unstyled submenu InvoiceMenu">
-            <li><a href="#"><i class="fa fa-question-circle"></i></a></li>
-            <li><a href="" ng-click="goBack()"><i class="fa fa-times"></i></a></li>
-        </ul>
-    </div>
 
+<div class="FlexPopup" style="display:block" ng-init="model = {}">
+    <div class="flexheader lightblue  ">
+        <label style="float:left;padding:15px ">
+
+            <strong><span style="font-size:20px;  color:#585655">Receive Payment</span></strong>
+        </label>
+        <label style="float:right;padding:15px ">
+
+            <strong style="font-size:20px"><a href="" ng-click="goBack()"><i class="fa fa-times"></i></a></strong>
+
+
+        </label>
+
+    </div>
     <div class="flexcontainer">
         <div class="lightblue bluebrdr content" style="padding:10px 10px">
-            <div class="col-sm-3" style="margin-top:10px">
-                <ui-tree-select model="model">
-                </ui-tree-select>
+            <div class="col-sm-3 padding5">
+                <h4 class="tabheading font_11">Supplier</h4>
+                <ui-select ui-tree-select ng-model="supplier.selected" id="countryCode"
+                           ui-select-focuser
+                           theme="selectize">
+                    <ui-select-match placeholder="Select Suppliers">{{ $select.selected.company }}</ui-select-match>
 
-                <div id="form-popoverPopup" class="popupbox">
-                    <div class="dijitDialogTitle">
-                        New Term
-                        <i class="fa fa-times-circle cursor pull-right" title="close" ng-click="popuclose()"></i>
-                    </div>
-                    <div class="form-content">
-                        <div class="form-group">
-                            <label><span class="red">*</span> Name</label>
-                            <input type="text" class="form-control" />
+                    <ui-select-choices repeat="person in supliers  | filter: $select.search">
+                        <div>
+                            <span ng-model="supplier1" ng-bind-html="person.company | highlight: $select.search"></span>
                         </div>
-                        <strong>
-                            <input type="radio" class="pull-left" /> <span class="pull-left">Due in fixed number of days</span>
-                        </strong>
-                        <p>
-                            <input type="text" class="form-control pull-left" style="width:50px" /> <span class="pull-left">days</span>
-                        </p>
-                        <strong>
-                            <input type="radio" class="pull-left" /> <span class="pull-left">Due by certain day of the month</span>
-                        </strong>
-                        <p>
-                            <input type="text" class="form-control pull-left" style="width:50px" /> <span class="pull-left">day of month</span>
-                        </p>
-                        <strong>
-                            <span class="pull-left">Due the next month if issued within</span>
-                        </strong>
-                        <p>
-                            <input type="text" class="form-control pull-left" style="width:50px" /> <span class="pull-left">days of due date</span>
-                        </p>
-                        <div class="form-footer">
-                            <button type="button" class="btn btn-sm btn-default">Save</button>
+
+
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+
+            <div class="col-sm-3">
+                <h4 class="tabheading font_11">Deposited To</h4>
+                <ui-select ng-model="accounts.selected" id="countryCode"
+                           ui-select-focuser
+                           theme="bootstrap">
+                    <ui-select-match placeholder="Choose an account">{{$select.selected.accountName}}</ui-select-match>
+
+                    <ui-select-choices repeat="person in account  | filter: $select.search">
+                        <div>
+                            <span ng-model="supplier1" ng-bind-html="person.accountName | highlight: $select.search"></span>
+                        </div>
+
+
+                    </ui-select-choices>
+                </ui-select>
+
+                <label class="btn-secondary bg-blue"> {{accountbBalance}}</label>
+
+            </div>
+            <div id="addInventryModal1" class="modal fade" role="dialog">
+                <div class="modal-alert">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+
+                        <div class="modal-body fa fa-check-circle fa-1x co-ok" style="background-color:#ffffff;text-align:center">
+                            <strong style="text-align:center;color:#0A0503">Bill Payment Saved</strong>
                         </div>
                     </div>
+
                 </div>
             </div>
-            <div class="col-sm-3" style="margin-top:10px">
-                <input type="text" class="form-control" placeholder="Email (Separate emails with a comma)" style="margin-bottom:5px" />
-                <input type="checkbox" class="pull-left" /> <small class="sendlater">Send later</small>
+
+
+            <div id="ammountAlert" class="modal fade" role="dialog">
+                <div class="modal-alert">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+
+                        <div class="modal-body fa fa-exclamation-triangle fa-1x co-dan" style="background-color:#ffffff">
+                            <label style="text-align:center;color:#0A0503">Please Add Amount</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="accountAlert" class="modal fade" role="dialog">
+                <div class="modal-alert">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+
+                        <div class="modal-body fa fa-exclamation-triangle fa-1x co-dan" style="background-color:#ffffff">
+                            <label style="text-align:center;color:#0A0503">Please Select Account</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="form-popoverPopup" class="popupbox">
+                <div class="dijitDialogTitle">
+                    New Suppliers
+                    <i class="fa fa-times-circle cursor pull-right" title="close" ng-click="popuclose()"></i>
+                </div>
+                <div class="form-content">
+                    <div class="form-group">
+                        <label><span class="red">*</span>Suppliers Name</label>
+                        <input type="text" ng-model="suppliersName" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label><span class="red">*</span>Email</label>
+                        <input type="text" ng-model="email1" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label><span class="red">*</span>Mobile No.</label>
+                        <input type="text" ng-model="mobile" class="form-control" />
+                    </div>
+
+
+
+                    <div class="form-footer">
+                        <button type="button" class="btn btn-sm btn-default" ng-click="saveSuppliers()">Save</button>
+                    </div>
+                </div>
             </div>
             <div class="pull-right">
-                <p class="text-right">BALANCE DUE</p>
-                <span class="balancedue">Rs0.00</span>
+
+                <p class="text-right">Amount</p>
+                <span class="balancedue">{{balance |number : fractionSize}} &#8377;</span>
+                <h3>{{status}}</h3>
+
+
             </div>
-        </div>
-        <div class="col-sm-12">
 
 
-            <div class="col-sm-2 padding5">
-                <h4 class="tabheading">Payment date</h4>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="Paymentdate">
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+            <div style="float:left; width:100%">
+                <div class="col-sm-2 padding5">
+                    <h4 class="tabheading" ng-click="Accountbtn()">Mailing address</h4>
+                    <textarea class="form-control" style="height:80px"></textarea>
+                </div>
+                @*Account*@
+                <div class="modal fade" id="formaccount">
+                    <div class="modal-dialog">
+                        <div class="modal-content content">
+                            <div class="modal-header popupheader content" style="padding:10px 20px">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title">Account</h4>
+                            </div>
+                            <div class="modal-body content" style="padding:10px 20px">
+                                <div class="col-sm-6 paddinright">
+
+                                    <div class="col-sm-12 form-group padding5">
+                                        <label>Account Type</label>
+                                        <select class="form-control" ng-model="accountType">
+                                            <option>Bank</option>
+                                            <option>Credit Card</option>
+
+
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12 form-group padding5">
+                                        <label><span class="red">*</span>Group</label>
+                                        <select class="form-control" multiple style="height:120px; width:75%" ng-model="accountgroup">
+                                            <option>Sundry Creditor</option>
+                                            <option>Sundry Debitor</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-sm-12 form-group padding5" style="margin-top:10px">
+                                        <div class="form-control" style="height:200px; overflow-y:scroll; background:#f4f4f4; font-size:14px">
+                                            <p><strong>Credit card</strong> accounts track the balance due on your business credit cards.</p>
+
+                                            <p>Create one <strong>Credit card</strong> account for each credit card account your business uses.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-sm-6">
+
+                                    <div class="col-sm-12 form-group padding5">
+                                        <label><span class="red">*</span>Name</label>
+                                        <input ng-model="accountName" type="text" class="form-control" />
+                                    </div>
+                                    <div class="col-sm-12 form-group padding5">
+                                        <label>Description</label>
+                                        <input ng-model="description" type="text" class="form-control" />
+                                    </div>
+                                    <div class="col-sm-12 form-group padding5" style="margin:20px 0px;">
+                                        <label><input type="checkbox" /> Is sub-account </label>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" style="width:280px; color:#000 !important; text-align:left;">
+                                                Enter parent account
+                                                <i class="fa fa-sort pull-right" style="margin-top:3px"></i>
+                                            </button>
+
+                                            <ul class="dropdown-menu my parentaccount" style="width:310px; height:300px; overflow-y:auto">
+                                                <li class="panelSearch">
+                                                    <input type="text" class="form-control" placeholder="Enter parent account" id="SearchFilter" />
+                                                </li>
+                                                <li style="margin-top:50px;"><a href="#">Cash on hold <em>Bank</em></a></li>
+                                                <li><a href="#">Inventory Asset <em>Current Assets</em></a></li>
+                                                <li><a href="#">TDS Receivable <em>Current Assets</em></a></li>
+                                                <li><a href="#">Undeposited Funds <em>Current Assets</em></a></li>
+                                                <li><a href="#">Uncategorised Asset <em>Current Assets</em></a></li>
+                                                <li><a href="#">TDS Payable <em>Current Liabilities</em></a></li>
+                                                <li><a href="#">Accounts Payable (Creditors) <em>Creditors</em></a></li>
+                                                <li><a href="#">Opening Balance Equity <em>Equity</em></a></li>
+                                                <li><a href="#">Retained Earnings <em>Equity</em></a></li>
+                                                <li><a href="#">Billable Expense Income <em>Income</em></a></li>
+                                                <li><a href="#">Discounts given <em>Income</em></a></li>
+                                                <li><a href="#">Sales of Product Income <em>Income</em></a></li>
+                                                <li><a href="#">Services <em>Income</em></a></li>
+                                                <li><a href="#">Uncategorised Income <em>Income</em></a></li>
+                                                <li><a href="#">Cost of sales <em>Cost of Goods Sold</em></a></li>
+                                                <li><a href="#">Inventory Shrinkage <em>Cost of Goods Sold</em></a></li>
+                                                <li><a href="#">Purchases <em>Expenses</em></a></li>
+                                                <li><a href="#">Unapplied Cash Bill Payment Expense <em>Expenses</em></a></li>
+                                                <li><a href="#">Uncategorised Expense <em>Expenses</em></a></li>
+                                                <li><a href="#">Other Expense <em>Other Expenses</em></a></li>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4 form-group padding5">
+                                        <label>Balance</label>
+                                        <input ng-model="balance" type="text" class="form-control" />
+                                    </div>
+
+                                    <div class="col-sm-4 form-group padding5">
+                                        <label>as of</label>
+                                        <input type="text" class="form-control" id="asofdate" placeholder="dd/mm/yyy" />
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+                            <div class="modal-footer content">
+                                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" ng-click="createAccount()">Save changes</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
                 </div>
 
-            </div>
-        </div>
-
-        <div class="col-sm-12">
-
-            <div class="col-sm-2 padding5">
-                <h4 class="tabheading">Payment method</h4>
-
-                <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-default  dropdown-toggle" data-toggle="dropdown" style="width:188px; color:#000 !important; text-align:left;">
-                        Cash
-                        <i class="fa fa-sort pull-right" style="margin-top:3px"></i>
-                    </button>
-
-                    <ul class="dropdown-menu my PaymentFilter" style="width:188px;">
-                        <li><a href="#">Cash</a></li>
-                        <li><a href="#">Cheque</a></li>
-                        <li><a href="#">Credit Card</a></li>
 
 
-                    </ul>
-
+                <div class="col-sm-2 padding5">
+                    <h4 class="tabheading">Payment date</h4>
+                    <div class='input-group'>
+                        <input type='text' class="form-control" id="PaymentdateCheque" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
                 </div>
 
-            </div>
-
-            <div class="col-sm-2 padding5">
-                <h4 class="tabheading">Reference no.</h4>
-                <input type="text" class="form-control" />
-            </div>
 
 
-            <div class="col-sm-3 padding5">
-                <h4 class="tabheading">Deposit to</h4>
 
-                <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" style="width:280px; color:#000 !important; text-align:left;">
-                        Undeposited Funds
-                        <i class="fa fa-sort pull-right" style="margin-top:3px"></i>
-                    </button>
 
-                    <ul class="dropdown-menu my DepositFilter" style="width:250px;">
-                        <li><a href="#">Travel</a></li>
-                        <li><a href="#">Deferred Krishi Kalyan Cess Input Credit</a></li>
-                        <li><a href="#">Deferred Service Tax Input Credit</a></li>
-                        <li><a href="#">Deferred VAT Input Credit</a></li>
-                        <li><a href="#">Inventory Asset</a></li>
-                        <li><a href="#">Krishi Kalyan Cess Refund</a></li>
-                        <li><a href="#">Prepaid Insurance</a></li>
-                    </ul>
-
+                <div class="col-sm-1 padding5 pull-right">
+                    <h4 class="tabheading">Ref no.</h4>
+                    <input type="text" ng-model="no" class="form-control" value="3" disabled />
                 </div>
             </div>
-
-
-            <div class="col-sm-2 padding5 pull-right">
-                <h4 class="tabheading">Amount received</h4>
-                <input type="text" class="form-control" />
-            </div>
         </div>
-
-
-
         <div class="col-sm-12" style="padding-top:30px">
             <h4 data-toggle="collapse" data-target="#AccountDetail" class="cursor"><i class="fa fa-caret-right"></i> Outstanding Transactions details</h4>
             <div class="collapse in" id="AccountDetail">
-                <table class="table NewTable" style="width:100%">
+                <table class="table-bordered table-condensed table-hover borderless" style="width:100%">
                     <thead>
                         <tr>
-                            <th class="text-right" style="width:50px"><input type="checkbox"></th>
-                            <th>Description</th>
+                            <th class="text-right" style="width:50px"><input type="checkbox" /></th>
+                            <th>Date</th>
                             <th>Due Date</th>
-                            <th class="text-right" style="width:150px">Original Amount</th>
-                            <th class="text-right" style="width:150px">Open Balance</th>
+                            <th class="text-right">Original Amount</th>
+                            <th class="text-right">Open Balance</th>
                             <th class="text-right" style="width:100px">Payment</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody ng-repeat="data in bill">
 
                         <tr>
-                            <td class="text-right" style="width:50px"><input type="checkbox"></td>
-                            <td>Bill (17/08/2016)</td>
-                            <td>17/08/2016</td>
-                            <td class="text-right">24,000.00</td>
-                            <td class="text-right">14,000.00</td>
-                            <td class="text-right"><input type="text" class="form-control" value="14,000.000"> </td>
-                        </tr>
+                            <td class="text-right" style="width:50px"><input type="checkbox" /></td>
+                            <td ng-bind="data.date | date:'dd MMM yyyy'"></td>
+                            <td ng-bind="data.billDueDate | date:'dd MMM yyyy'"></td>
 
-                        <tr>
-                            <td class="text-right" style="width:50px"><input type="checkbox"></td>
-                            <td>Bill (17/08/2016)</td>
-                            <td>17/08/2016</td>
-                            <td class="text-right">40,000.00</td>
-                            <td class="text-right">40,000.00</td>
-                            <td class="text-right"><input type="text" class="form-control" value="40,000.000"> </td>
+                            <td class="text-right">{{data.amount |number : fractionSize}}</td>
+                            <td class="text-right">{{data.balance |number : fractionSize}}</td>
+                            <td class="text-right"><input type="text" id="abc" /></td>
                         </tr>
 
 
@@ -200,52 +325,79 @@
                 </table>
             </div>
         </div>
-        <hr style="float:left; width:100%; margin:5px 0px">
+
+        <hr style="float:left; width:100%; margin:5px 0px" />
+
+
 
         <div class="col-sm-12">
             <div class="col-sm-3 padding">
 
                 <div class="form-group">
-                    <h4 class="tabheading">Memo</h4>
+                    <h4 class="tabheading">Memo{{data.paymentAmount |number : fractionSize}}</h4>
                     <textarea class="form-control" style="height:80px"></textarea>
                 </div>
             </div>
             <span class="pull-right" style="width:350px">
-                <label class="subtotal" style="font-size:1.3rem;">Amount to Apply</label>
-                <span class="subtotalvalue" style="font-size:1.3rem; font-weight:bold">Rs1,54,000.00</span>
-                <label class="subtotal" style="font-size:1.3rem;">Amount to Credit</label>
-                <span class="subtotalvalue" style="font-size:1.3rem; font-weight:bold">Rs0.00</span>
+
+                @*
+                    <span class="subtotalvalue" style="font-size:1.3rem; font-weight:bold">Rs1,54,000.00</span>
+                    <label class="subtotal" style="font-size:1.3rem;">Amount to Credit</label>
+                    <span class="subtotalvalue" style="font-size:1.3rem; font-weight:bold">Rs0.00</span>
+                *@
             </span>
         </div>
 
 
+        <hr style="float:left; width:100%; margin:5px 0px" />
 
+        <div class="col-sm-12" style="margin-bottom:20px">
+            <div class="col-sm-4 padding">
+
+                <div class="form-group">
+                    <h4 class="tabheading">Attachments</h4>
+                    <div class="attachmets">
+                        <input type="file" id="uploadBtn" multiple="multiple" name="browsefile">
+                        <div>
+                            <i class="fa fa-plus"></i>
+                            <p>Add file</p>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div id="upload_prev" class="upload_prev"></div>
+        </div>
     </div>
 
 
     <div class="flexfooter">
         <span class="pull-left">
-            <button type="button" class="btn btn-sm btn-primary">Cancel</button>
+
             <button type="button" class="btn btn-sm btn-primary">Clear</button>
         </span>
 
         <div class="pull-right">
-            <button type="button" class="btn btn-sm btn-primary">Save</button>
+            <button type="button" class="btn btn-sm btn-primary" ng-click="makePayment(paymentAmount-amount)">Save</button>
             <div class="btn-group dropup">
-                <button type="button" class="btn btn-info btn-sm">Save and send</button>
-                <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:25px">
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" style="right:-2px !important">
-                    <li><a href="#">Save and close</a></li>
-                    <li><a href="#">Save and send</a></li>
-                    <li><a href="#">Save and new</a></li>
-                    <li><a href="#">Save and share link</a></li>
-                </ul>
+                @*
+                    <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:25px">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" style="right:-2px !important">
+                        <li><a href="#">Save and close</a></li>
+                        <li><a href="#">Save and send</a></li>
+                        <li><a href="#">Save and new</a></li>
+                        <li><a href="#">Save and share link</a></li>
+                    </ul>
+                *@
             </div>
         </div>
     </div>
 
 
+
 </div>
+
 

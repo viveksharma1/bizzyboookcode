@@ -7,10 +7,15 @@ myApp.controller('LoginCntrl', ['$state', '$http', '$rootScope', '$scope', 'conf
         if (localStorage.comobj != undefined)
         {
             $scope.CompanyList = JSON.parse(localStorage.comobj)
+
+            console.log($scope.CompanyList)
             $scope.DefaultCompanyName = localStorage.DefaultCompanyName;
         }
        
     }
+
+    //if (localStorage.accessToken != undefined)
+      //  $http.defaults.headers.common['Authorization'] = localStorage.accessToken;
 
 
     $(function () {
@@ -31,17 +36,26 @@ myApp.controller('LoginCntrl', ['$state', '$http', '$rootScope', '$scope', 'conf
             RoleCheck = "";
             // $scope.loading = true;
             $http.post(config.login + "login", data).success(function (data, status) {
-              
-                RoleCheck = data.role;
+                console.log(data.message);
+                var userData = data;
+                localStorage["tokenNo"] = data.res1.id;
+                localStorage["username"] = data.res1.user.username;
+
+                $scope.username = localStorage["username"]
+
+               // $http.defaults.headers.common['Authorization'] = data.res1.id;
+                localStorage.accessToken = data.res1.id;
+                RoleCheck = data.res1.user.role;
                 GetCompanyData(RoleCheck)
-                localStorage.userType_Role = data.role;
+                localStorage.userType_Role = data.res1.user.role;
                 $rootScope.tok = data.token;
-                localStorage['adminrole'] = data.role;
+                localStorage['adminrole'] = data.res1.user.role;
                 localStorage['token'] = data.token;
                 // console.log($rootScope.tok);
 
-                if (data.message == "User Not Found") {
-                    $('#InvalidModal').modal('show');
+                if (userData.message == "User Not Found") {
+                   $('#InvalidModal').modal('show');
+                   window.alert("invalid user and password"); 
 
                 }
                 else {
@@ -150,9 +164,12 @@ myApp.controller('LoginCntrl', ['$state', '$http', '$rootScope', '$scope', 'conf
             var url = config.api + "CompanyMasters";
             $http.get(url).success(function (response) {
                 $scope.CompanyList = response;
+
+                console.log($scope.CompanyList)
                 localStorage.comobj = JSON.stringify(response);
                 $scope.DefaultCompanyName = response[0].CompanyName;
                 localStorage.DefaultCompanyName = response[0].CompanyName;
+                localStorage.CompanyId = response[0].CompanyId;
                 $scope.DefualtVATTIN_NO = response[0].VAT_TIN_NO;
                 localStorage.VAT_TIN_NO = response[0].VAT_TIN_NO;
                 $scope.CST_TIN_NO = response[0].CST_TIN_NO;
@@ -169,6 +186,7 @@ myApp.controller('LoginCntrl', ['$state', '$http', '$rootScope', '$scope', 'conf
                 localStorage.comobj = JSON.stringify(response);
                 $scope.DefaultCompanyName = response[0].CompanyName;
                 localStorage.DefaultCompanyName = response[0].CompanyName;
+                localStorage.CompanyId = response[0].CompanyId;
                 $scope.DefualtVATTIN_NO = response[0].VAT_TIN_NO;
                 localStorage.VAT_TIN_NO = response[0].VAT_TIN_NO;
                 $scope.CST_TIN_NO = response[0].CST_TIN_NO;
@@ -180,11 +198,30 @@ myApp.controller('LoginCntrl', ['$state', '$http', '$rootScope', '$scope', 'conf
         }
     }
 
-    $scope.BindCompanyName = function (CompanyName, VAT_TIN_NO, CST_TIN_NO) {
+    $scope.BindCompanyName = function (CompanyName, CompanyId,VAT_TIN_NO, CST_TIN_NO) {
         $scope.DefaultCompanyName = CompanyName;
+        localStorage.DefaultCompanyName = CompanyName;
+        localStorage.CompanyId = CompanyId;
         localStorage.ChangeCompanyName = CompanyName;
         localStorage.VAT_TIN_NO = VAT_TIN_NO;
         localStorage.CST_TIN_NO = CST_TIN_NO;
+
+        $state.reload();
+
+    }
+
+
+    $scope.logout = function () {
+
+        $http.get(config.login + 'logout' + "?token1=" + localStorage["tokenNo"])
+                      .success(function (data) {
+                          console.log(data)
+                          if (data == "logout") {
+                              $state.go('login');
+                          }
+                      });
+
+
 
     }
 

@@ -110,7 +110,7 @@
                     </a>
                 </li>
                 <li>
-                    <a ui-sref=".HomePage"><i class="fa fa-dashboard"></i> Home</a>
+                    <a ui-sref=".HomePage"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
                 </li>
                 <li>
                     <a ui-sref=".Customer"><i class="fa fa-users"></i> Customers</a>
@@ -120,12 +120,14 @@
                 </li>
 
                 <li>
-                    <a href="" class="sub-menu"><i class="fa fa-money"></i> Transactions</a>
-                    <ul class="list-unstyled leftsubmenu">
-                        <li><a ui-sref=".Banking">Banking</a></li>
-                        <li><a ui-sref=".Sales">Sales</a></li>
-                        <li><a ui-sref=".Expenses">Expenses</a></li>
+                   
 
+                    <a href="" class="sub-menu"><i class="fa fa-money"></i> Transactions</a>
+                    <ul class="list-unstyled">
+                       <li><a ui-sref=".Banking" style="font-size: 12px;  padding-left: 27px;  color: #57bbf0;">Banking</a></li>
+            @*<li><a ui-sref=".Sales">Sales</a></li>
+    <li><a ui-sref=".Expenses">Expenses</a></li>*@
+                        <li><a ui-sref=".ChartofAccounts" style="font-size: 12px;  padding-left: 27px;  color: #57bbf0;">Chart of Accounts</a></li>
                     </ul>
                 </li>
                 <li>
@@ -160,11 +162,11 @@
 
                 <li>
                     <a href="" class="sub-menu"><i class="fa fa-money"></i> Transactions</a>
-                    <ul class="list-unstyled leftsubmenu">
-                        <li><a ui-sref=".Banking">Banking</a></li>
-                        <li><a ui-sref=".Sales">Sales</a></li>
-                        <li><a ui-sref=".Expenses">Expenses</a></li>
-
+                    <ul class="list-unstyled">
+                       <li><a ui-sref=".Banking" style="font-size: 12px;  padding-left: 27px;  color: #57bbf0;">Banking</a></li>
+          @*  <li><a ui-sref=".Sales">Sales</a></li>
+    <li><a ui-sref=".Expenses">Expenses</a></li>*@
+                        <li><a ui-sref=".ChartofAccounts" style="font-size: 12px;  padding-left: 27px;  color: #57bbf0;">Chart of Accounts</a></li>
                     </ul>
                 </li>
                 <li>
@@ -252,7 +254,7 @@
                     <div id="flyoutCompany" class="flytopbar">
                         <div class="arrow-up" style="margin-right:26%; float:right"></div>
                         <div class="flyoutdiv">
-                            <h3 class="title">Labdhi Engineering & Co.</h3>
+                            <h3 class="title">{{DefaultCompanyName}}  ({{username}})</h3>
 
                             <div class="col-sm-8" style="padding:0px">
                                 <h3 class="Subtitle">Settings</h3>
@@ -272,7 +274,7 @@
                                 <ul class="list-unstyled my">
                                     <li><a href="#">Your Account</a></li>
                                     <li><a href="#">Manage Users</a></li>
-                                    <li class="logout"><a href="#"><i class="fa fa-lock"></i> Sign Out</a></li>
+                                    <li class="logout"  ng-click="logout()"><a href="#"><i class="fa fa-lock"></i> Sign Out</a></li>
 
                                 </ul>
                             </div>
@@ -293,7 +295,7 @@
 
                             <div class="col-sm-12" style="padding:0px">
                                 <ul class="list-unstyled my" ng-repeat="list in CompanyList">
-                                    <li><a ng-click="BindCompanyName(list.CompanyName,list.VAT_TIN_NO,list.CST_TIN_NO)">{{list.CompanyName}}</a></li>
+                                    <li><a ng-click="BindCompanyName(list.CompanyName,list.CompanyId,list.VAT_TIN_NO,list.CST_TIN_NO)">{{list.CompanyName}}</a></li>
                                     
                                 </ul>
                             </div>

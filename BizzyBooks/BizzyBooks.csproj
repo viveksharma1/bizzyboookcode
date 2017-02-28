@@ -172,7 +172,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Site.css" />
+    <Content Include="css\accordion.min.css" />
     <Content Include="css\angular-datatables.min.css" />
+    <Content Include="css\bootstrap-datepicker.css" />
     <Content Include="css\bootstrap-select.min.css" />
     <Content Include="css\bootstrap-theme.min.css" />
     <Content Include="css\bootstrap.min.css" />
@@ -199,11 +201,14 @@
     <Content Include="css\datatables\images\sort_desc_disabled.png" />
     <Content Include="css\datatables\tools\css\dataTables.tableTools.css" />
     <Content Include="css\datepicker.css" />
+    <Content Include="css\daterangepicker.css" />
     <Content Include="css\editable-table.css" />
     <Content Include="css\floatexamples.css" />
     <Content Include="css\ion.rangeSlider.css" />
     <Content Include="css\ion.rangeSlider.skinFlat.css" />
+    <Content Include="css\jquery.toastmessage-min.css" />
     <Content Include="css\loader.css" />
+    <Content Include="css\loading-bar.css" />
     <Content Include="css\normalize.css" />
     <Content Include="css\select.min.css" />
     <Content Include="css\select2.css" />
@@ -241,9 +246,14 @@
     <Content Include="images\warning-icon-24.png" />
     <Content Include="ion\sounds\bell_ring.aac" />
     <Content Include="ion\sounds\bell_ring.mp3" />
+    <Content Include="js\accordion.min.js" />
     <Content Include="js\alertify.js" />
+    <Content Include="js\angular-charts.js" />
+    <Content Include="js\angular-fusioncharts.min.js" />
+    <Content Include="js\bootstrap-datepicker.js" />
     <Content Include="js\bootstrap-select.min.js" />
     <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\Chart.js" />
     <Content Include="js\Common.js" />
     <Content Include="js\custom.js" />
     <Content Include="js\dataTables.min.css" />
@@ -270,16 +280,22 @@
     <Content Include="js\datepicker.js" />
     <Content Include="js\datepicker\daterangepicker.js" />
     <Content Include="js\datepicker\daterangepicker-min.js" />
+    <Content Include="js\daterangepicker.js" />
     <Content Include="js\editable-table.js" />
     <Content Include="js\fsm-sticky-header.js" />
+    <Content Include="js\fusioncharts-jquery-plugin.js" />
+    <Content Include="js\fusioncharts.js" />
     <Content Include="js\JavaScript.js" />
+    <Content Include="js\JavaScript1.js" />
     <Content Include="js\jquery.dataTables.min.js" />
     <Content Include="js\jquery.js" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\jquery.scrollTo.js" />
+    <Content Include="js\jquery.toastmessage-min.js" />
     <Content Include="js\jspdf.min.js" />
     <Content Include="js\jszip.js" />
     <Content Include="js\kendo.all.min.js" />
+    <Content Include="js\loading-bar.js" />
     <Content Include="js\modernizr.custom.js" />
     <Content Include="js\moment.js" />
     <Content Include="js\moment\moment.js" />
@@ -361,9 +377,11 @@
     <Content Include="ScriptsAngular\Angular\src\plugins\tabletools\angular-datatables.tabletools.js" />
     <Content Include="ScriptsAngular\Angular\src\select.min.js" />
     <Content Include="ScriptsAngular\Angular\src\ui-bootstrap-tpls-0.13.4.js" />
+    <Content Include="ScriptsAngular\app\Controller\accountHistoryCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\AdvancePaymentCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\BankingCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\BillCntrl.js" />
+    <Content Include="ScriptsAngular\app\Controller\ChartofAccountsCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\CreateInventoryCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\CustomerCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\CustomerdetailCntrl.js" />
@@ -458,6 +476,9 @@
     <Content Include="Views\Customer\Enquirydetail.cshtml" />
     <Content Include="Views\Customer\PdfView.cshtml" />
     <Content Include="Views\Customer\CustomerPdfView.cshtml" />
+    <Content Include="Views\Customer\enquirytable.cshtml" />
+    <Content Include="Views\Customer\ChartofAccounts.cshtml" />
+    <Content Include="Views\Customer\accounthistory.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
