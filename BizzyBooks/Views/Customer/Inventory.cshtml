@@ -116,41 +116,55 @@
                 <i class="fa fa-gear tableicon" title="Settingd"></i>
             </div>
             <div class="col-sm-12">
-                <table class="table-bordered table-condensed table-hover" id="ItemTable" style="margin-top:10px;width:100%;">
-                    <thead style="width:23px ; font-weight:bold">
+                <table class="table-bordered table-condensed table-hover"   fixed-header  id="ItemTable" style="margin-top:10px;width:100%; height:400px; font-size:12px;">
+                    <thead>
                         <tr>
-                            <th>Container No.</th>
-                            <th>Remarks</th>
-                            <th>Grade</th>
-                            <th>Finish</th>
-                            <th>Thickness (MM)</th>
-                            <th>Width (MM)</th>
-                            <th>Length (MM)</th>
-                            <th>Net Weight (MT)</th>
-                            <th>Gross Weight (MT)</th>
-                            <th>No Of Sheets </th>
+                            <th>INVOICE NO </th>
+                            <th>SUB CATEGORY </th>
+                            <th>COIL/SHEET NO</th>
+                            <th>INCOMING DATE</th>
+                            <th>LOT WEIGHT</th>
+                            <th>LOCATION</th>
+                            
+                            <th>GRADE</th>
+                            <th>FINISH</th>
+                            <th>THICKNESS (MM)</th>
+                            <th>WIDTH (MM)</th>
+                            <th>LENGTH (MM)</th>
+                            <th>NET WEIGHT (MT)</th>
+                            <th>GROSS WEIGHT (MT)</th>
+                            <th>PCS/LENGTH IN MTRS </th>
+                            <th>REMARKS</th>
                            
-                            <th width="80">Action</th>
+                            <th>Action</th>
 
                         </tr>
                     </thead>
-                    <tbody ng-repeat="item in InventoryList | filter:search">
+                    <tbody >
 
+                       
+                        <tr ng-repeat="item in InventoryList1 | filter:search">
+                            @*
+                            <td> {{item.CONTNO}}</td>
 
-
-                        <tr>
-
-                            <td> {{item.containerNo}}</td>
-                            <td> {{item.remarks}}</td>
-                            <td> {{item.grade}}</td>
-                            <td> {{item.finish}}</td>
-                            <td> {{item.thickness}}</td>
-                            <td> {{item.width}}</td>
-                            <td> {{item.length}}</td>
-                            <td> {{item.netweight}}</td>
-                            <td> {{item.grossweight}}</td>
-                            <td> {{item.sheetNo}}</td>
-                            
+                            <td> {{item.DESCRIPTION}}</td>
+                            *@
+                            <td> {{item.no}}</td>
+                            <td > {{item.SUBCATEGORY}}</td>
+                            <td> {{item.COILSHEETNO}}</td>
+                            <td> {{item.INCOMINGDATE}}</td>
+                            <td> {{item.LotWeight}}</td>
+                            <td> {{item.LOCATION}}</td>
+                            <td> {{item.GRADE}}</td>
+                            <td> {{item.FINISH}}</td>
+                            <td> {{item.THICKNESS}}</td>
+                            <td> {{item.WIDTH}}</td>
+                            <td> {{item.LENGTH}}</td>
+                            <td> {{item.NETWEIGHT}}</td>
+                            <td> {{item.GROSSWT}}</td>
+                            <td> {{item.PCS/LENGTHINMTRS}}</td>
+                            <td> {{item.REMARK}}</td>
+                           
                             
                             <td>
                                 <button type="button" class="editbtn" ng-click="GRNDetail(item)">Detail</button>
@@ -173,33 +187,35 @@
                     </tbody>
 
                 </table>
-                <div class="pagination-div" style="float:left; width:100%; margin-top:10px;">
-                    <strong> Total :  {{TotalCount}} </strong>
-                    <ul class="pagination pull-right" style="margin-top:0px">
+                @*
+    <div class="pagination-div" style="float:left; width:100%; margin-top:10px;">
 
-                        <li ng-class="DisablePrevPage()">
+        <ul class="pagination pull-right" style="margin-top:0px">
 
-                            <a href="" ng-click="prevPage()"> Prev</a>
+            <li ng-class="DisablePrevPage()">
 
-                        </li>
+                <a href="" ng-click="prevPage()"> Prev</a>
 
-                        <li ng-repeat="n in range()"
-                            ng-class="{active: n == currentPage}"
-                            ng-click="setPage(n)">
+            </li>
 
-                            <a href="">{{n+1}}</a>
+            <li ng-repeat="n in range()"
+                ng-class="{active: n == currentPage}"
+                ng-click="setPage(n)">
 
-                        </li>
+                <a href="">{{n+1}}</a>
 
-                        <li ng-class="DisableNextPage()">
+            </li>
 
-                            <a href="" ng-click="nextPage()">Next </a>
+            <li ng-class="DisableNextPage()">
 
-                        </li>
+                <a href="" ng-click="nextPage()">Next </a>
 
-                    </ul>
+            </li>
 
-                </div>
+        </ul>
+
+    </div>
+                *@
             </div>
         </div>
 
@@ -232,11 +248,11 @@
                         <ul >
 
                             <li>
-                                <span>Qty (MT)  </span>
-                                <span class="pull-right">{{NetWeight}}(MT)</span>
+                                <span>Qty (KG)  </span>
+                                <span class="pull-right">{{NetWeight}}(KG)</span>
                             </li>
                             <li>
-                                <span>BILL No </span>
+                                <span>INVOICE NO </span>
                                 <span class="pull-right">{{billNo}}</span>
                             </li>
 
@@ -246,7 +262,7 @@
                             </li>
 
                             <li>
-                                <span>Cost/MT  </span>
+                                <span>Cost/KG  </span>
                                 <span class="pull-right">{{costPerMTinINR}}</span>
                             </li>
 
@@ -267,6 +283,34 @@
 
                         </ul>
                     </div>
+                    <div class="card border-orange">
+                        <label class="heading active">
+                            Tax & Duties
+
+                        </label>
+                        <ul >
+                            <li>
+                                <span>Custom Per KG </span>
+                                <span class="pull-right"> {{totalCustom |number : fractionSize}}</span>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                    <div class="card border-orange">
+                        <label class="heading active">
+                            UO Expense
+
+                        </label>
+                        <ul ng-repeat="data in taxData">
+                            <li>
+                                <span>{{data.accountName}}  </span>
+                                <span class="pull-right"> {{data.credit/NetWeight |number : fractionSize}}</span>
+                            </li>
+
+
+                        </ul>
+                    </div>
                     <div class="card border-blue">
                         <ul>
                             <li>
@@ -279,7 +323,7 @@
                         <ul>
                             <li>
                                 <span>
-                                    Total Cost/MT
+                                    Total Cost/KG
                                     <span class="pull-right"><b>{{totalCostPerMT |number : fractionSize}}</b></span>
                                 </span>
                             </li>

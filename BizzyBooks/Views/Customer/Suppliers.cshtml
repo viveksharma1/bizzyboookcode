@@ -177,7 +177,8 @@
                                         <li><a ui-sref="Customer.CreateInventory()">Create Inventory</a></li>
                                         <li><a ui-sref="Customer.Expense()">Create Expense</a></li>
                                         <li><a ui-sref="Customer.MakePayment()">Make Payment</a></li>
-
+                                        <li><a ui-sref="Customer.PurchaseInvoiceSattlement()">Purchase Settlement</a></li>
+                                        <li><a ui-sref="Customer.SalesInvoiceSattlement()">Sales Settlement</a></li>
                                     </ul>
 
                                 </div>
@@ -267,7 +268,8 @@
 
                                             <li><a ui-sref="Customer.Enquiry({email:data.no,edit:1})">Edit</a></li>
                                             <li><a ui-sref="Customer.PurchaseOrder({poNo:data.no})">Create Purchase Order</a></li>
-
+                                            <li><a ui-sref="Customer.PurchaseInvoiceSattlement()">Purchase Settlement</a></li>
+                                            <li><a ui-sref="Customer.SalesInvoiceSattlement()">Sales Settlement</a></li>
                                             <li><a href="">Cancel</a></li>
 
 
@@ -392,7 +394,8 @@
                                 <ul class="dropdown-menu editdrpdwn" role="menu" style="left:-135px">
                                     <li><a ui-sref="Customer.PurchaseOrder({enqNo:data.no,edit:1})">Edit</a></li>
 
-
+                                    <li><a ui-sref="Customer.PurchaseInvoiceSattlement()">Purchase Settlement</a></li>
+                                    <li><a ui-sref="Customer.SalesInvoiceSattlement()">Sales Settlement</a></li>
                                     <li><a ui-sref="Customer.Bill({billNo:data.no,suppliers:data.supliersName})">Create Bill</a></li>
                                     <li><a href="">Cancel</a></li>
                                 </ul>
@@ -453,10 +456,11 @@
                         <th style="padding-left:30px; width:30px"></th>
                         <th class="fontnormal">Suppliers / Company</th>
                         <th class="fontnormal">Email</th>
-                        <th class="fontnormal">Bill no.</th>
+                        <th class="fontnormal">Invoice No.</th>
                         <th class="fontnormal">Bill Date</th>
 
-                        <th class="fontnormal">Bill Amount</th>
+                        <th class="fontnormal">Amount</th>
+                       
                         <th class="fontnormal">Bal Amount</th>
 
                         <th class="fontnormal text-right">Action</th>
@@ -465,14 +469,15 @@
 
                 <tbody>
                    
-                    <tr ng-repeat="data in InventoryList | filter:search">
+                    <tr ng-repeat="data in InventoryList | filter:search" class="cursor" ui-sref="Customer.Bill({billNo:data.id,suppliers:data.supliersName})">
                         <td style="padding-left:15px; width:15px"><input type="checkbox" class="checkboxcss" /></td>
                         <td>{{data.supliersName}}</td>
                         <td>{{data.email}}</td>
                         <td>{{data.no}}</td>
                         <td ng-bind="data.date | date:'dd MMM yyyy'"></td>
                       
-                        <td>{{data.amount |number : fractionSize}}</td>
+                        <td ng-hide="Role =='3'">{{data.amount |number : fractionSize}}</td>
+                        <td ng-show="Role =='3'">{{data.adminAmount |number : fractionSize}}</td>
                         <td ng-show="data.balance == 0" ><span class="badge bg-green">{{"PAID"}}</span></td>
                         <td ng-hide="data.balance == 0">{{data.balance |number : fractionSize}}</td>
 
@@ -483,10 +488,11 @@
                                 <i class="fa fa-caret-down cursor" dropdown-toggle" data-toggle="dropdown"></i>
                                 <ul class="dropdown-menu editdrpdwn" role="menu" style="left:-135px">
                                     <li><a ui-sref="Customer.MakePayment({poNo:data.no,suppliers:data.supliersName})">Make Payment</a></li>
-                                    <li><a ng-click="billView(data.no)" ng-href="" > View</a> </li>
+                                    <li><a ui-sref="Customer.Bill({billNo:data.id,suppliers:data.supliersName})">Edit Bill</a></li>
                                     <li><a ui-sref="Customer.Expense({no:data.no,suppliers:data.supliersName})">Add Expense</a></li>
                                     <li ng-click="addInventrybtn(data)"><a href="">Add Enventory</a></li>
-
+                                    <li><a ui-sref="Customer.PurchaseInvoiceSattlement()">Purchase Settlement</a></li>
+                                    <li><a ui-sref="Customer.SalesInvoiceSattlement()">Sales Settlement</a></li>
                                 </ul>
 
                             </div>
@@ -557,7 +563,9 @@
                                     <i class="fa fa-caret-down cursor" dropdown-toggle" data-toggle="dropdown"></i>
                                     <ul class="dropdown-menu editdrpdwn" role="menu" style="left:-135px">
                                         <li><a ui-sref="Customer.Expense({no:data.no,suppliers:data.suppliers})">Add Expense</a></li>
-                                        <li><a href="">Cancel</a></li>
+                                        <li><a ui-sref="Customer.PurchaseInvoiceSattlement()">Purchase Settlement</a></li>
+                                        <li><a ui-sref="Customer.SalesInvoiceSattlement()">Sales Settlement</a></li>
+                                         <li><a href="">Cancel</a></li>
 
                                     </ul>
 
@@ -601,6 +609,28 @@
                                 <input type="text" ng-model="email" class="form-control" placeholder="Separate multiple emails with commas" />
                             </div>
                             <div class="col-sm-4 form-group padding5">
+                                <label>Account</label>
+                                <ui-select ng-model="groupMasters.selected" id="countryCode">
+
+                                    <ui-select-match placeholder="Choose Group">{{$select.selected.name}}</ui-select-match>
+
+
+
+                                    <ui-select-header>Top of the list!</ui-select-header>
+
+
+                                    <ui-select-choices repeat="person in groupMaster  | filter: $select.search">
+                                        <div ng-init="balanceType = $select.selected.balanceType">
+                                            <span style="color:black" ng-model="supplier1" ng-bind-html="person.name | highlight: $select.search">{{person.type}}</span>
+                                            <span style="color:forestgreen">({{person.type}})</span>
+
+                                        </div>
+
+
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="col-sm-4 form-group padding5">
                                 <label>Phone</label>
                                 <input type="text" ng-model="phone" class="form-control" />
                             </div>
@@ -608,17 +638,24 @@
                                 <label>Mobile</label>
                                 <input type="text" ng-model="mobile" class="form-control" />
                             </div>
-                            <div class="col-sm-4 form-group padding5">
-                                <label>Fax</label>
-                                <input type="text" ng-model="fax" class="form-control" />
-                            </div>
+                            
                             <div class="col-sm-4 form-group padding5">
                                 <label>Opening balance</label>
                                 <input type="text" ng-model="openingBalance" class="form-control" />
                             </div>
                             
                         </div>
+                        <div class="col-sm-12 UODiv padding">
+                            <h4>
+                                is UO &nbsp;
+                                <div class="btn-group btnhover">
+                                    <button type="button" class="btn btn-xs active btn-default">On</button>
+                                    <button type="button" class="btn btn-xs  btn-default">Off</button>
 
+                                </div>
+                            </h4>
+
+                        </div>
                         <div class="col-sm-12 padding" style="padding-top:20px !important">
                             <ul class="nav nav-tabs tabnav my">
                                 <li class="active"><a href="#Address" data-toggle="tab"><i class="fa fa-map-marker"></i> Address</a></li>
@@ -689,19 +726,88 @@
                                         <label class="tabheading">PAN No.</label>
                                         <input type="text" ng-model="panNo" class="form-control" />
                                     </div>
+                                    <div class="col-sm-4">
+                                        <label class="tabheading">Range</label>
+                                        <input type="text" ng-model="Range" class="form-control" />
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <label class="tabheading">Division</label>
+                                        <input type="text" ng-model="division" class="form-control" />
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label class="tabheading">Address</label>
+                                        <input type="text" ng-model="address" class="form-control" />
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label class="tabheading">Commisionerate</label>
+                                        <input type="text" ng-model="commisionerate" class="form-control" />
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label class="tabheading">CE Region No.</label>
+                                        <input type="text" ng-model="ceRegionNo" class="form-control" />
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label class="tabheading">ECC Code No.</label>
+                                        <input type="text" ng-model="eccCodeNo" class="form-control" />
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label class="tabheading">IEC No.</label>
+                                        <input type="text" ng-model="iecNo" class="form-control" />
+                                    </div>
+
 
                                    
                                 </div>
                               
 
                                 <div id="Attachments" class="tab-pane fade">
-                                    <h4 class="tabheading">Attachments</h4>
+                                    <div class="col-sm-12" style="margin:20px 0px">
 
-                                    <div class="attachmets">
-                                        <input type="file" />
-                                        <div>
-                                            <i class="fa fa-plus"></i>
-                                            <p>Add file</p>
+
+                                        @*<ul ng-repeat="data in datapath">
+                <li>
+                    <span> <a href="" style="font-size:medium" class="pointer fa fa-file-pdf-o" aria-hidden="true"> <b ng-click="getfile(data)">{{data.replace("server/boot/uploads/"+ billNo,'')}}</b></a></span>
+                    <i class="fa fa-times" aria-hidden="true" ng-click="deletefile(data,$index)"></i>
+                </li>
+            </ul>*@
+
+                                        <div class="col-sm-12" style="padding:0px">
+
+
+                                            <div class="col-sm-5 padding5">
+                                                <input type="text" class="form-control" id="NameInput" placeholder="Title" />
+                                            </div>
+                                            <div class="col-sm-5 padding5">
+                                                @*<input type="file" class="form-control" id="id=" uploadBtn" />*@
+                                                <input type="file" class="filestyle" id="uploadBtn" data-buttonName="btn-info">
+                                            </div>
+
+                                            <div class="col-sm-2 padding5">
+                                                <button type="button" class="btn btn-sm btn-primary Attechmentdetail" style="width:100%">Add</button>
+                                            </div>
+
+
+                                            <div style="float:left; width:100%; padding:10px 10px; border-bottom:1px dotted #ccc;" class="filenameDiv">
+
+
+                                                <div class="col-sm-5 padding5" style="word-break:break-all">
+                                                    <strong id="name"></strong>
+                                                </div>
+
+                                                <div class="col-sm-5 padding5 cursor" style="word-break:break-all">
+                                                    <a id="type" class="cursor"></a>
+                                                </div>
+
+                                                <div class="col-sm-2">
+                                                    <i class="fa fa-times pull-right text-danger" id="removeattachment"></i>
+                                                </div>
+
+
+
+                                            </div>
+
+
                                         </div>
                                     </div>
                                 </div>

@@ -30,11 +30,24 @@
     <div class="flexheader lightblue  ">
         <label style="float:left;padding:15px ">
 
-            <strong><span style="font-size:20px;  color:#585655">Receive Payment</span></strong>
+            <strong><span style="font-size:20px;  color:#585655">Receipt</span></strong>
         </label>
-        <label style="float:right;padding:15px ">
 
-            <strong style="font-size:20px"><a href="" ng-click="goBack()"><i class="fa fa-times"></i></a></strong>
+        <label style="float:right;padding:15px">
+            <span style="float:left; font-size:18px; margin-top:-2px">
+                <label style="color:#000">State :</label>
+                <span class="dropdown my" style="width:auto; margin-right:20px;">
+                    <a href="#" class="dropdown-toggle stagesdrpdwn" data-toggle="dropdown" style="color:#ff9800">Closed<span class="caret" style="margin-top:0px;color:#000"></span></a>
+                    <ul class="dropdown-menu dropmenu">
+                        <li>Closed</li>
+                        <li>Edit</li>
+                        <li>New</li>
+                        <li>Discard</li>
+
+                    </ul>
+                </span>
+            </span>
+            <strong style="font-size:24px; margin-top:-7px; float:right"><a href="" ng-click="goBack()"><i class="fa fa-times"></i></a></strong>
 
 
         </label>
@@ -42,49 +55,131 @@
     </div>
     <div class="flexcontainer">
         <div class="lightblue bluebrdr content" style="padding:10px 10px">
-            <div class="col-sm-3 padding5">
-                <h4 class="tabheading font_11">Supplier</h4>
-                <ui-select ui-tree-select ng-model="supplier.selected" id="countryCode"
-                           ui-select-focuser
-                           theme="selectize">
-                    <ui-select-match placeholder="Select Suppliers">{{ $select.selected.company }}</ui-select-match>
 
-                    <ui-select-choices repeat="person in supliers  | filter: $select.search">
-                        <div>
-                            <span ng-model="supplier1" ng-bind-html="person.company | highlight: $select.search"></span>
-                        </div>
+            <div class="col-lg-5 padding">
+                <div class="col-sm-4 padding">
+                    <h4 class="tabheading">Payment no.</h4>
+                    <input type="text" ng-model="no" class="form-control" value="3" disabled />
+                </div>
+
+                <div class="col-sm-4 padding">
+                    <h4 class="tabheading">Payment Date</h4>
+
+                    <div class='input-group'>
+                        <input type='text' class="form-control" id='paymentdate' />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-6 padding">
+                    <h4 class="tabheading">Bank/Cash</h4>
+                    <ui-select ui-tree-select ng-model="supplier.selected" id="countryCode"
+                               ui-select-focuser
+                               theme="selectize">
+                        <ui-select-match placeholder="Select Suppliers">{{ $select.selected.company }}</ui-select-match>
+
+                        <ui-select-choices repeat="person in supliers  | filter: $select.search">
+                            <div>
+                                <span ng-model="supplier1" ng-bind-html="person.company | highlight: $select.search"></span>
+                            </div>
 
 
-                    </ui-select-choices>
-                </ui-select>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
+                <div class="col-sm-7 padding">
+                    <h4 class="tabheading">Party Name</h4>
+                    <ui-select ui-tree-select ng-model="supplier.selected" id="countryCode"
+                               ui-select-focuser
+                               theme="selectize">
+                        <ui-select-match placeholder="Select Suppliers">{{ $select.selected.company }}</ui-select-match>
+
+                        <ui-select-choices repeat="person in supliers  | filter: $select.search">
+                            <div>
+                                <span ng-model="supplier1" ng-bind-html="person.company | highlight: $select.search"></span>
+                            </div>
+
+
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
+                <div class="col-sm-3 padding">
+                    <h4 class="tabheading">Rs.</h4>
+                    <input type="text" class="form-control" />
+                </div>
+
+
             </div>
 
-            <div class="col-sm-3">
-                <h4 class="tabheading font_11">Deposited To</h4>
-                <ui-select ng-model="accounts.selected" id="countryCode"
-                           ui-select-focuser
-                           theme="bootstrap">
-                    <ui-select-match placeholder="Choose an account">{{$select.selected.accountName}}</ui-select-match>
+            <div class="col-sm-3 pull-right" style="padding:10px; background:rgba(139, 195, 74, 0.09)">
+                <h4 style="margin:0px 0px 10px 0px; font-size:14px; font-weight:bold" class="text-primary"><input type="checkbox" /> Badla Payment</h4>
+                <div class="col-sm-7 padding5">
+                    <label>Badla Person</label>
+                    <ui-select ui-tree-select ng-model="supplier.selected" id="countryCode"
+                               ui-select-focuser
+                               theme="selectize">
+                        <ui-select-match placeholder="Select Suppliers">{{ $select.selected.company }}</ui-select-match>
 
-                    <ui-select-choices repeat="person in account  | filter: $select.search">
-                        <div>
-                            <span ng-model="supplier1" ng-bind-html="person.accountName | highlight: $select.search"></span>
-                        </div>
+                        <ui-select-choices repeat="person in supliers  | filter: $select.search">
+                            <div>
+                                <span ng-model="supplier1" ng-bind-html="person.company | highlight: $select.search"></span>
+                            </div>
 
 
-                    </ui-select-choices>
-                </ui-select>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-sm-5 padding5">
+                    <label>Date of Badla</label>
+                    <div class='input-group'>
+                        <input type='text' class="form-control" id='BadlaDate' />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
 
-                <label class="btn-secondary bg-blue"> {{accountbBalance}}</label>
+                <table style="float:left; width:100%; background:#fff; font-size:12px; width:98%; margin:0px 5px;" class="table-bordered table">
+                    <thead style="background:rgb(243, 245, 248)">
+                        <tr>
+                            <th width="50" style="padding:5px">&nbsp;</th>
+                            <th width="50" style="padding:5px">Total</th>
+                            <th width="50" style="padding:5px">Interest</th>
+                            <th width="50" style="padding:5px">Diff</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="vertical-align:middle"><strong>DAYS</strong></td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td><input type="text" class="form-control" /></td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:middle"><strong>INTEREST (%)</strong></td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td><input type="text" class="form-control" /></td>
+                            <td><input type="text" class="form-control" /></td>
+                        </tr>
 
+                    </tbody>
+                </table>
             </div>
+
+
+
+
+
             <div id="addInventryModal1" class="modal fade" role="dialog">
                 <div class="modal-alert">
 
                     <!-- Modal content-->
                     <div class="modal-content">
 
-                        <div class="modal-body fa fa-check-circle fa-1x co-ok" style="background-color:#ffffff;text-align:center">
+                        <div class="modal-body fa fa-check-circle fa-1x co-ok" style="background-color:#ffffff; text-align:center">
                             <strong style="text-align:center;color:#0A0503">Bill Payment Saved</strong>
                         </div>
                     </div>
@@ -146,21 +241,21 @@
                     </div>
                 </div>
             </div>
-            <div class="pull-right">
+            @*<div class="pull-right">
 
-                <p class="text-right">Amount</p>
-                <span class="balancedue">{{balance |number : fractionSize}} &#8377;</span>
-                <h3>{{status}}</h3>
+                    <p class="text-right">Amount</p>
+                    <span class="balancedue">{{balance |number : fractionSize}} &#8377;</span>
+                    <h3>{{status}}</h3>
 
 
-            </div>
+                </div>*@
 
 
             <div style="float:left; width:100%">
-                <div class="col-sm-2 padding5">
-                    <h4 class="tabheading" ng-click="Accountbtn()">Mailing address</h4>
-                    <textarea class="form-control" style="height:80px"></textarea>
-                </div>
+                @*<div class="col-sm-2 padding5">
+                        <h4 class="tabheading" ng-click="Accountbtn()">Mailing address</h4>
+                        <textarea class="form-control" style="height:80px"></textarea>
+                    </div>*@
                 @*Account*@
                 <div class="modal fade" id="formaccount">
                     <div class="modal-dialog">
@@ -274,59 +369,106 @@
 
 
 
-                <div class="col-sm-2 padding5">
-                    <h4 class="tabheading">Payment date</h4>
-                    <div class='input-group'>
-                        <input type='text' class="form-control" id="PaymentdateCheque" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-                </div>
+                @*<div class="col-sm-2 padding5">
+                        <h4 class="tabheading">Payment date</h4>
+                        <div class='input-group'>
+                            <input type='text' class="form-control" id="PaymentdateCheque" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>*@
 
 
 
 
 
-                <div class="col-sm-1 padding5 pull-right">
-                    <h4 class="tabheading">Ref no.</h4>
-                    <input type="text" ng-model="no" class="form-control" value="3" disabled />
-                </div>
+
             </div>
         </div>
-        <div class="col-sm-12" style="padding-top:30px">
+        <div class="col-sm-12" style="padding-top:10px;" id="Outstandingdiv">
             <h4 data-toggle="collapse" data-target="#AccountDetail" class="cursor"><i class="fa fa-caret-right"></i> Outstanding Transactions details</h4>
+
             <div class="collapse in" id="AccountDetail">
-                <table class="table-bordered table-condensed table-hover borderless" style="width:100%">
+                <table class="table-bordered table-condensed table-hover borderless" fixed-header style="width:100%; height:200px;">
                     <thead>
                         <tr>
                             <th class="text-right" style="width:50px"><input type="checkbox" /></th>
                             <th>Date</th>
                             <th>Due Date</th>
-                            <th class="text-right">Original Amount</th>
-                            <th class="text-right">Open Balance</th>
-                            <th class="text-right" style="width:100px">Payment</th>
+                            <th>Ref No.</th>
+                            <th>Type</th>
+                            <th class="text-right">Total Amount</th>
+                            <th class="text-right">Balance Balance</th>
+                            <th class="text-right" style="width:100px">Receipt</th>
                         </tr>
                     </thead>
-                    <tbody ng-repeat="data in bill">
+                    <tbody>
+
+                        @*<tr ng-repeat="data in bill">
+                                <td class="text-right" style="width:50px"><input type="checkbox" /></td>
+                                <td ng-bind="data.date | date:'dd MMM yyyy'"></td>
+                                <td ng-bind="data.billDueDate | date:'dd MMM yyyy'"></td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="text-right">{{data.amount |number : fractionSize}}</td>
+                                <td class="text-right">{{data.balance |number : fractionSize}}</td>
+                                <td class="text-right"><input type="text" id="abc" class="form-control" /></td>
+                            </tr>*@
+
 
                         <tr>
                             <td class="text-right" style="width:50px"><input type="checkbox" /></td>
-                            <td ng-bind="data.date | date:'dd MMM yyyy'"></td>
-                            <td ng-bind="data.billDueDate | date:'dd MMM yyyy'"></td>
+                            <td ng-bind="data.date | date:'dd MMM yyyy'">12/03/2017</td>
+                            <td ng-bind="data.billDueDate | date:'dd MMM yyyy'">22/03/2017</td>
+                            <td>2322</td>
+                            <td>&nbsp;</td>
+                            <td class="text-right">2000</td>
+                            <td class="text-right">2000</td>
+                            <td class="text-right"><input type="text" id="abc" class="form-control" /></td>
+                        </tr>
 
-                            <td class="text-right">{{data.amount |number : fractionSize}}</td>
-                            <td class="text-right">{{data.balance |number : fractionSize}}</td>
-                            <td class="text-right"><input type="text" id="abc" /></td>
+                        <tr>
+                            <td class="text-right" style="width:50px"><input type="checkbox" /></td>
+                            <td>12/03/2017</td>
+                            <td>22/03/2017</td>
+                            <td>2322</td>
+                            <td>&nbsp;</td>
+                            <td class="text-right">2000</td>
+                            <td class="text-right">2000</td>
+                            <td class="text-right"><input type="text" id="abc" class="form-control" /></td>
+                        </tr>
+
+                        <tr>
+                            <td class="text-right" style="width:50px"><input type="checkbox" /></td>
+                            <td>12/03/2017</td>
+                            <td ng-bind="data.billDueDate | date:'dd MMM yyyy'">22/03/2017</td>
+                            <td>2322</td>
+                            <td>&nbsp;</td>
+                            <td class="text-right">2000</td>
+                            <td class="text-right">2000</td>
+                            <td class="text-right"><input type="text" id="abc" class="form-control" /></td>
                         </tr>
 
 
                     </tbody>
+                    <tfoot style="font-size: 11px;font-weight: bold; color: #000; background: #e3eaf3; text-transform:uppercase">
+                        <tr>
+                            <th style="width:50px">&nbsp;</th>
+                            <th>Total</th>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
 
-        <hr style="float:left; width:100%; margin:5px 0px" />
+        <hr style="float:left; width:100%; margin:10px 0px" />
 
 
 
@@ -334,7 +476,7 @@
             <div class="col-sm-3 padding">
 
                 <div class="form-group">
-                    <h4 class="tabheading">Memo{{data.paymentAmount |number : fractionSize}}</h4>
+                    <h4 class="tabheading">Remarks{{data.paymentAmount |number : fractionSize}}</h4>
                     <textarea class="form-control" style="height:80px"></textarea>
                 </div>
             </div>
@@ -349,25 +491,85 @@
         </div>
 
 
-        <hr style="float:left; width:100%; margin:5px 0px" />
+        <hr style="float:left; width:100%; margin:10px 0px" />
 
         <div class="col-sm-12" style="margin-bottom:20px">
-            <div class="col-sm-4 padding">
+            @*<div class="col-sm-4 padding">
 
-                <div class="form-group">
-                    <h4 class="tabheading">Attachments</h4>
-                    <div class="attachmets">
-                        <input type="file" id="uploadBtn" multiple="multiple" name="browsefile">
-                        <div>
-                            <i class="fa fa-plus"></i>
-                            <p>Add file</p>
+                    <div class="form-group">
+                        <h4 class="tabheading">Attachments</h4>
+                        <div class="attachmets">
+                            <input type="file" id="uploadBtn" multiple="multiple" name="browsefile">
+                            <div>
+                                <i class="fa fa-plus"></i>
+                                <p>Add file</p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div id="upload_prev" class="upload_prev"></div>*@
+
+
+
+            <ul ng-repeat="data in datapath">
+                <li>
+                    <span> <a href="" style="font-size:medium" class="pointer fa fa-file-pdf-o" aria-hidden="true"> <b ng-click="getfile(data)">{{data.replace("server/boot/uploads/"+ billNo,'')}}</b></a></span>
+                    <i class="fa fa-times" aria-hidden="true" ng-click="deletefile(data,$index)"></i>
+                </li>
+            </ul>
+
+            <div class="col-sm-12" style="padding:0px">
+                <div class="col-sm-6" style="padding:0px">
+
+                    <div class="form-group">
+                        <h4 style="margin-top: 15px; margin-bottom:10px;">
+                            <i class="fa fa-caret-right"></i> Attachments
+                            <small class="text-primary cursor dwn">(<i class="fa fa-download"></i> Download all files)</small>
+                        </h4>
+
+                        @*<div class="attachmets">*@
+                        @*<input type="file" id="uploadBtn" multiple="multiple" name="browsefile">*@
+                        @*<div id="uploadAttchments">
+                                    <i class="fa fa-plus"></i>
+                                    <p>Add file</p>
+                                </div>
+                            </div>*@
+                        <div class="col-sm-5 padding5">
+                            <input type="text" class="form-control" id="NameInput" placeholder="Title" />
+                        </div>
+                        <div class="col-sm-5 padding5">
+                            @*<input type="file" class="form-control" id="id=" uploadBtn" />*@
+                            <input type="file" class="filestyle" id="uploadBtn" data-buttonName="btn-info">
+                        </div>
+
+                        <div class="col-sm-2 padding5">
+                            <button type="button" class="btn btn-sm btn-primary Attechmentdetail" style="width:100%">Add</button>
+                        </div>
+
+
+                        <div style="float:left; width:100%; padding:10px 10px; border-bottom:1px dotted #ccc;" class="filenameDiv">
+
+
+                            <div class="col-sm-5 padding5" style="word-break:break-all">
+                                <strong id="name"></strong>
+                            </div>
+
+                            <div class="col-sm-5 padding5 cursor" style="word-break:break-all">
+                                <a id="type" class="cursor"></a>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <i class="fa fa-times pull-right text-danger" id="removeattachment"></i>
+                            </div>
+
+
+
                         </div>
                     </div>
-
-
                 </div>
             </div>
-            <div id="upload_prev" class="upload_prev"></div>
         </div>
     </div>
 

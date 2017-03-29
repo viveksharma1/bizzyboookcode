@@ -122,7 +122,28 @@
     
     $scope.suppliers = [];
     console.log($stateParams.contactId);
-   
+    $http.get(config.api + "groupMasters").then(function (response) {
+        $scope.groupMaster = response.data
+        console.log($scope.account);
+    });
+
+    $scope.groupMasters = {};
+    $scope.createAccount = function () {
+        var accountData = {
+            compCode: localStorage.CompanyId,
+            accountName: $scope.company.toUpperCase(),
+            Under: $scope.groupMasters.selected.name,
+            type: $scope.groupMasters.selected.type,
+            balance: $scope.balance,
+            credit: 0,
+            debit: 0,
+            openingBalance: $scope.openingBalance,
+            balanceType: $scope.groupMasters.selected.balanceType
+        }
+
+        $http.post(config.login + "createAccount", accountData).then(function (response) {
+        });
+    }
    
     $scope.supplierscount = [];
     $http.get(config.login + "getSupplier" + "?supCode=" + $scope.supCode).then(function (response) {
@@ -134,7 +155,6 @@
    $scope.company =$scope.suppliers[0].company,
    $scope.phone = $scope.suppliers[0].phone,
    $scope.mobile = $scope.suppliers[0].mobile,
-   $scope.fax = $scope.suppliers[0].fax,
   
    
          $scope.street =  $scope.suppliers[0].billingAddress[0].street ,
@@ -151,20 +171,23 @@
   
          $scope.taxRegNo =   $scope.suppliers[0].taxInfo[0].taxRegNo,
          $scope.cstReg =  $scope.suppliers[0].taxInfo[0].cstRegNo,
-         $scope.panNo =  $scope.suppliers[0].taxInfo[0].panNo,
+         $scope.panNo = $scope.suppliers[0].taxInfo[0].panNo,
+          $scope.Range = $scope.suppliers[0].taxInfo[0].range
+   $scope.division = $scope.suppliers[0].taxInfo[0].division
+   $scope.address = $scope.suppliers[0].taxInfo[0].address
+   $scope.commisionerate = $scope.suppliers[0].taxInfo[0].commisionerate
+   $scope.ceRegionNo = $scope.suppliers[0].taxInfo[0].ceRegionNo
+   $scope.eccCodeNo = $scope.suppliers[0].taxInfo[0].eccCodeNo
+   $scope.iecNo = $scope.suppliers[0].taxInfo[0].iecNo
+   $scope.groupMasters = { selected: { name: $scope.suppliers[0].account.group } };
 
 
    
-         $scope.paymentMethod = $scope.suppliers[0].paymentInfo[0].paymentMethod,
-         $scope.terme =  $scope.suppliers[0].paymentInfo[0].terms,
-         $scope.deliveryMethod = $scope.suppliers[0].paymentInfo[0].deliveryMethod,
-         $scope.openingBalance = $scope.suppliers[0].paymentInfo[0].openingBalance,
-         $scope.asOf = $scope.suppliers[0].paymentInfo[0].asOf,
-
-
-
-   
+       
+      
+         $scope.openingBalance = $scope.suppliers[0].openingBalance,
         $scope.notes = $scope.suppliers[0].notes
+   
 
 
 
@@ -173,22 +196,17 @@
 
    //update Supplier
 
-    $scope.updateSupplier = function (supplier) {
+    $scope.updateSupplier = function () {
 
         var data = {
 
-            title: $scope.title,
-            firstName: $scope.firstName,
-            middleName: $scope.middleName,
-            suffix: $scope.suffix,
-            email: $scope.email,
+         
             company: $scope.company,
             phone: $scope.phone,
             mobile: $scope.mobile,
-            fax: $scope.fax,
-            displayName: $scope.displayName,
-            other: $scope.other,
-            website: $scope.website,
+            email:$scope.email,
+          
+         
             billingAddress: [
               {
                   street: $scope.street,
@@ -212,60 +230,34 @@
               {
                   taxRegNo: $scope.taxRegNo,
                   cstRegNo: $scope.cstRegNo,
-                  panNo: $scope.panNo
+                  panNo: $scope.panNo,
+                  range: $scope.Range,
+                  division: $scope.division,
+                  address: $scope.address,
+                  commisionerate: $scope.commisionerate,
+                  ceRegionNo: $scope.ceRegionNo,
+                  eccCodeNo: $scope.eccCodeNo,
+                  iecNo: $scope.iecNo
 
 
               }
             ],
             paymentInfo: [
-              {
-                  paymentMethod: $scope.paymentMethod,
-                  terms: $scope.terme,
-                  deliveryMethod: $scope.deliveryMethod,
-                  openingBalance: $scope.openingBalance,
-                  asOf: $scope.asOf
-
-
-
+              {                 
+                  openingBalance: $scope.openingBalance
               }
             ],
-            notes: $scope.notes
-
+            notes: $scope.notes,
+            account: {              
+                group: $scope.groupMasters.selected.name
+                             
         }
-        var data1 = {
-
-            companyName: $scope.company,
-            email: $scope.email,
-            po: 0,
-            enquiry: 0,
-            openBill: 0
 
         }
 
-       
-
-        $http.post(config.api +"suppliers" + "/update" + "?[where][email]=" + supplier, data).then(function (response) {
-           
-
-
-            console.log(supplier);
-            console.log(response.data);
-        });
-        var data1 = {
-
-            companyName: $scope.company,
-            email: $scope.email,
-          
-        }
-
-       
-       
-
-     
-        $scope.suppliers.push(data1);
-
-
-
+        var url = config.api + "suppliers/" + $scope.supCode;
+        $http.put(url, data).success(function (response) {
+        })
 
     };
 

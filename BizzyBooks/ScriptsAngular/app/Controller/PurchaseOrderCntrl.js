@@ -41,10 +41,10 @@ $(".Additem").click(function () {
 });
 
 
-    $('#BillDate').datepicker("setDate", new Date());
-    $('#billDueDate').datepicker("setDate", new Date());
+$('#BillDate').datepicker("setDate", moment().format('DD/MM/YYYY'));
+$('#billDueDate').datepicker("setDate", moment().format('DD/MM/YYYY'));
    
-    $scope.poDate = moment().format('MM/DD/YYYY');
+    $scope.poDate = moment().format('DD/MM/YYYY');
     $scope.poDueDate = moment().add(1, 'months').format('MM/DD/YYYY')
     $('#BillDate').datepicker().on('changeDate', function (ev) {
         $('.datepicker').hide();

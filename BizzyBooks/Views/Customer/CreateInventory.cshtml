@@ -38,52 +38,40 @@
     <div class="flexcontainer">
         <div class="lightblue bluebrdr content" style="padding:10px 0px">
             <div class="col-sm-2">
-                <label>Remarks</label>
-                <input type="text" ng-model="Remarks" placeholder="Remarks" />
-                @*<ui-tree-select model="model">
-                    </ui-tree-select>
+                <ui-select ui-tree-select ng-model="test.selected.name" id="countryCode"
+                           ui-select-focuser
+                           theme="selectize">
+                    <div>
+                        <span >
+                             
+                            
 
-                    <div id="form-popoverPopup" class="popupbox">
-                        <div class="dijitDialogTitle">
-                            New Term
-                            <i class="fa fa-times-circle cursor pull-right" title="close" ng-click="popuclose()"></i>
-                        </div>
-                        <div class="form-content">
-                            <div class="form-group">
-                                <label><span class="red">*</span> Name</label>
-                                <input type="text" class="form-control" />
-                            </div>
-                            <strong>
-                                <input type="radio" class="pull-left" /> <span class="pull-left">Due in fixed number of days</span>
-                            </strong>
-                            <p>
-                                <input type="text" class="form-control pull-left" style="width:50px" /> <span class="pull-left">days</span>
-                            </p>
-                            <strong>
-                                <input type="radio" class="pull-left" /> <span class="pull-left">Due by certain day of the month</span>
-                            </strong>
-                            <p>
-                                <input type="text" class="form-control pull-left" style="width:50px" /> <span class="pull-left">day of month</span>
-                            </p>
-                            <strong>
-                                <span class="pull-left">Due the next month if issued within</span>
-                            </strong>
-                            <p>
-                                <input type="text" class="form-control pull-left" style="width:50px" /> <span class="pull-left">days of due date</span>
-                            </p>
-                            <div class="form-footer">
-                                <button type="button" class="btn btn-sm btn-default">Save</button>
-                            </div>
-                        </div>
-                    </div>*@
+                        </span>
+                    </div>
+                    <ui-select-match placeholder="Select Suppliers">
+                        <span>{{ $select.selected.name|| $select.search }}</span>
+                        <a class="btn btn-xs btn-link pull-right" ng-click="clear($event, $select)"><i class="glyphicon glyphicon-remove"></i></a>
+                    </ui-select-match>
+                    
+                    <ui-select-choices repeat="person.name as person in testData  | filter: $select.search"refresh="refreshResults($select)" refresh-delay="2">
+                       
+                       
+            <div>
+                <span ng-bind-html="person.name | highlight: $select.search"></span>
             </div>
+                        
+
+
+            </ui-select-choices>
+            </ui-select>
+        </div>
 
 
 
 
             <div class="col-sm-2">
                 <label>Container NOS.</label>
-                <input type="text" ng-model="ContainerNOS" placeholder="Container NOS." />
+                <input type="text" ng-model="test1" placeholder="Container NOS." />
                 @*<ui-tree-select model="model">
                     </ui-tree-select>
 
@@ -499,7 +487,7 @@
             <div class="col-sm-2">
                 <label style="width:100%;">&nbsp;</label>
 
-                <button type="button" ng-click="createNewInventory()" class="btn btn-sm btn-info pull-left" style="width:38%; margin-left:-40px"><i class="fa fa-plus"></i> Add</button>
+                <button type="button" ng-click="addAccount1()" class="btn btn-sm btn-info pull-left" style="width:38%; margin-left:-40px"><i class="fa fa-plus"></i> Add</button>
                 @*<input type="file" class="btn btn-sm btn-primary pull-right" style="width:55%"><i class="fa fa-upload"></i> Excel Upload</input>*@
                 @*<input type="file" file-model="myFile" class="btn btn-sm btn-primary pull-right" style="width: 40%; z-index: -1" />*@
                 <label for="imageUpload" class="btn btn-primary pull-left" style="height:30px;width:100px;margin-left:10px">Excel Upload</label>
@@ -530,19 +518,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="data in InventoryList" ng-click="getId(data.id,data.Remarks,data.ContainerNOS,data.ParticularSheets,data.ParticularSheets,data.Grade,data.Finish,data.Thickness,data.Width,data.Length,data.NetWeight,data.GrossWeight,data.StockCount)">
-                        <td style="display:none">{{data.id}}</td>
-                        <td>{{data.Remarks}}</td>
-                        <td style="text-align:center;">{{data.ContainerNOS}}</td>
-                        <td style="text-align:center">{{data.ParticularSheets}}</td>
-                        <td style="text-align:center">{{data.Grade}}</td>
-                        <td style="text-align:center">{{data.Finish}}</td>
-                        <td style="text-align:right">{{data.Thickness}}</td>
-                        <td style="text-align:right">{{data.Width}}</td>
-                        <td style="text-align:right">{{data.Length}}</td>
-                        <td style="text-align:right">{{data.NetWeight}}</td>
-                        <td style="text-align:right">{{data.GrossWeight}}</td>
-                        <td style="text-align:right">{{data.StockCount}}</td>
+                    <tr ng-repeat="data in accountTable1" >
+                     
+                        <td ng-click="edit(data,$index)">{{data.name}}</td>
+                        <td style="text-align:center;">{{data.test}}</td>
+                        
                         <td ng-click="deleteRecord(data.id)" style="text-align:center; color:red"><i class="fa fa-times-circle cursor RemoveTR"></i> </td>
                     </tr>
                     @*<tr>

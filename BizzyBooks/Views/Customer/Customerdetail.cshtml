@@ -399,9 +399,8 @@
 
 
 
-
     <div class="modal fade" id="NewCustomerCreateModal">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg" style="margin-top:50px">
             <div class="modal-content content">
                 <div class="modal-header popupheader content">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -410,44 +409,39 @@
                     <h4 class="modal-title">Customer Information</h4>
                 </div>
                 <div class="modal-body content" style="padding:0px 15px">
-                    <div class="col-sm-6 paddinright">
-                        <div class="col-sm-1 form-group padding5">
-                            <label>Title</label>
-                            <input type="text" ng-model="title" class="form-control" />
-                        </div>
-                        <div class="col-sm-3 form-group padding5">
-                            <label>First name</label>
-                            <input type="text" ng-model="firstName" class="form-control" />
-                        </div>
-                        <div class="col-sm-3 form-group padding5">
-                            <label>Middle name</label>
-                            <input type="text" ng-model="middleName" class="form-control" />
-                        </div>
-                        <div class="col-sm-3 form-group padding5">
-                            <label>Last name</label>
-                            <input type="text" ng-model="lastName" class="form-control" />
-                        </div>
-                        <div class="col-sm-2 form-group padding5">
-                            <label>Suffix</label>
-                            <input type="text" ng-model="suffix" class="form-control" />
-                        </div>
-                        <div class="col-sm-12 form-group padding5">
-                            <label>Company</label>
+
+
+
+                    <div class="col-sm-12 paddinright">
+                        <div class="col-sm-4 form-group padding5">
+                            <label>Name</label>
                             <input type="text" ng-model="company" class="form-control" />
                         </div>
-                        <div class="col-sm-12 form-group padding5">
-                            <label><span class="red">*</span>Display name as</label>
-                            <input type="text" ng-model="displayName" class="form-control" />
-                        </div>
-                    </div>
-
-
-
-                    <div class="col-sm-6 paddinright">
-
-                        <div class="col-sm-12 form-group padding5">
+                        <div class="col-sm-4 form-group padding5">
                             <label>Email</label>
-                            <input type="text" class="form-control" ng-model="email" placeholder="Separate multiple emails with commas" />
+                            <input type="text" ng-model="email" class="form-control" placeholder="Separate multiple emails with commas" />
+                        </div>
+                        <div class="col-sm-4 form-group padding5">
+                            <label>Account</label>
+                            <ui-select ng-model="groupMasters.selected" id="countryCode">
+
+                                <ui-select-match placeholder="Choose Group">{{$select.selected.name}}</ui-select-match>
+
+
+
+                                <ui-select-header>Top of the list!</ui-select-header>
+
+
+                                <ui-select-choices repeat="person in groupMaster  | filter: $select.search">
+                                    <div ng-init="balanceType = $select.selected.balanceType">
+                                        <span style="color:black" ng-model="supplier1" ng-bind-html="person.name | highlight: $select.search">{{person.type}}</span>
+                                        <span style="color:forestgreen">({{person.type}})</span>
+
+                                    </div>
+
+
+                                </ui-select-choices>
+                            </ui-select>
                         </div>
                         <div class="col-sm-4 form-group padding5">
                             <label>Phone</label>
@@ -457,30 +451,23 @@
                             <label>Mobile</label>
                             <input type="text" ng-model="mobile" class="form-control" />
                         </div>
+
                         <div class="col-sm-4 form-group padding5">
-                            <label>Fax</label>
-                            <input type="text" ng-model="fax" class="form-control" />
-                        </div>
-                        <div class="col-sm-4 form-group padding5">
-                            <label>Other</label>
-                            <input type="text" ng-model="other" class="form-control" />
-                        </div>
-                        <div class="col-sm-8 form-group padding5">
-                            <label>Website</label>
-                            <input type="text" ng-model="website" class="form-control" />
+                            <label>Opening balance</label>
+                            <input type="text" ng-model="openingBalance" class="form-control" />
                         </div>
 
-                        <div class="col-sm-12 form-group padding5">
-                            <label><input type="checkbox" /> Is sub-customer</label>
+                    </div>
 
-                        </div>
-                        <div class="col-sm-6 form-group padding5">
-                            <input type="text" class="form-control" placeholder="Enter parent customer" />
-                        </div>
-                        <div class="col-sm-6 form-group padding5">
+                    <div class="col-sm-12 UODiv padding">
+                        <h4>
+                            is UO &nbsp;
+                            <div class="btn-group btnhover">
+                                <button type="button" class="btn btn-xs active btn-default">On</button>
+                                <button type="button" class="btn btn-xs  btn-default">Off</button>
 
-                            <select data-dojo-type="dijit/form/ComboBox" class="form-control" id="CustomerBill"></select>
-                        </div>
+                            </div>
+                        </h4>
 
                     </div>
 
@@ -489,7 +476,7 @@
                             <li class="active"><a href="#Address" data-toggle="tab"><i class="fa fa-map-marker"></i> Address</a></li>
                             <li><a href="#Notes" data-toggle="tab"><i class="fa fa-file"></i> Notes</a></li>
                             <li><a href="#TaxInfo" data-toggle="tab"><i class="fa fa-info"></i> Tax Info</a></li>
-                            <li><a href="#Payment" data-toggle="tab"><i class="fa fa-money"></i> Payment and billing</a></li>
+
                             <li><a href="#Attachments" data-toggle="tab"><i class="fa fa-paperclip"></i> Attachments</a></li>
                         </ul>
 
@@ -543,7 +530,7 @@
 
                             <div id="TaxInfo" class="tab-pane fade">
                                 <div class="col-sm-4">
-                                    <label class="tabheading">Tax Reg. No.</label>
+                                    <label class="tabheading">TIN No.</label>
                                     <input type="text" ng-model="taxRegNo" class="form-control" />
                                 </div>
                                 <div class="col-sm-4">
@@ -556,60 +543,86 @@
                                 </div>
 
                                 <div class="col-sm-4">
-                                    <label class="tabheading"><input type="checkbox" /> Apply TDS for this customer</label>
-
-                                </div>
-                            </div>
-                            <div id="Payment" class="tab-pane fade">
-                                <div class="col-sm-4">
-                                    <label class="tabheading">Preferred payment method</label>
-                                    <select class="form-control" ng-model="paymentMethod">
-                                        <option>Cash</option>
-                                        <option>Cheque</option>
-                                        <option>Credit Card</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label class="tabheading">Terms</label>
-                                    <select class="form-control" ng-model="terms">
-                                        <option>Due on receipt</option>
-                                        <option>Net 15</option>
-                                        <option>Net 30</option>
-                                        <option>Net 60</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label class="tabheading">Preferred delivery method</label>
-                                    <select class="form-control" ng-model="deliveryMethod">
-                                        <option>Print later</option>
-                                        <option>Send later</option>
-                                        <option>None</option>
-                                    </select>
+                                    <label class="tabheading">Range</label>
+                                    <input type="text" ng-model="range" class="form-control" />
                                 </div>
 
                                 <div class="col-sm-4">
-                                    <label class="tabheading">Opening balance</label>
-                                    <input type="text" ng-model="openingBalance" class="form-control" />
+                                    <label class="tabheading">Division</label>
+                                    <input type="text" ng-model="division" class="form-control" />
                                 </div>
                                 <div class="col-sm-4">
-                                    <label class="tabheading">as of</label>
-                                    <div class='input-group' id='datetimepicker1'>
-                                        <input type='text' ng-model="asOf" class="form-control" />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
+                                    <label class="tabheading">Address</label>
+                                    <input type="text" ng-model="address" class="form-control" />
                                 </div>
+                                <div class="col-sm-4">
+                                    <label class="tabheading">Commisionerate</label>
+                                    <input type="text" ng-model="commisionerate" class="form-control" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="tabheading">CE Region No.</label>
+                                    <input type="text" ng-model="ceRegionNo" class="form-control" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="tabheading">ECC Code No.</label>
+                                    <input type="text" ng-model="eccCodeNo" class="form-control" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="tabheading">IEC No.</label>
+                                    <input type="text" ng-model="iecNo" class="form-control" />
+                                </div>
+
+
                             </div>
+
 
                             <div id="Attachments" class="tab-pane fade">
-                                <h4 class="tabheading">Attachments</h4>
+                                <div class="col-sm-12" style="margin:20px 0px">
 
-                                <div class="attachmets">
-                                    <input type="file" />
-                                    <div>
-                                        <i class="fa fa-plus"></i>
-                                        <p>Add file</p>
+
+                                    @*<ul ng-repeat="data in datapath">
+                                            <li>
+                                                <span> <a href="" style="font-size:medium" class="pointer fa fa-file-pdf-o" aria-hidden="true"> <b ng-click="getfile(data)">{{data.replace("server/boot/uploads/"+ billNo,'')}}</b></a></span>
+                                                <i class="fa fa-times" aria-hidden="true" ng-click="deletefile(data,$index)"></i>
+                                            </li>
+                                        </ul>*@
+
+                                    <div class="col-sm-12" style="padding:0px">
+
+
+                                        <div class="col-sm-5 padding5">
+                                            <input type="text" class="form-control" id="NameInput" placeholder="Title" />
+                                        </div>
+                                        <div class="col-sm-5 padding5">
+                                            @*<input type="file" class="form-control" id="id=" uploadBtn" />*@
+                                            <input type="file" class="filestyle" id="uploadBtn" data-buttonName="btn-info">
+                                        </div>
+
+                                        <div class="col-sm-2 padding5">
+                                            <button type="button" class="btn btn-sm btn-primary Attechmentdetail" style="width:100%">Add</button>
+                                        </div>
+
+
+                                        <div style="float:left; width:100%; padding:10px 10px; border-bottom:1px dotted #ccc;" class="filenameDiv">
+
+
+                                            <div class="col-sm-5 padding5" style="word-break:break-all">
+                                                <strong id="name"></strong>
+                                            </div>
+
+                                            <div class="col-sm-5 padding5 cursor" style="word-break:break-all">
+                                                <a id="type" class="cursor"></a>
+                                            </div>
+
+                                            <div class="col-sm-2">
+                                                <i class="fa fa-times pull-right text-danger" id="removeattachment"></i>
+                                            </div>
+
+
+
+                                        </div>
+
+
                                     </div>
                                 </div>
                             </div>
@@ -619,10 +632,9 @@
                 </div>
                 <div class="modal-footer content">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn-sm" ng-click="UpdateCustomerInfo()">Save changes</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" ng-click="UpdateCustomerInfo()">Save changes</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-
 </div>  

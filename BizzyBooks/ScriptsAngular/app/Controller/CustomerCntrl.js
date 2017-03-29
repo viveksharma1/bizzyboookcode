@@ -85,6 +85,28 @@
 
     }
 
+    $scope.groupMasters = {};
+    $scope.createAccount = function () {
+        var accountData = {
+            compCode: localStorage.CompanyId,
+            accountName: $scope.company.toUpperCase(),
+            Under: $scope.groupMasters.selected.name,
+            type: $scope.groupMasters.selected.type,
+            balance: $scope.balance,
+            credit: 0,
+            debit: 0,
+            openingBalance: $scope.openingBalance,
+            balanceType: $scope.groupMasters.selected.balanceType
+        }
+
+        $http.post(config.login + "createAccount", accountData).then(function (response) {
+        });
+    }
+
+    $http.get(config.api + "groupMasters").then(function (response) {
+        $scope.groupMaster = response.data
+        console.log($scope.account);
+    });
     $scope.createNewSupplier = function () {
 
         var data = {
@@ -118,21 +140,23 @@
               {
                   taxRegNo: $scope.taxRegNo,
                   cstRegNo: $scope.cstRegNo,
-                  panNo: $scope.panNo
+                  panNo: $scope.panNo,
+                  range: $scope.range,
+                  division: $scope.division,
+                  address: $scope.address,
+                  commisionerate: $scope.commisionerate,
+                  ceRegionNo: $scope.ceRegionNo, 
+                  eccCodeNo: $scope.eccCodeNo,
+                  iecNo: $scope.iecNo,
 
 
               }
             ],
 
             notes: $scope.notes,
-            account: {
-                compCode: localStorage.CompanyId,
-                accountName: $scope.company,
-                category: 'Supplier',
-                group: 'Sundry Debitor',
-                type: 'Current Liability',
-                credit: 0,
-                debit: 0
+            account: {              
+                group: $scope.groupMaster.selected.name,
+                             
             }
 
         }
@@ -144,8 +168,9 @@
 
 
             $http.post(config.login + "createCustomer", data).then(function (response) {
+                $scope.createAccount();
 
-            });
+          
             $scope.email = null,
             $scope.company = null,
             $scope.phone = null,
@@ -177,6 +202,7 @@
                   $scope.openingBalance = null,
                   $scope.asOf = null,
                   $scope.notes = null
+            });
         }
     };
 
@@ -197,5 +223,25 @@
 
 
     }
+
+    $('.btnhover button').click(function () {
+        $(this).siblings().removeClass('active')
+        $(this).addClass('active');
+    });
+
+    $('.filenameDiv').hide();
+    $('.attechmentDescription').hide();
+    $('.Attechmentdetail').click(function () {
+        $('.filenameDiv').show();
+        $("#name").append($("#NameInput").val());
+        $("#type").append($("#uploadBtn").val());
+
+    });
+
+    $('#removeattachment').click(function () {
+        $('.filenameDiv').hide();
+    });
+
+    $(":file").filestyle({ buttonName: "btn-sm btn-info" });
 
 }]);

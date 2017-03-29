@@ -251,6 +251,7 @@
     <Content Include="js\angular-charts.js" />
     <Content Include="js\angular-fusioncharts.min.js" />
     <Content Include="js\bootstrap-datepicker.js" />
+    <Content Include="js\bootstrap-filestyle.min.js" />
     <Content Include="js\bootstrap-select.min.js" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\Chart.js" />
@@ -282,6 +283,7 @@
     <Content Include="js\datepicker\daterangepicker-min.js" />
     <Content Include="js\daterangepicker.js" />
     <Content Include="js\editable-table.js" />
+    <Content Include="js\fixedHeader.js" />
     <Content Include="js\fsm-sticky-header.js" />
     <Content Include="js\fusioncharts-jquery-plugin.js" />
     <Content Include="js\fusioncharts.js" />
@@ -378,7 +380,11 @@
     <Content Include="ScriptsAngular\Angular\src\select.min.js" />
     <Content Include="ScriptsAngular\Angular\src\ui-bootstrap-tpls-0.13.4.js" />
     <Content Include="ScriptsAngular\app\Controller\accountHistoryCntrl.js" />
+    <Content Include="ScriptsAngular\app\Controller\ActivityLogCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\AdvancePaymentCntrl.js" />
+    <Content Include="ScriptsAngular\app\Controller\BadlaVoucherCntrl.js" />
+    <Content Include="ScriptsAngular\app\Controller\BalanceInventoryCntrl.js" />
+    <Content Include="ScriptsAngular\app\Controller\BalanceInventoryViewInfoCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\BankingCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\BillCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\ChartofAccountsCntrl.js" />
@@ -388,27 +394,38 @@
     <Content Include="ScriptsAngular\app\Controller\CustomerPdfViewCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\EnquiryCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\EnquirydetailCntrl.js" />
+    <Content Include="ScriptsAngular\app\Controller\ExciseInvoiceCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\ExpenseCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\ExpensesCntrl.js" />
+    <Content Include="ScriptsAngular\app\Controller\ForexGainLossCntrl.js" />
+    <Content Include="ScriptsAngular\app\Controller\GeneralInvoiceCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\GRNEntryCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\HomePageCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\ImportCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\InventoryCntrl.js" />
+    <Content Include="ScriptsAngular\app\Controller\inventorystockCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\InvoiceCntrl.js" />
+    <Content Include="ScriptsAngular\app\Controller\JournalEntryCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\LogisticsCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\MakePaymentCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\PdfViewCntrl.js" />
+    <Content Include="ScriptsAngular\app\Controller\PurchaseInvoiceSattlementCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\PurchaseOrderCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\ReceivePaymentCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\SalesCntrl.js" />
+    <Content Include="ScriptsAngular\app\Controller\SalesInvoiceSattlementCntrl.js" />
+    <Content Include="ScriptsAngular\app\Controller\SattlementTransactionsCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\SearchTransactionsCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\SupplierCntrl.js" />
     <Content Include="ScriptsAngular\app\Controller\SupplierdetailCntrl.js" />
+    <Content Include="ScriptsAngular\app\Controller\TaxInvoiceCntrl.js" />
+    <Content Include="ScriptsAngular\app\Controller\VoucherTransactionsCntrl.js" />
     <Content Include="ScriptsAngular\app\orderApp.js" />
     <Content Include="ScriptsAngular\app\Controller\_LoginCntrl.js" />
     <Content Include="ScriptsAngular\app\_app.js" />
     <Content Include="ScriptsAngular\app\app.js" />
     <Content Include="ScriptsAngular\app\Controller\LoginCntrl.js" />
+    <Content Include="Views\Customer\stock.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -437,6 +454,7 @@
     <Folder Include="js\switchery\" />
     <Folder Include="js\tags\" />
     <Folder Include="js\textarea\" />
+    <Folder Include="Views\inventorystockCntrl\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -479,6 +497,21 @@
     <Content Include="Views\Customer\enquirytable.cshtml" />
     <Content Include="Views\Customer\ChartofAccounts.cshtml" />
     <Content Include="Views\Customer\accounthistory.cshtml" />
+    <Content Include="Views\View.cshtml" />
+    <Content Include="Views\Customer\inventorystock.cshtml" />
+    <Content Include="Views\Customer\ForexGainLoss.cshtml" />
+    <Content Include="Views\Customer\JournalEntry.cshtml" />
+    <Content Include="Views\Customer\TaxInvoice.cshtml" />
+    <Content Include="Views\Customer\BadlaVoucher.cshtml" />
+    <Content Include="Views\Customer\BalanceInventory.cshtml" />
+    <Content Include="Views\Customer\BalanceInventoryViewInfo.cshtml" />
+    <Content Include="Views\Customer\GeneralInvoice.cshtml" />
+    <Content Include="Views\Customer\SalesInvoiceSattlement.cshtml" />
+    <Content Include="Views\Customer\SattlementTransactions.cshtml" />
+    <Content Include="Views\Customer\PurchaseInvoiceSattlement.cshtml" />
+    <Content Include="Views\Customer\VoucherTransactions.cshtml" />
+    <Content Include="Views\Customer\ActivityLog.cshtml" />
+    <Content Include="Views\Customer\ExciseInvoice.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

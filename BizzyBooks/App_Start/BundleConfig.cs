@@ -31,7 +31,7 @@ namespace Restaurant
                 ));
 
 
-           
+
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                    "~/js/jquery.js",
@@ -40,7 +40,7 @@ namespace Restaurant
                    "~/js/bootstrap.min.js",
                     "~/js/moment/moment.js",
                    "~/js/progressbar/bootstrap-progressbar.min.js",
-                  
+
                     "~/js/prefixfree.min.js",
                    "~/js/datepicker/daterangepicker.js",
                    "~/ScriptsAngular/Angular/angular.js",
@@ -61,15 +61,16 @@ namespace Restaurant
                     "~/js/waitMe.js",
                     "~/js/underscore-min.js",
                     "~/js/fsm-sticky-header.js",
-                   
+                   "~/js/fixedHeader.js",
+                   "~/js/bootstrap-filestyle.min.js",
                     "~/js/datepicker.js",
                     "~/js/Common.js",
                       "~/js/bootstrap-select.min.js",
                        "~/js/jquery.dataTables.min.js",
-                       "~/js/xeditable.js", 
+                       "~/js/xeditable.js",
                         "~/js/xeditable.min.js",
                         "~/js/angular-mocks.js",
-                         "~/js/select2.min.js", 
+                         "~/js/select2.min.js",
                           "~/js/jspdf.min.js",
                            "~/js/accordion.min.js",
                                 "~/js/loading-bar.js",
@@ -82,7 +83,7 @@ namespace Restaurant
                ));
             bundles.Add(new ScriptBundle("~/bundles/appjs")
                 .Include(
-                   
+
                   "~/js/jszip.js",
                   "~/js/xlsx.js",
                 "~/js/kendo.all.min.js",
@@ -126,7 +127,26 @@ namespace Restaurant
                   "~/ScriptsAngular/app/Controller/PdfViewCntrl.js",
                    "~/ScriptsAngular/app/Controller/CustomerPdfViewCntrl.js",
                     "~/ScriptsAngular/app/Controller/ChartofAccountsCntrl.js",
-                     "~/ScriptsAngular/app/Controller/accountHistoryCntrl.js"
+                     "~/ScriptsAngular/app/Controller/accountHistoryCntrl.js",
+                      "~/ScriptsAngular/app/Controller/inventorystockCntrl.js",
+                      "~/ScriptsAngular/app/Controller/ForexGainLossCntrl.js",
+                      "~/ScriptsAngular/app/Controller/TaxInvoiceCntrl.js",
+                      "~/ScriptsAngular/app/Controller/PurchaseInvoiceSattlementCntrl.js",
+                      "~/ScriptsAngular/app/Controller/SalesInvoiceSattlementCntrl.js",
+                      "~/ScriptsAngular/app/Controller/BadlaVoucherCntrl.js",
+                      "~/ScriptsAngular/app/Controller/GeneralInvoiceCntrl.js",
+                      "~/ScriptsAngular/app/Controller/JournalEntryCntrl.js",
+                      "~/ScriptsAngular/app/Controller/BalanceInventoryCntrl.js",
+                      "~/ScriptsAngular/app/Controller/DetailInventoryCntrl.js",
+                      "~/ScriptsAngular/app/Controller/SaleInventoryCntrl.js",
+                         "~/ScriptsAngular/app/Controller/ProcessInventoryCntrl.js",
+                          "~/ScriptsAngular/app/Controller/BalanceInventoryViewInfoCntrl.js",
+                       "~/ScriptsAngular/app/Controller/BalanceInventoryViewDetailCntrl.js",
+                          "~/ScriptsAngular/app/Controller/VoucherTransactionsCntrl.js",
+                             "~/ScriptsAngular/app/Controller/SattlementTransactionsCntrl.js",
+                               "~/ScriptsAngular/app/Controller/ActivityLogCntrl.js",
+                                     "~/ScriptsAngular/app/Controller/ExciseInvoiceCntrl.js"
+
 
 
 
@@ -134,7 +154,7 @@ namespace Restaurant
 
             bundles.Add(new StyleBundle("~/bundles/appcss2").Include(
                 "~/css/bootstrap.min.css"
-               
+
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/appjs2").Include(

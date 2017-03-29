@@ -49,7 +49,7 @@ myApp.controller('InventoryCntrl', ['$scope', '$http', '$timeout', '$rootScope',
     //{
     //    $scope.InventoryList = response.data;
     //});
-    var url = config.api + "Inventories?filter[limit]=10&filter[skip]=0";
+   /* var url = config.api + "Inventories?filter[limit]=10&filter[skip]=0";
 
     $http.get(url).then(function (response) {
         $scope.InventoryList = response.data;
@@ -57,7 +57,18 @@ myApp.controller('InventoryCntrl', ['$scope', '$http', '$timeout', '$rootScope',
         console.log($scope.InventoryList)
         console.log($scope.response)
     });
+""*/
+    //get inventory data
 
+    var url = config.api + "Inventories?filter[where][visible]=false";
+
+    $http.get(url).then(function (response) {
+        $scope.InventoryList1 = response.data;
+        console.log($scope.InventoryList1);
+        $scope.TotalCount = response.data.length;
+    });
+
+   
     //Create New Inventory and update
     $scope.createNewInventory = function () {
 
@@ -559,14 +570,23 @@ myApp.controller('InventoryCntrl', ['$scope', '$http', '$timeout', '$rootScope',
         console.log(data.id);
         $('#GRNDetailDiv').slideDown();
       
-        $scope.billNo = data.NO;
-        $scope.NetWeight = data.netweight;
-        $scope.itemAmount1 = data.cifrate * data.netweight * data.exchangeRate;
+        $scope.billNo = data.no;
+        $scope.NetWeight = data.NETWEIGHT;
+        $scope.itemAmount1 = data.TOTALAMOUNTUSD* data.exchangeRate;
         $scope.itemAmountinINR = $filter('currency')($scope.itemAmount1, '₹', 2)
-        $scope.costPerMTinINR = $filter('currency')($scope.itemAmount1 / data.netweight, '₹', 2)
+        $scope.costPerMTinINR = $filter('currency')($scope.itemAmount1 / data.NETWEIGHT, '₹', 2)
        
+        $http.get(config.api + "transactions" + "?[filter][where][no]=" + $scope.billNo).then(function (response) {
+            console.log(response.data)
+            $scope.billData = response.data[0].manualLineItem[0].totalDutyAmt;
+            console.log($scope.billData)
+           
+            $scope.totalDutyAmt = response.data[0].manualLineItem[0].totalDutyAmt;
+            $scope.totalBillAmount = response.data[0].amount;
+            $scope.totalCustom = (Number($scope.totalDutyAmt) * Number(data.TOTALAMOUNTUSD) * Number(data.exchangeRate)) / Number($scope.totalBillAmount) * Number(data.NETWEIGHT);
 
-        $http.get(config.api + "transactions" + "?[filter][where][refNo]=" + $scope.billNo + "&[filter][where][ordertype]=EXPENSE").then(function (response) {
+        });
+        $http.get(config.api + "transactions" + "?[filter][where][ordertype]=EXPENSE" + "&[where][refNo]=" + $scope.billNo).then(function (response) {
 
             $scope.expenseData = response.data;
             console.log(response.data)
@@ -584,7 +604,7 @@ myApp.controller('InventoryCntrl', ['$scope', '$http', '$timeout', '$rootScope',
             $scope.totalCostPerMT = ($scope.tatalExpense + $scope.itemAmount1) / $scope.NetWeight
         })
 
-        $http.get(config.api + "ledgers" + "?[filter][where][refNo]=" + $scope.billNo + "&[filter][where][type]=Tax").then(function (response) {
+        $http.get(config.api + "ledgers" + "?[filter][where][refNo]=" + $scope.billNo + "&[filter][where][type]=Direct Expense").then(function (response) {
 
             $scope.taxData = response.data;
             console.log(response.data)

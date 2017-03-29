@@ -2,6 +2,8 @@
 var RoleCheck = "";
 myApp.controller('LoginCntrl', ['$state', '$http', '$rootScope', '$scope', 'config', 'UserService', function ($state, $http, $scope, $rootScope, config, UserService) {
     // showoverlay();
+
+    
     if ($scope.CompanyList == undefined)
     {
         if (localStorage.comobj != undefined)
@@ -39,6 +41,8 @@ myApp.controller('LoginCntrl', ['$state', '$http', '$rootScope', '$scope', 'conf
                 console.log(data.message);
                 var userData = data;
                 localStorage["tokenNo"] = data.res1.id;
+                localStorage["userrole"] = data.res1.user.role;
+                console.log(localStorage["userrole"]);
                 localStorage["username"] = data.res1.user.username;
 
                 $scope.username = localStorage["username"]
@@ -49,6 +53,8 @@ myApp.controller('LoginCntrl', ['$state', '$http', '$rootScope', '$scope', 'conf
                 GetCompanyData(RoleCheck)
                 localStorage.userType_Role = data.res1.user.role;
                 $rootScope.tok = data.token;
+                localStorage['usertype'] = data.res1.user.role;
+                $scope.usertype = localStorage['usertype'];
                 localStorage['adminrole'] = data.res1.user.role;
                 localStorage['token'] = data.token;
                 // console.log($rootScope.tok);
@@ -180,7 +186,7 @@ myApp.controller('LoginCntrl', ['$state', '$http', '$rootScope', '$scope', 'conf
 
         }
         else {
-            var url = config.api + "CompanyMasters?filter[where][LoginRoleMapping]=" + Role + "" //+ Role;
+            var url = config.api + "CompanyMasters"; //+ Role;
             $http.get(url).success(function (response) {
                 $scope.CompanyList = response;
                 localStorage.comobj = JSON.stringify(response);
@@ -224,7 +230,7 @@ myApp.controller('LoginCntrl', ['$state', '$http', '$rootScope', '$scope', 'conf
 
 
     }
-
+    $scope.usertype = localStorage['usertype'];
 }]);
 
 

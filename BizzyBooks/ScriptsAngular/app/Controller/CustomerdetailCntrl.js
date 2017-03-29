@@ -1,4 +1,4 @@
-﻿myApp.controller('CustomerdetailCntrl', ['$scope', '$http', '$timeout', '$rootScope', '$state', 'config', function ($scope, $http, $timeout, $rootScope, $state, config) {
+﻿myApp.controller('CustomerdetailCntrl', ['$scope', '$http', '$timeout', '$rootScope', '$state', 'config', '$stateParams', function ($scope, $http, $timeout, $rootScope, $state, config, $stateParams) {
 
 
     var CustomerId = localStorage.CustomerId;
@@ -55,46 +55,70 @@
         e.preventDefault();
     };
 
+    $http.get(config.api + "groupMasters").then(function (response) {
+        $scope.groupMaster = response.data
+        console.log($scope.account);
+    });
+
+    $scope.groupMasters = {};
+    $scope.createAccount = function () {
+        var accountData = {
+            compCode: localStorage.CompanyId,
+            accountName: $scope.company.toUpperCase(),
+            Under: $scope.groupMasters.selected.name,
+            type: $scope.groupMasters.selected.type,
+            balance: $scope.balance,
+            credit: 0,
+            debit: 0,
+            openingBalance: $scope.openingBalance,
+            balanceType: $scope.groupMasters.selected.balanceType
+        }
+
+        $http.post(config.login + "createAccount", accountData).then(function (response) {
+        });
+    }
 
 
-
-
-
-
+    $scope.customer = [];
     $scope.EditViewPopUp = function () {
-        var url = config.api + "customers/" + CustomerId + "";
+        var url = config.api + "customers/" + $stateParams.cusCode;
         $http.get(url).success(function (response) {
-            $scope.title = response.title;
-            $scope.firstName = response.firstName;
-            $scope.lastName = response.lastName;
-            $scope.middleName = response.middleName;
+            $scope.customer = response;
+            console.log($scope.customer);
+            $scope.company = response.company;        
+            $scope.email = response.email;
             $scope.street = response.billingAddress[0].street;
             $scope.city = response.billingAddress[0].city;
             $scope.state = response.billingAddress[0].state;
             $scope.country = response.billingAddress[0].country;
-            $scope.postalCode = response.billingAddress[0].postalCode;
+            $scope.postalcode = response.billingAddress[0].postalcode;
             $scope.street1 = response.shippingAddress[0].street;
             $scope.city1 = response.shippingAddress[0].city;
             $scope.state1 = response.shippingAddress[0].state;
             $scope.country1 = response.shippingAddress[0].country;
-            $scope.postalCode1 = response.shippingAddress[0].postalCode;
+            $scope.postalcode1 = response.shippingAddress[0].postalcode;
             $scope.notes = response.notes;
-            $scope.deliveryMethod = response.paymentInfo[0].deliveryMethod;
-            $scope.paymentMethod = response.paymentInfo[0].paymentMethod;
+          
             $scope.openingBalance = response.paymentInfo[0].openingBalance;
-            $scope.terms = response.paymentInfo[0].terms;
+         
             $scope.taxRegNo = response.taxInfo[0].taxRegNo;
             $scope.cstRegNo = response.taxInfo[0].cstRegNo;
             $scope.panNo = response.taxInfo[0].panNo;
-            $scope.website = response.website;
-            $scope.other = response.other;
-            $scope.displayName = response.displayName;
-            $scope.fax = response.fax;
+          
             $scope.mobile = response.mobile;
             $scope.phone = response.phone;
-            $scope.company = response.company;
-            $scope.email = response.email;
-            $scope.suffix = response.suffix;
+            $scope.range = response.taxInfo[0].range
+            $scope.division = response.taxInfo[0].division
+            $scope.address = response.taxInfo[0].address
+            $scope.commisionerate = response.taxInfo[0].commisionerate
+            $scope.ceRegionNo = response.taxInfo[0].ceRegionNo
+            $scope.eccCodeNo = response.taxInfo[0].eccCodeNo
+            $scope.iecNo = response.taxInfo[0].iecNo
+            $scope.groupMasters = { selected: { name: response.account.group } };
+
+      
+           
+          
 
         })
         $('#NewCustomerCreateModal').modal('show');
@@ -103,19 +127,11 @@
     $scope.UpdateCustomerInfo = function () {
         var data = {
 
-            title: $scope.title,
-            firstName: $scope.firstName,
-            middleName: $scope.middleName,
-            lastName: $scope.lastName,
-            suffix: $scope.suffix,
+           
             email: $scope.email,
             company: $scope.company,
             phone: $scope.phone,
             mobile: $scope.mobile,
-            fax: $scope.fax,
-            displayName: $scope.displayName,
-            other: $scope.other,
-            website: $scope.website,
             billingAddress: [
               {
                   street: $scope.street,
@@ -139,7 +155,14 @@
               {
                   taxRegNo: $scope.taxRegNo,
                   cstRegNo: $scope.cstRegNo,
-                  panNo: $scope.panNo
+                  panNo: $scope.panNo,
+                  range: $scope.range,
+                division: $scope.division,
+            address: $scope.address,
+            commisionerate: $scope.commisionerate,
+            ceRegionNo: $scope.ceRegionNo, 
+            eccCodeNo: $scope.eccCodeNo,
+            iecNo: $scope.iecNo,
 
 
               }
@@ -157,11 +180,15 @@
               }
             ],
             notes: $scope.notes,
-            id: CustomerId
+            account: {
+                group: $scope.groupMaster.selected.name,
+
+            }
+           
 
         }
 
-        var url = config.api + "customers/" + CustomerId + "";
+        var url = config.api + "customers/" + $stateParams.cusCode;
         $http.put(url, data).success(function (response) {
             $scope.CustomerName = response.firstName;
 

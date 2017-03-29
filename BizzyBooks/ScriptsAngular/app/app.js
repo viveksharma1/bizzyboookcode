@@ -1,5 +1,5 @@
 var myApp = angular
-    .module('myApp', ['ui.router', 'datatables','angular-loading-bar', 'ngAnimate',
+    .module('myApp', ['ui.router', 'datatables','angular-loading-bar', 'anguFixedHeaderTable','ngAnimate',
         //'ngtimeago',
         'oitozero.ngSweetAlert', 'fsm', 'ui.select', 'ngSanitize'])
     .config(['$stateProvider','$urlRouterProvider',function ($stateProvider,   $urlRouterProvider) {
@@ -17,17 +17,22 @@ var myApp = angular
         })
        
         $stateProvider.state("Customer.Customerdetail", {
-            url: "/Customerdetail",
+            url: "/Customerdetail/:cusCode",
             //url: "/RecentOrders",
             templateUrl: "Customer/Customerdetail",
-            controller: "CustomerdetailCntrl"
+            controller: "CustomerdetailCntrl",
+            params: {
+                cusCode: null,
+                cusName: null
+               
+        }
         });
 
         $stateProvider.state("Customer.HomePage", {
             url: "/HomePage",
             //url: "/RecentOrders",
             templateUrl: "Customer/HomePage",
-            controller: "HomePageCntrl"
+            controller: "LoginCntrl"
         });
 
         $stateProvider.state("Customer.Customer", {
@@ -74,8 +79,14 @@ var myApp = angular
             url: "/Inventory",
             templateUrl: "Customer/Inventory",
             controller: "InventoryCntrl"
-        });
+    });
 
+        $stateProvider.state("Customer.inventorystock", {
+                 url: "/InventoryStock",
+                templateUrl: "Customer/inventorystock",
+                controller: "inventorystockCntrl"
+             });
+   
         $stateProvider.state("Customer.Import", {
             url: "/Import",
             templateUrl: "Customer/Import",
@@ -168,11 +179,12 @@ var myApp = angular
         });
 
         $stateProvider.state("Customer.Expense", {
-            url: "/Expense",
+            url: "/Expense/:expenceId/:suppliers",
             templateUrl: "Customer/Expense",
             controller: "ExpenseCntrl",
             params: {
                 no: null,
+                expenceId: null,
                 suppliers: null
 
             }
@@ -195,13 +207,14 @@ var myApp = angular
         });
 
         $stateProvider.state("Customer.MakePayment", {
-            url: "/MakePayment/:poNo",
+            url: "/MakePayment/:voId",
             templateUrl: "Customer/MakePayment",
             controller: "MakePaymentCntrl",
             params: {
                 poNo: null,
                 suppliers: null,
-                Code: null
+                Code: null,
+                voId: null
                
             }
 
@@ -213,7 +226,7 @@ var myApp = angular
             templateUrl: "Customer/CreateInventory",
 
 
-            controller: "InventoryCntrl",
+            controller: "CreateInventoryCntrl",
            
 
          
@@ -263,6 +276,94 @@ var myApp = angular
 
               }
           });
+        // new controller
+
+          $stateProvider.state("Customer.TaxInvoice", {
+              url: "/TaxInvoice",
+              //url: "/RecentOrders",
+              templateUrl: "Customer/TaxInvoice",
+              controller: "TaxInvoiceCntrl"
+          });
+
+
+          $stateProvider.state("Customer.BadlaVoucher", {
+              url: "/BadlaVoucher",
+              templateUrl: "Customer/BadlaVoucher",
+              controller: "BadlaVoucherCntrl"
+          });
+
+          $stateProvider.state("Customer.GeneralInvoice", {
+              url: "/GeneralInvoice",
+              templateUrl: "Customer/GeneralInvoice",
+              controller: "GeneralInvoiceCntrl"
+          });
+
+          $stateProvider.state("Customer.JournalEntry", {
+              url: "/JournalEntry",
+              templateUrl: "Customer/JournalEntry",
+              controller: "JournalEntryCntrl"
+
+          });
+
+          $stateProvider.state("Customer.BalanceInventory", {
+              url: "/BalanceInventory",
+              templateUrl: "Customer/BalanceInventory",
+              controller: "BalanceInventoryCntrl"
+          });
+
+          $stateProvider.state("Customer.SalesInvoiceSattlement", {
+              url: "/SalesInvoiceSattlement",
+              templateUrl: "Customer/SalesInvoiceSattlement",
+              controller: "SalesInvoiceSattlementCntrl"
+          });
+
+          $stateProvider.state("Customer.PurchaseInvoiceSattlement", {
+              url: "/PurchaseInvoiceSattlement",
+              templateUrl: "Customer/PurchaseInvoiceSattlement",
+              controller: "PurchaseInvoiceSattlementCntrl"
+          });
+
+          $stateProvider.state("Customer.BalanceInventoryViewInfo", {
+              url: "/BalanceInventoryViewInfo",
+              templateUrl: "Customer/BalanceInventoryViewInfo",
+              controller: "BalanceInventoryViewInfoCntrl"
+          });
+
+
+          $stateProvider.state("Customer.VoucherTransactions", {
+              url: "/VoucherTransactions",
+              templateUrl: "Customer/VoucherTransactions",
+              controller: "VoucherTransactionsCntrl"
+
+          });
+
+          $stateProvider.state("Customer.SattlementTransactions", {
+              url: "/SattlementTransactions",
+              templateUrl: "Customer/SattlementTransactions",
+              controller: "SattlementTransactionsCntrl"
+
+          });
+
+          $stateProvider.state("Customer.ForexGainLoss", {
+              url: "/ForexGainLoss",
+              templateUrl: "Customer/ForexGainLoss",
+              controller: "ForexGainLossCntrl"
+
+          });
+
+          $stateProvider.state("Customer.ActivityLog", {
+              url: "/ActivityLog",
+              templateUrl: "Customer/ActivityLog",
+              controller: "ActivityLogCntrl"
+
+          });
+
+          $stateProvider.state("Customer.ExciseInvoice", {
+              url: "/ExciseInvoice",
+              templateUrl: "Customer/ExciseInvoice",
+              controller: "ExciseInvoiceCntrl"
+
+          });
 
 
 
@@ -293,13 +394,13 @@ var myApp = angular
 
 myApp.value('config', {
 
- login: 'http://localhost:4000/',
+login: 'http://localhost:4000/',
 
- api: 'http://localhost:4000/api/'
+api: 'http://localhost:4000/api/'
 
 
- // login: 'http://bizzy-book-api.azurewebsites.net/',
- // api: 'http://bizzy-book-api.azurewebsites.net/api/'
+//login: 'http://bizzy-book-api.azurewebsites.net/',
+ //api: 'http://bizzy-book-api.azurewebsites.net/api/'
 });
 
 
@@ -605,7 +706,7 @@ myApp.factory('groupFactory', ['$http',
 ]);
 
 
-
+/*
 myApp.run(['$templateCache', function ($templateCache) {
     // Overrides selectize template for group select tree.
     $templateCache.put('selectize/choices.tpl.html', [
@@ -633,40 +734,13 @@ myApp.run(['$templateCache', function ($templateCache) {
       '</div>'
     ].join(''))
 
-    
+    $templateCache.put("select2/match.tpl.html", 
+    "<a ...> ... <span class=\"select2-arrow ui-select-toggle\" ng-click=\"$select.toggle($event)\"><b></b></span></a>");
 
 
 }]);
+*/
 
-myApp.run(['$templateCache', function ($templateCache) {
-    $templateCache.put('bootstrap/choices.tpl.html', [
-     '<div ng-show="$select.open"',
-     '  class="ui-select-choices group-tree selectize-dropdown single">',
-     '  <div ng-show="true" class="ui-select-breadcrumbs">',
-     '    <span class="ui-breadcrumb"',
-     '       ng-click="add3()">',
-     '       + Add new  {{$select.search}}',
-     '    </span>',
-     '  </div>',
-     '  <div class="ui-select-choices-content selectize-dropdown-content">',
-     '    <div class="ui-select-choices-group optgroup">',
-     '      <div ng-show="$select.isGrouped"',
-     '        class="ui-select-choices-group-label optgroup-header">',
-     '        {{$group}}',
-     '      </div>',
-     '      <div class="ui-select-choices-row">',
-     '        <div class="option ui-select-choices-row-inner"',
-     '           data-selectable="">',
-     '        </div>',
-     '      </div>',
-     '    </div>',
-     '  </div>',
-     '</div>'
-    ].join(''))
-
-
-
-}]);
 
 
 

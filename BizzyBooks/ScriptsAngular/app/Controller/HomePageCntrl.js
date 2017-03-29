@@ -4,4 +4,17 @@
         e.preventDefault();
     });
 
-}]);
+    $scope.namechange = function () {
+        $('#namechangeModal').modal('show');
+    }
+
+    $('#Fromdate').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+    });
+
+    $('#Todate').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+    });
+    ;}]);

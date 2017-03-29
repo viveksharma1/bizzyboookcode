@@ -62,7 +62,7 @@ myApp.controller('SupplierCntrl', ['$scope', '$http', '$timeout', '$stateParams'
     }
     $(".sk-wave").show()
     $scope.admin = localStorage['adminrole'];
-
+    $scope.Role = localStorage['adminrole'];
 
     $scope.paginationTable = function (url2, globalUrl) {
         $scope.url2 = url2;
@@ -233,8 +233,8 @@ myApp.controller('SupplierCntrl', ['$scope', '$http', '$timeout', '$stateParams'
 
     $('#NewCustomerCreate').click(function () {
         $('#NewCustomerCreateModal').modal('show');
-
-
+        $scope.getAccountMaster();
+        $scope.getGroupMaster();
     });
 
 
@@ -441,6 +441,22 @@ myApp.controller('SupplierCntrl', ['$scope', '$http', '$timeout', '$stateParams'
         $scope.suppliers = response.data;
 
     });
+    $scope.createAccount = function () {
+        var accountData = {
+            compCode: localStorage.CompanyId,
+            accountName: $scope.company.toUpperCase(),
+            Under: $scope.groupMasters.selected.name,
+            type: $scope.groupMasters.selected.type,
+            balance: $scope.balance,
+            credit: 0,
+            debit: 0,        
+            openingBalance: $scope.openingBalance,
+            balanceType: $scope.groupMasters.selected.balanceType
+        }
+
+        $http.post(config.login + "createAccount", accountData).then(function (response) {
+        });
+    }
 
 
     //create New Suppliers
@@ -448,13 +464,13 @@ myApp.controller('SupplierCntrl', ['$scope', '$http', '$timeout', '$stateParams'
     $scope.createNewSupplier = function () {
         
         var data = {
-
             compCode:localStorage.CompanyId,
             email: $scope.email,
-            company: $scope.company,
+            company: $scope.company.toUpperCase(),
             phone: $scope.phone,
             mobile: $scope.mobile,
-            fax: $scope.fax,
+           
+            openingBalance: $scope.openingBalance,
            
           
             billingAddress: [
@@ -480,63 +496,72 @@ myApp.controller('SupplierCntrl', ['$scope', '$http', '$timeout', '$stateParams'
               {
                   taxRegNo: $scope.taxRegNo,
                   cstRegNo: $scope.cstRegNo,
-                  panNo: $scope.panNo
+                  panNo: $scope.panNo,
+                  range: $scope.Range,
+                  division: $scope.division,
+                  address: $scope.address,
+                  commisionerate: $scope.commisionerate,
+                  ceRegionNo: $scope.ceRegionNo,
+                  eccCodeNo: $scope.eccCodeNo,
+                  iecNo: $scope.iecNo,
 
 
               }
             ],
             
             notes: $scope.notes,
+            compCode: localStorage.CompanyId,
             account: {
-                compCode: localStorage.CompanyId,
-                accountName: $scope.company,
-                category: 'Supplier',
-                group: 'Sundry Creditor',
-                type: 'Current Liability',
-                credit: 0,
-                debit:0
+                group: $scope.groupMasters.selected.name,
+
             }
+            
+            
+
 
         }
        
        
-        if (!data.email == '') {        
+        if (!data.company == '') {        
             $http.post(config.login + "createSupplier", data).then(function (response) {
                 if (response.status == "200") {
                     showSuccessToast("Supplier Save Succesfully");
+                    $scope.createAccount();
+                    $scope.email = null,
+           $scope.company = null,
+           $scope.phone = null,
+           $scope.mobile = null,
+           $scope.fax = null,
+
+
+                 $scope.street = null,
+                 $scope.city = null,
+                 $scope.state = null,
+                 $scope.postalCode = null,
+
+
+                 $scope.street1 = null,
+                 $scope.city1 = null,
+                 $scope.state1 = null,
+                 $scope.postalCode1 = null,
+
+
+                 $scope.taxRegNo = null,
+                 $scope.cstReg = null,
+                 $scope.panNo = null,
+
+
+
+                 $scope.paymentMethod = null,
+                 $scope.terme = null,
+                 $scope.deliveryMethod = null,
+                 $scope.openingBalance = null,
+                 $scope.asOf = null,
+                 $scope.notes = null
+
                 }
             });
-            $scope.email = null,
-            $scope.company = null,
-            $scope.phone = null,
-            $scope.mobile = null,
-            $scope.fax = null,
-          
-
-                  $scope.street = null,
-                  $scope.city = null,
-                  $scope.state = null,
-                  $scope.postalCode = null,
-
-
-                  $scope.street1 = null,
-                  $scope.city1 = null,
-                  $scope.state1 = null,
-                  $scope.postalCode1 = null,
-
-
-                  $scope.taxRegNo = null,
-                  $scope.cstReg = null,
-                  $scope.panNo = null,
-
-
-
-                  $scope.paymentMethod = null,
-                  $scope.terme = null,
-                  $scope.deliveryMethod = null,
-                  $scope.openingBalance = null,
-                  $scope.asOf = null,
-                  $scope.notes = null
+           
         } else {
 
             showWarningToast("Please Fill Required Field");
@@ -772,6 +797,22 @@ myApp.controller('SupplierCntrl', ['$scope', '$http', '$timeout', '$stateParams'
 
     // Exel upload
 
+    //get account Data
+
+    $scope.groupMasters = {};
+    $scope.getAccountMaster = function () {
+        $http.get(config.api + "accounts" + "?filter[where][compCode]=" + localStorage.CompanyId).then(function (response) {
+            $scope.parentAccount = response.data;
+
+        });
+    }
+    // get groupMaster Data 
+
+        $scope.getGroupMaster = function () {
+            $http.get(config.api + "groupMasters").then(function (response) {
+                $scope.groupMaster = response.data;
+            });
+        }
 
     $scope.uploadFile = function () {
         $scope.rows = [];
@@ -860,6 +901,24 @@ myApp.controller('SupplierCntrl', ['$scope', '$http', '$timeout', '$stateParams'
         var data = this.parseExcel(file);
     };
 
+    $('.btnhover button').click(function () {
+        $(this).siblings().removeClass('active')
+        $(this).addClass('active');
+    });
 
+    $('.filenameDiv').hide();
+    $('.attechmentDescription').hide();
+    $('.Attechmentdetail').click(function () {
+        $('.filenameDiv').show();
+        $("#name").append($("#NameInput").val());
+        $("#type").append($("#uploadBtn").val());
+
+    });
+
+    $('#removeattachment').click(function () {
+        $('.filenameDiv').hide();
+    });
+
+    $(":file").filestyle({ buttonName: "btn-sm btn-info" });
 
 }]);

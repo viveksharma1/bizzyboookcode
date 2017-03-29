@@ -151,5 +151,92 @@ namespace Restaurant.Controllers
         {
             return View();
         }
+        public ActionResult inventorystock()
+        {
+            return View();
+        }
+        public ActionResult JournalEntry()
+        {
+            return View();
+        }
+        public ActionResult ForexGainLoss()
+        {
+            return View();
+        }
+
+        public ActionResult TaxInvoice()
+        {
+            return View();
+        }
+
+        public ActionResult PurchaseInvoiceSattlement()
+        {
+            return View();
+        }
+
+        public ActionResult SalesInvoiceSattlement()
+        {
+            return View();
+        }
+
+        public ActionResult BadlaVoucher()
+        {
+            return View();
+        }
+
+        public ActionResult GeneralInvoice()
+        {
+            return View();
+        }
+
+        public ActionResult BalanceInventory()
+        {
+            return View();
+        }
+
+        public ActionResult DetailInventory()
+        {
+            return View();
+        }
+
+        public ActionResult SaleInventory()
+        {
+            return View();
+        }
+
+
+        public ActionResult ProcessInventory()
+        {
+            return View();
+        }
+
+        public ActionResult BalanceInventoryViewInfo()
+        {
+            return View();
+        }
+
+        public ActionResult BalanceInventoryViewDetail()
+        {
+            return View();
+        }
+
+        public ActionResult VoucherTransactions()
+        {
+            return View();
+        }
+
+        public ActionResult SattlementTransactions()
+        {
+            return View();
+        }
+        public ActionResult ActivityLog()
+        {
+            return View();
+        }
+
+        public ActionResult ExciseInvoice()
+        {
+            return View();
+        }
     }
 }

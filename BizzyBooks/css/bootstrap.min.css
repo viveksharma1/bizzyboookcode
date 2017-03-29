@@ -1585,7 +1585,7 @@ a.text-info:focus, a.text-info:hover {
 }
 
 .text-warning {
-    color: #8a6d3b;
+    color: #FF9800;
 }
 
 a.text-warning:focus, a.text-warning:hover {
@@ -6604,7 +6604,7 @@ button.close {
     left: 0;
     z-index: 1060;
     display: none;
-    max-width: 276px;
+    width: 430px;
     padding: 1px;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 14px;
@@ -7451,8 +7451,8 @@ button.close {
         .submenu li a {
             float: left;
             display: block;
-            font-size: 12px;
-            padding: 5px 15px 10px 15px;
+            font-size: 16px;
+            padding: 5px 15px 8px 15px;
             border-left: 1px solid #9dd3ee;
             color: #1a81d9;
         }
@@ -7548,6 +7548,7 @@ button.close {
 .pulltab {
     cursor: pointer;
     position: absolute;
+    display:none;
     bottom: 309px;
     right: 0;
     margin-right: 15px;
@@ -7591,7 +7592,7 @@ button.close {
 }
 
 .tabnav li a {
-    padding: 5px 69px !important;
+    padding: 5px 66px !important;
     font-weight: bold;
     background: #f8f8f8;
     border: 1px solid #e3e3e3;
@@ -7699,9 +7700,10 @@ button.close {
     font-family: DIN, Arial;
     font-weight: normal;
     letter-spacing: -.05em;
-    font-size: 4.8rem;
+    font-size: 4rem;
     margin-top: -20px;
     float: right;
+    height:60px; white-space:nowrap;
 }
 
 .NewTable thead {
@@ -8371,6 +8373,7 @@ main {
 .flyoutdiv ul li a:hover{background:#337ab7; color:#fff;}
 #flyoutCompany{width: 42%; right: 10px; position: absolute; z-index: 20; padding-top:7px;}
 #flyoutChange{width: 20%; right: 10px; position: absolute; z-index: 20; padding-top:7px;}
+#flyoutDate{width: 30%; right: 10px; position: absolute; z-index: 20; padding-top:7px;}
 .logout {
     border-bottom: 0 none;
     padding-top: 20px; float:left
@@ -8799,3 +8802,180 @@ main {
 }
 
 #openPopup.modal-dialog{width:55%;}
+.text_editor {
+  border: 1px solid #ccc; text-align:right;
+  background: #fff;
+  color: #000;
+  font-size: 14px;
+  font-family: arial;
+  width: 100%;
+  cursor: text;
+  height:30px;
+  float:left;
+}
+.editable_text{width:100%; height:30px; float:left; line-height:28px;background: #f9f9f9; text-align: right; padding: 0px 5px;  border: 1px solid #e3e3e3;}
+.formbox{float:left; width:100%; margin-bottom:5px;font-size:12px;}
+   .scroll {
+            width: 100%;
+           /*background:#e3eaf3;*/
+        }
+
+       .scroll thead, .scroll tbody, .scroll tr, .scroll td, .scroll th, .scroll tfoot { display: block; }
+
+       .scroll tr:after {
+            content: ' ';
+            display: block;
+            visibility: hidden;
+            clear: both;
+        }
+
+       .scroll thead th {
+            height: 40px;
+            font-weight:bold !important
+            /*text-align: left;*/
+        }
+
+       .scroll tbody {
+            height: 180px;
+            overflow-y: auto;
+        }
+        .scroll tbody td {
+            height: 100px;
+            font-size:12px;
+           /*// background:#fff;*/    
+        }
+       .scroll thead {
+            /* fallback */
+            width:98%
+        }
+       .scroll tfoot{
+               width:98%
+       }
+
+     .scroll tbody td, .scroll thead th, .scroll tfoot th {
+            width: 11.1%;
+            float: left;
+        }
+
+     .table-scroll thead {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.table-scroll tbody {
+    max-height: 150px;
+    overflow-y: auto;
+    display: block;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.table-scroll tr {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.table-scroll td {
+    height: 47px; // needed in order to keep rows from collapsing
+}
+.RemoveTR:hover{color:#ff0000}
+.selectuiTable{font-size: 12px !important; float:left;
+    font-weight: normal;
+    white-space: nowrap;
+    height:19px;
+    overflow: hidden !important;
+    width: 96% !important;}
+
+.highlighted{
+    background:aliceblue !important;
+}
+.dropmenu{left:-34px;}
+.dropmenu li{padding:5px; color:#000; cursor:pointer}
+/*.active{background:#337ab7 !important;color:#fff !important; border:1px solid #337ab7 !important; text-shadow:none}*/
+.dwn{font-weight:bold; letter-spacing:1px; margin-left:5px;}
+.dwn:hover{color:#000 !important;}
+.wordbreak td {word-break:break-all !important; word-wrap:break-word !important;}
+#fileUpload div{display:none;}
+#ForexGainModal .modal-dialog{width:80%;}
+.UO-header{background:#FFC107 !important;}
+.tablepadding{padding:10px !important;}
+#AddInventoryModal .modal-dialog{width:99%;}
+.filterBox{padding: 10px;
+    background: aliceblue;
+    border: 1px solid rgba(108, 127, 137, 0.13);
+    border-radius: 3px;}
+.filterBox h3{font-size: 16px;
+    font-weight: bold;
+    margin: 0px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(108, 127, 137, 0.13);}
+.filterBox .form-group{margin-bottom:0px}
+.remarksbox{background:rgba(243, 245, 248, 0.3); box-shadow:none; border-left:1px solid #e3e3e3;  border-right:1px solid #e3e3e3; border-bottom:1px solid #e3e3e3; height:80px}
+.itemtd td{padding:3px;}
+.msg_container_base{
+  background: #e5e5e5;
+  margin: 0;
+  padding: 0 10px 10px;
+  max-height:300px;
+  overflow-x:hidden;
+}
+
+
+.messages {
+  background: #f3f5f8;
+  padding: 10px;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  max-width:100%;
+  margin-top:3px;
+}
+.messages > p {
+    font-size: 13px;
+    margin: 0 0 0.2rem 0;
+  }
+
+.msg_container {
+    padding: 10px;
+    overflow: hidden;
+    display: flex;
+}
+
+
+
+
+
+.msg_container_base::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+.msg_container_base::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #F5F5F5;
+}
+.msg_container label{line-height:60px;}
+.msg_container_base::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+.datelink:hover{text-decoration:underline;}
+.datelink em:hover{text-decoration:underline;}
+.datelink{padding-left:20px;}
+
+.bg-danger{background:#ff0000}
+.bg-warning{background:orange}
+.btn-group .active {
+     background: #337ab7 !important; 
+     color: #fff !important; 
+     border: 1px solid #337ab7 !important; 
+    text-shadow: none;
+} 
+#AddLineItemModal .modal-dialog{width:90%}
+tr:hover, tr.selected {
+    background-color: #ddd
+}
